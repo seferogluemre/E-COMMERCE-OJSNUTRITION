@@ -1,18 +1,17 @@
 import { createRoot } from 'react-dom/client'
-import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { HomePage, RootPage } from './assets/pages';
 
 const routes = createBrowserRouter([
   {
-    // path: "/",
-    // element: <RootPage />,
-    // errorElement: <ErrorPage />,
-    // children: [
-    //   {
-    //     index: true,
-    //     element: <HomePage />,
-    //   },
-    // ],
+    path: "/",
+    element: <RootPage />,
+    children: [
+      {
+        index: true,
+        element: <HomePage />,
+      },
+    ],
   },
 ]);
 
