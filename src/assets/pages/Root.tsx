@@ -1,4 +1,4 @@
-
+import NavbarComp from "../components/layout/Navbar/Navbar";
 
 function RootLayout() {
 
@@ -7,6 +7,8 @@ function RootLayout() {
 
 
     return <>
+        <NavbarComp />
+
 
     </>
 

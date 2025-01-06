@@ -2,7 +2,7 @@
 
 * {
     font-family: "Host Grotesk", serif !important;
-    font-size: 21px !important;
-    font-weight: 600 !important;
-    color: black !important;
+    font-size: 19px !important;
+    font-weight: 400 !important;
+    user-select: none;
 }
