@@ -1,7 +1,11 @@
+import BestSeller from "../../components/layout/BestSeller/BestSeller";
+
 function HomePage() {
 
     return <>
-        <h1>Emre seferoglu</h1>
+
+
+        <BestSeller ></BestSeller>
     </>
 }
 
