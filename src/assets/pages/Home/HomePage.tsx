@@ -1,13 +1,13 @@
 import { Container } from "react-bootstrap";
 import BestSeller from "../../components/layout/BestSeller/BestSeller";
-import BlazeSliderComponent from "../../components/layout/BlazeSlider/BlazeSliderComponent";
+import BlazeSlider from "../../components/layout/BlazeSlider/BlazeSliderComponent";
 
 function HomePage() {
   return (
     <>
       <Container>
-        <BestSeller /> x
-        <BlazeSliderComponent />
+        <BestSeller />
+        <BlazeSlider />
       </Container>
     </>
   );

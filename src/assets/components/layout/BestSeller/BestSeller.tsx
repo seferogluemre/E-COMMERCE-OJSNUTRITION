@@ -1,25 +1,11 @@
 import { Container, Row } from "react-bootstrap";
 import { useLoaderData } from "react-router-dom";
 import BestSellerCard from "./BestSellerCard";
+import { BestSellerPropsCS } from "../../type/type";
+import "./_BestSeller.scss";
+
 export const base_url = "https://fe1111.projects.academy.onlyjs.com/api/v1";
 export const Photo_Url = "https://fe1111.projects.academy.onlyjs.com";
-
-export interface PriceInfo {
-  profit?: null;
-  total_price: number;
-  discounted_price?: number | null;
-  price_per_servings?: number;
-  discount_percentage?: number | null;
-}
-export interface BestSellerPropsCS {
-  name: string;
-  short_explanation: string;
-  price_info: PriceInfo;
-  photo_src: string;
-  comment_count?: number;
-  average_star: number;
-  slug?: string;
-}
 
 function BestSeller() {
   const { products } = useLoaderData();
@@ -27,9 +13,12 @@ function BestSeller() {
   return (
     <>
       <Container>
-        <Row>
+        <Row className="d-flex justify-content-center row-gap-5">
           {products?.map((data: BestSellerPropsCS, index: number) => (
-            <div className="col-lg-3 col-md-6 col-xxl-2" key={data.slug}>
+            <div
+              className="col-lg-4 col-md-6 col-sm-6 col-xxl-2 best_seller_column"
+              key={data.slug}
+            >
               <BestSellerCard
                 slug={data.slug}
                 key={index}

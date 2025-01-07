@@ -1,0 +1,9 @@
+.best_seller-card {
+  width: 250px !important;
+  height: 365px !important;
+  border: 0px;
+}
+.best_seller-card .best-seller-product-price {
+  color: red;
+  font-size: 22px !important;
+}/*# sourceMappingURL=BestSeller.css.map */

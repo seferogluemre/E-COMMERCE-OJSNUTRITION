@@ -1,42 +1,30 @@
 import { Card, CardBody, CardHeader, CardImg, CardText } from "react-bootstrap";
-// import { BestSellerPropsCS } from "./BestSeller";
-
-export interface BestSellerProps {
-  name: string;
-  short_explanation: string;
-  slug?: string;
-  price_info: {
-    profit?: null;
-    total_price: number;
-    discounted_price?: number | null;
-    price_per_servings?: number;
-    discount_percentage?: number | null;
-  };
-  photo_src: string;
-  comment_count?: number;
-  average_star: number;
-}
+import { BestSellerProps } from "../../type/type";
+import FiveStar from "../../FiveStars/FiveStar";
 
 function BestSellerCard({
   name,
   photo_src,
-  average_star,
   comment_count,
   slug,
-  price_info: { total_price, discounted_price },
+  price_info: { total_price },
 }: BestSellerProps) {
   return (
     <>
-      <Card className="best_seller-card">
-        <CardHeader>
+      <Card className="best_seller-card border-0">
+        <CardHeader className="best-seller-card-header border-0">
           <CardImg src={photo_src} className="best-seller-product-image" />
         </CardHeader>
-        <CardBody className="card-body">
-          <CardText>{name}</CardText>
-          <CardText>{slug}</CardText>
-          <CardText>{comment_count}</CardText>
-          <CardText>{average_star}</CardText>
-          <CardText>{total_price}</CardText>
+        <CardBody className="best_seller-card-body">
+          <CardText>{name.toLocaleUpperCase()}</CardText>
+          <CardText>{slug?.toLocaleUpperCase()}</CardText>
+          <CardText className="column-gap-1 d-flex pb-3 justify-content-center">
+            <FiveStar />
+          </CardText>
+          <CardText className="m-0">{comment_count} Yorum</CardText>
+          <CardText className="best-seller-product-price">
+            {total_price}₺
+          </CardText>
         </CardBody>
       </Card>
     </>
