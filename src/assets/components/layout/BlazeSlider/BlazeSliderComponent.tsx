@@ -41,8 +41,8 @@ const BlazeSliderComponent = () => {
             <div className="blaze-track">
               <div>YORUM 1</div>
               <div>YORUM 2</div>
-              <div>YORUM 1</div>
-              <div>YORUM 1</div>
+              <div>YORUM 3</div>
+              <div>YORUM 4</div>
             </div>
           </div>
         </div>

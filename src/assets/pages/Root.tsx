@@ -1,11 +1,11 @@
-import BestSeller from "../components/layout/BestSeller/BestSeller";
+import { Outlet } from "react-router-dom";
 import NavbarComp from "../components/layout/Navbar/Navbar";
 
 function RootLayout() {
   return (
     <>
       <NavbarComp />
-      <BestSeller />
+      <Outlet />
     </>
   );
 }
