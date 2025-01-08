@@ -1,4 +1,4 @@
-#REACT TYPESCRİPT E-COMMERCE Project
+#REACT + TYPESCRİPT + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
