@@ -12,7 +12,10 @@ function BestSeller() {
 
   return (
     <>
-      <Container className="my-5">
+      <Container  className="my-5">
+        <div className="text-center">
+          <h1 className="fs-3">Çok Satanlar</h1>
+        </div>
         <Row className="d-flex justify-content-center row-gap-5">
           {products?.map((data: BestSellerPropsCS, index: number) => (
             <div

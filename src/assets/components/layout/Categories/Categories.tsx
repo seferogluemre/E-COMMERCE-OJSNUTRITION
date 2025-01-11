@@ -15,7 +15,7 @@ function Categories() {
 
 
     return <>
-        <Container >
+        <Container className="my-5">
             <Row>
                 {
                     caategoriesImagesArray.map((category) => (
