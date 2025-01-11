@@ -3,13 +3,23 @@
     .control-buttons {
         display: flex;
         justify-content: end;
-
         .blaze-next {
             width: 100px;
+            background-color: transparent;
+            color: black !important;
+            border: none !important;
+            width: 50px;
+
         }
 
         .blaze-prev {
             width: 100px;
+            background-color: transparent;
+            color: black !important;
+            border: none !important;
+            width: 50px;
+
         }
     }
+
 }

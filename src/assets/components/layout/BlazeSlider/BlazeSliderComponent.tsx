@@ -1,9 +1,11 @@
 import BlazeSlider from "blaze-slider";
 import "blaze-slider/dist/blaze.css";
 import { useEffect, useRef } from "react";
-import { FaChevronCircleLeft } from "react-icons/fa";
-import { FaChevronCircleRight } from "react-icons/fa";
+import { FaAngleLeft } from "react-icons/fa";
+import { FaAngleRight } from "react-icons/fa6";
 import './BlazeSlider.scss'
+import FiveStar from "../../FiveStars/FiveStar";
+import { Button } from "react-bootstrap";
 
 const BlazeSliderComponent = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -43,14 +45,24 @@ const BlazeSliderComponent = () => {
 
   return (
     <>
-      <div className="blaze-slider mt-5" ref={sliderRef}>
-        <div className="control-buttons">
-          <button ref={prevButtonRef} className="blaze-prev ">
-            <FaChevronCircleLeft />
-          </button>
-          <button ref={nextButtonRef} className="blaze-next ">
-            <FaChevronCircleRight />
-          </button>
+      <div className="blaze-slider mt-5 container-xxl" ref={sliderRef}>
+        <div className="header d-flex justify-content-between">
+          <div className="blaze-header">
+            <div className="text-start">
+              <h1 className="fs-4">Gerçek Müşteri yorumları</h1>
+            </div>
+          </div>
+          <div className="control-buttons d-flex align-items-center column-gap-3">
+            <FiveStar />
+            <div className="controls">
+              <Button ref={prevButtonRef} className="blaze-prev">
+                <FaAngleLeft className="fs-3" />
+              </Button>
+              <Button ref={nextButtonRef} className="blaze-next">
+                <FaAngleRight className="fs-3" />
+              </Button>
+            </div>
+          </div>
         </div>
         <div className="blaze-container mt-5">
           <div className="blaze-track-container">

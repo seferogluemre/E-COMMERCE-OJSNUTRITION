@@ -16,7 +16,6 @@ function NavbarComp() {
                             type="search"
                             placeholder="Search"
                             aria-label="Search"
-
                         />
                         <Button variant="secondary">Search</Button>
                     </Form>
