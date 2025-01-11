@@ -1,6 +1,8 @@
 import { FaFacebook } from 'react-icons/fa';
 import { BsInstagram } from 'react-icons/bs';
+import { IoAddOutline, IoRemoveOutline } from 'react-icons/io5';
 import FiveStar from '../../FiveStars/FiveStar';
+import { useState } from 'react';
 
 interface FooterLink {
   title: string;
@@ -58,6 +60,16 @@ const footerData: FooterSection[] = [
 ];
 
 const Footer: React.FC = () => {
+  const [expandedSections, setExpandedSections] = useState<number[]>([]);
+
+  const toggleSection = (index: number) => {
+    setExpandedSections(prev => 
+      prev.includes(index) 
+        ? prev.filter(i => i !== index)
+        : [...prev, index]
+    );
+  };
+
   return (
     <footer className="bg-dark text-white py-5 mt-5">
       <div className="container">
@@ -67,7 +79,7 @@ const Footer: React.FC = () => {
             {[...Array(5)].map((_, index) => (
               <FiveStar key={index} />
             ))}
-            <span className=" ml-2">(300.000+)</span>
+            <span className="ml-2">(300.000+)</span>
           </div>
 
           <div className="row mb-5">
@@ -92,8 +104,18 @@ const Footer: React.FC = () => {
         <div className="row mb-5">
           {footerData.map((section, index) => (
             <div className="col-md-4 mb-4" key={index}>
-              <h1 className="h5 fs-5 font-weight-bold">{section.title}</h1>
-              <ul className="list-unstyled">
+              <div className="d-flex align-items-center justify-content-between d-md-none" 
+                   onClick={() => toggleSection(index)}
+                   style={{ cursor: 'pointer' }}>
+                <h1 className="h5 fs-5 font-weight-bold mb-0">{section.title}</h1>
+                {expandedSections.includes(index) ? (
+                  <IoRemoveOutline size={24} />
+                ) : (
+                  <IoAddOutline size={24} />
+                )}
+              </div>
+              <h1 className="h5 fs-5 font-weight-bold d-none d-md-block">{section.title}</h1>
+              <ul className={`list-unstyled ${expandedSections.includes(index) ? 'd-block' : 'd-none'} d-md-block`}>
                 {section.links.map((link, linkIndex) => (
                   <li key={linkIndex} className='nav-link'>
                     <a href={link.href} className="text-white opacity-50 text-decoration-none text-light">
@@ -108,17 +130,15 @@ const Footer: React.FC = () => {
 
         {/* Bottom Section */}
         <div className="border-top border-muted pt-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
-          
-          <div className="text-center text-md-left ">
+          <div className="text-center text-md-left">
             Copyright © - Tüm Hakları Saklıdır.
-           
           </div>
 
           <div className="d-flex gap-3 mt-3 mt-md-0">
-            <a href="#" className=" hover-text-white">
+            <a href="#" className="hover-text-white">
               <FaFacebook className="fs-3 text-primary" />
             </a>
-            <a href="#" className=" hover-text-white">
+            <a href="#" className="hover-text-white">
               <BsInstagram className="fs-3 text-danger" />
             </a>
           </div>
