@@ -1,0 +1,15 @@
+.blaze-slider {
+
+    .control-buttons {
+        display: flex;
+        justify-content: end;
+
+        .blaze-next {
+            width: 100px;
+        }
+
+        .blaze-prev {
+            width: 100px;
+        }
+    }
+}

@@ -1,9 +1,14 @@
 import BlazeSlider from "blaze-slider";
 import "blaze-slider/dist/blaze.css";
 import { useEffect, useRef } from "react";
+import { FaChevronCircleLeft } from "react-icons/fa";
+import { FaChevronCircleRight } from "react-icons/fa";
+import './BlazeSlider.scss'
 
 const BlazeSliderComponent = () => {
-  const sliderRef = useRef(null);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const prevButtonRef = useRef<HTMLButtonElement>(null);
+  const nextButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (sliderRef.current) {
@@ -19,24 +24,35 @@ const BlazeSliderComponent = () => {
           slidesToShow: 4,
         },
         "(max-width: 480px)": {
-          slidesToShow: 2,
+          slidesToShow: 1,
         },
       });
-      const prevButton = document.querySelector(".blaze-prev");
-      const nextButton = document.querySelector(".blaze-next");
-      if (prevButton) {
-        prevButton.addEventListener("click", () => slider.prev());
-      }
-      if (nextButton) {
-        nextButton.addEventListener("click", () => slider.next());
-      }
+
+      const handlePrev = () => slider.prev();
+      const handleNext = () => slider.next();
+
+      prevButtonRef.current?.addEventListener("click", handlePrev);
+      nextButtonRef.current?.addEventListener("click", handleNext);
+
+      return () => {
+        prevButtonRef.current?.removeEventListener("click", handlePrev);
+        nextButtonRef.current?.removeEventListener("click", handleNext);
+      };
     }
   }, []);
 
   return (
     <>
-      <div className="blaze-slider my-5 bg-dark text-light" ref={sliderRef}>
-        <div className="blaze-container">
+      <div className="blaze-slider mt-5" ref={sliderRef}>
+        <div className="control-buttons">
+          <button ref={prevButtonRef} className="blaze-prev ">
+            <FaChevronCircleLeft />
+          </button>
+          <button ref={nextButtonRef} className="blaze-next ">
+            <FaChevronCircleRight />
+          </button>
+        </div>
+        <div className="blaze-container mt-5">
           <div className="blaze-track-container">
             <div className="blaze-track">
               <div>YORUM 3</div>
