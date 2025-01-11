@@ -8,7 +8,6 @@ import ErrorPage from "./assets/pages/error-page";
 const routes = createBrowserRouter([
   {
     path: "/",
-
     element: <RootPage />,
     errorElement: <ErrorPage />,
     children: [

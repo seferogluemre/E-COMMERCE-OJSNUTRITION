@@ -35,14 +35,16 @@ const BlazeSliderComponent = () => {
 
   return (
     <>
-      <div className="blaze-slider">
+      <div className="blaze-slider my-5 bg-dark text-light" ref={sliderRef}>
         <div className="blaze-container">
           <div className="blaze-track-container">
             <div className="blaze-track">
-              <div>YORUM 1</div>
+              <div>YORUM 3</div>
               <div>YORUM 2</div>
               <div>YORUM 3</div>
               <div>YORUM 4</div>
+              <div>YORUM 5</div>
+              <div>YORUM 6</div>
             </div>
           </div>
         </div>
