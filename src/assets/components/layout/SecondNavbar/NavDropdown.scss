@@ -6,6 +6,18 @@
     font-size: 13.5px !important;
   }
 }
+@media (min-width: 768px) {
+  #Nav {
+    height: 50px;
+
+    .col-4 {
+      height: 45px;
+      span {
+        font-size: 10px !important;
+      }
+    }
+  }
+}
 @media (max-width: 768px) {
   #NavDropdown,
   #Nav {

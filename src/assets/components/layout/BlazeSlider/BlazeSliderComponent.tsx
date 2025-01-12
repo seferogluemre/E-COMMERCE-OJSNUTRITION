@@ -7,6 +7,7 @@ import "./BlazeSlider.scss";
 import FiveStar from "../FiveStars/FiveStar";
 import { Button } from "react-bootstrap";
 import CommentCard from "../CommentCard/CommentCard";
+import { dummyCommentsData } from "../../../store/data/CommentsDummyData";
 
 export interface ReviewsProps {
   stars: string;
@@ -23,81 +24,6 @@ const BlazeSliderComponent = () => {
   const prevButtonRef = useRef<HTMLButtonElement>(null);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
 
-  const dummyCommentsData: ReviewsProps[] = [
-    {
-      stars: "5",
-      comment: "Harika bir ürün, kesinlikle tavsiye ederim.",
-      title: "Mükemmel",
-      created_at: "2024-11-01",
-      aroma: "Tatlı ve ferah",
-      first_name: "İsmet",
-      last_name: "Tarık",
-    },
-    {
-      stars: "5",
-      comment: "Harika bir ürün, kesinlikle tavsiye ederim.",
-      title: "Mükemmel",
-      created_at: "2024-11-01",
-      aroma: "Tatlı ve ferah",
-      first_name: "Ahmet",
-      last_name: "Yılmaz",
-    },
-    {
-      stars: "5",
-      comment: "Harika bir ürün, kesinlikle tavsiye ederim.",
-      title: "Mükemmel",
-      created_at: "2024-11-01",
-      aroma: "Tatlı ve ferah",
-      first_name: "İsmet",
-      last_name: "Tarık",
-    },
-    {
-      stars: "5",
-      comment: "Harika bir ürün, kesinlikle tavsiye ederim.",
-      title: "Mükemmel",
-      created_at: "2024-11-01",
-      aroma: "Tatlı ve ferah",
-      first_name: "Ahmet",
-      last_name: "Yılmaz",
-    },
-    {
-      stars: "5",
-      comment: "Harika bir ürün, kesinlikle tavsiye ederim.",
-      title: "Mükemmel",
-      created_at: "2024-11-01",
-      aroma: "Tatlı ve ferah",
-      first_name: "Osman",
-      last_name: "Çetin",
-    },
-    {
-      stars: "5",
-      comment: "Harika bir ürün, kesinlikle tavsiye ederim.",
-      title: "Mükemmel",
-      created_at: "2024-11-01",
-      aroma: "Tatlı ve ferah",
-      first_name: "Kadir",
-      last_name: "Toprak",
-    },
-    {
-      stars: "5",
-      comment: "Harika bir ürün, kesinlikle tavsiye ederim.",
-      title: "Mükemmel",
-      created_at: "2024-11-01",
-      aroma: "Tatlı ve ferah",
-      first_name: "Ahmet",
-      last_name: "Yılmaz",
-    },
-    {
-      stars: "5",
-      comment: "Harika bir ürün, kesinlikle tavsiye ederim.",
-      title: "Mükemmel",
-      created_at: "2024-11-01",
-      aroma: "Tatlı ve ferah",
-      first_name: "Ahmet",
-      last_name: "Yılmaz",
-    },
-  ];
-
   useEffect(() => {
     if (sliderRef.current) {
       const slider = new BlazeSlider(sliderRef.current, {
@@ -105,8 +31,8 @@ const BlazeSliderComponent = () => {
           slidesToShow: 4,
           slidesToScroll: 1,
           enableAutoplay: true,
-          autoplayInterval: 4000,
-          transitionDuration: 300,
+          autoplayInterval: 3000,
+          transitionDuration: 1000,
         },
         "(max-width: 768px)": {
           slidesToShow: 3,
