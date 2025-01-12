@@ -1,0 +1,16 @@
+.Navbar-Logo {
+  width: 171px;
+  height: 60px;
+}
+.hamburger-menu {
+  display: none;
+}
+@media (max-width: 576px) {
+  #nav-dropdown,
+  #nav-search-form {
+    display: none !important;
+  }
+  .hamburger-menu {
+    display: block;
+  }
+}

@@ -2,5 +2,21 @@
   .category-column {
     width: 49% !important;
     flex: 49% !important;
+    margin: 15px;
+    img {
+      transform: scale(1.1) !important;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .category-column {
+    width: 33.9% !important;
+    flex: 33% !important;
+    margin: 15px;
+
+    img {
+      transform: scale(1.1);
+    }
   }
 }
