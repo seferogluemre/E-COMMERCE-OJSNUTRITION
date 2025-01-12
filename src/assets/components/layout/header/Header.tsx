@@ -1,14 +1,11 @@
 import styled from "styled-components";
 
 const StyledImage = styled.img`
-  width: 390px;
-  height: 400px;
-  object-fit: cover;
-  box-sizing: content-box;
-
-  @media (min-width: 768px) {
-    width: auto;
-    height: auto;
+  @media (max-width: 576px) {
+    object-position: 50% 100%;
+    object-fit: cover;
+    width: 100%;
+    height: 260px !important;
   }
 `;
 
