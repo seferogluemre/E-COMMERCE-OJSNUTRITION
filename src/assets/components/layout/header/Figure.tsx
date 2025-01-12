@@ -2,23 +2,28 @@ import styled from "styled-components";
 
 const StyledBanner = styled.img`
   width: 100%;
-  height: 400px;
+  height: 450px;
   margin-top: 100px;
+  object-fit: cover; /* Görseli orantılı şekilde kırp ve alanı doldur */
 
   @media (max-width: 768px) {
     margin-top: 0;
-    height: 500px;
+    height: 520px;
+    object-fit: cover;
+    object-position: 84% 50%; /* Fotoğrafın tam ortanın hafif sağını almasını sağlar */
   }
 `;
 
 function TwitchBanner() {
   return (
     <>
-      <StyledBanner
-        src="/src/assets/images/TwitchBanner.png"
-        className="img-fluid w-100"
-        alt="Twitch Banner Fotograf"
-      />
+      <div className="figure-container">
+        <StyledBanner
+          src="/src/assets/images/TwitchBanner.png"
+          className="img-fluid "
+          alt="Twitch Banner Fotograf"
+        />
+      </div>
     </>
   );
 }

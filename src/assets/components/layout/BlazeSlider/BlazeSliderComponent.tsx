@@ -64,6 +64,11 @@ const BlazeSliderComponent = () => {
               <h1 className="fs-4">Gerçek Müşteri yorumları</h1>
             </div>
             <FiveStar />
+            <div className="comment-count m-2">
+              <h4 className="text-decoration-underline">
+                {dummyCommentsData.length} Yorum
+              </h4>
+            </div>
           </div>
           <div className="control-buttons d-flex align-items-center  column-gap-3">
             <div className="controls d-flex">
