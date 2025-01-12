@@ -1,4 +1,4 @@
-import { Card, CardBody, CardHeader, CardImg, CardText } from "react-bootstrap";
+import { Card, CardBody, CardHeader, CardText } from "react-bootstrap";
 import { BestSellerProps } from "../../type/type";
 import FiveStar from "../FiveStars/FiveStar";
 
