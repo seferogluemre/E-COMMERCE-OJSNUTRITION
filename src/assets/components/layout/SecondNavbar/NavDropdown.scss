@@ -1,0 +1,14 @@
+.col-4 {
+  height: 35px;
+  font-size: 14px !important;
+
+  span {
+    font-size: 13.5px !important;
+  }
+}
+@media (max-width: 576px) {
+  #NavDropdown,
+  #Nav {
+    display: none !important;
+  }
+}

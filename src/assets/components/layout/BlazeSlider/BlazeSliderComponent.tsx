@@ -3,19 +3,19 @@ import "blaze-slider/dist/blaze.css";
 import { useEffect, useRef } from "react";
 import { FaAngleLeft } from "react-icons/fa";
 import { FaAngleRight } from "react-icons/fa6";
-import './BlazeSlider.scss'
+import "./BlazeSlider.scss";
 import FiveStar from "../FiveStars/FiveStar";
 import { Button } from "react-bootstrap";
 import CommentCard from "../CommentCard/CommentCard";
 
 export interface ReviewsProps {
-  stars: string,
-  comment: string,
-  title: string,
-  created_at: string,
-  aroma: string,
-  first_name: string,
-  last_name: string
+  stars: string;
+  comment: string;
+  title: string;
+  created_at: string;
+  aroma: string;
+  first_name: string;
+  last_name: string;
 }
 
 const BlazeSliderComponent = () => {
@@ -96,9 +96,7 @@ const BlazeSliderComponent = () => {
       first_name: "Ahmet",
       last_name: "Yılmaz",
     },
-  ]
-
-
+  ];
 
   useEffect(() => {
     if (sliderRef.current) {
@@ -156,19 +154,18 @@ const BlazeSliderComponent = () => {
         <div className="blaze-container mt-5">
           <div className="blaze-track-container">
             <div className="blaze-track">
-              {
-                dummyCommentsData.map((review) => (
-                  <CommentCard
-                    created_at={review.created_at}
-                    title={review.title}
-                    comment={review.comment}
-                    stars={review.stars}
-                    aroma={review.aroma}
-                    first_name={review.first_name}
-                    last_name={review.last_name}
-                  />
-                ))
-              }
+              {dummyCommentsData.map((review, index) => (
+                <CommentCard
+                  key={index}
+                  created_at={review.created_at}
+                  title={review.title}
+                  comment={review.comment}
+                  stars={review.stars}
+                  aroma={review.aroma}
+                  first_name={review.first_name}
+                  last_name={review.last_name}
+                />
+              ))}
             </div>
           </div>
         </div>

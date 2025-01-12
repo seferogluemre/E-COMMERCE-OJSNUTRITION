@@ -1,23 +1,31 @@
 import { Container } from "react-bootstrap";
-import "./Dropdown.scss";
-import { FaChevronDown } from "react-icons/fa";
+import "./NavDropdown.scss";
 
 function NavDropdown() {
   return (
-    <Container fluid className="bg-dark mx-0">
+    <Container fluid className="bg-dark mx-0" id="NavDropdown">
       <div className="container">
         <div
-          className="dropdown"
-          style={{ backgroundColor: "black", color: "white", height: "40px" }}
+          className="dropdown d-flex"
+          style={{ color: "white", height: "40px", padding: "10px" }}
         >
           <a href="#" className="dropdown-item">
-            Link 1 <FaChevronDown />
+            Protein
           </a>
           <a href="#" className="dropdown-item">
-            Link 2 <FaChevronDown />
+            Spor Gıdaları
           </a>
           <a href="#" className="dropdown-item">
-            Link 3 <FaChevronDown />
+            Saglık
+          </a>
+          <a href="#" className="dropdown-item">
+            Gıda
+          </a>
+          <a href="#" className="dropdown-item">
+            Vitamin
+          </a>
+          <a href="#" className="dropdown-item">
+            Tüm Ürünler
           </a>
         </div>
       </div>
