@@ -19,7 +19,7 @@ function NavbarComp() {
           <div className="d-flex align-items-center justify-content-between w-75">
             <GiHamburgerMenu className="fs-1 hamburger-menu m-1" />
             <NavbarBrand href="#" className="bg-transparent">
-              <img src="/src/assets/images/Logo1.png" className="Navbar-Logo" />
+              <img src="/public/assets/Logo1.png" className="Navbar-Logo" />
             </NavbarBrand>
           </div>
           <NavbarToggle aria-controls="navbarScroll" className="d-lg-none" />
