@@ -17,7 +17,7 @@ function Categories() {
         <Row className="d-flex justify-content-center">
           {caategoriesImagesArray.map((category, index) => (
             <div
-              className="col-lg-4 col-md-6  pb-3 category-column"
+              className="col-lg-4 col-md-6  pb-3 category-column text-center"
               key={index}
             >
               <img

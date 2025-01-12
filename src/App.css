@@ -4,3 +4,7 @@
   font-weight: 500 !important;
   user-select: none;
 }
+#root {
+  margin: 0px;
+  padding: 0px;
+}

@@ -3,7 +3,7 @@ import { ReviewsProps } from "../../components/layout/BlazeSlider/BlazeSliderCom
 export const dummyCommentsData: ReviewsProps[] = [
   {
     stars: "5",
-    comment: "Harika bir ürün, kesinlikle tavsiye ederim.",
+    comment: "Harika bir ürün, tavsiye ederim.",
     title: "Mükemmel",
     created_at: "2024-11-01",
     aroma: "Tatlı ve ferah",
@@ -12,8 +12,8 @@ export const dummyCommentsData: ReviewsProps[] = [
   },
   {
     stars: "5",
-    comment: "Harika bir ürün, kesinlikle tavsiye ederim.",
-    title: "Mükemmel",
+    comment: "Kalitesi çok yüksek, beğendim.",
+    title: "Harika",
     created_at: "2024-11-01",
     aroma: "Tatlı ve ferah",
     first_name: "Ahmet",
@@ -21,7 +21,7 @@ export const dummyCommentsData: ReviewsProps[] = [
   },
   {
     stars: "5",
-    comment: "Harika bir ürün, kesinlikle tavsiye ederim.",
+    comment: "Gerçekten memnun kaldım, teşekkürler.",
     title: "Mükemmel",
     created_at: "2024-11-01",
     aroma: "Tatlı ve ferah",
@@ -30,8 +30,8 @@ export const dummyCommentsData: ReviewsProps[] = [
   },
   {
     stars: "5",
-    comment: "Harika bir ürün, kesinlikle tavsiye ederim.",
-    title: "Mükemmel",
+    comment: "Ürün beklentilerimi karşıladı, harika.",
+    title: "Harika",
     created_at: "2024-11-01",
     aroma: "Tatlı ve ferah",
     first_name: "Ahmet",
@@ -39,7 +39,7 @@ export const dummyCommentsData: ReviewsProps[] = [
   },
   {
     stars: "5",
-    comment: "Harika bir ürün, kesinlikle tavsiye ederim.",
+    comment: "Kesinlikle tekrar alacağım, beğendim.",
     title: "Mükemmel",
     created_at: "2024-11-01",
     aroma: "Tatlı ve ferah",
@@ -48,8 +48,8 @@ export const dummyCommentsData: ReviewsProps[] = [
   },
   {
     stars: "5",
-    comment: "Harika bir ürün, kesinlikle tavsiye ederim.",
-    title: "Mükemmel",
+    comment: "Fiyatına göre kaliteli bir ürün.",
+    title: "Harika",
     created_at: "2024-11-01",
     aroma: "Tatlı ve ferah",
     first_name: "Kadir",
@@ -57,7 +57,7 @@ export const dummyCommentsData: ReviewsProps[] = [
   },
   {
     stars: "5",
-    comment: "Harika bir ürün, kesinlikle tavsiye ederim.",
+    comment: "Bu ürünü herkese tavsiye ediyorum.",
     title: "Mükemmel",
     created_at: "2024-11-01",
     aroma: "Tatlı ve ferah",
@@ -66,8 +66,8 @@ export const dummyCommentsData: ReviewsProps[] = [
   },
   {
     stars: "5",
-    comment: "Harika bir ürün, kesinlikle tavsiye ederim.",
-    title: "Mükemmel",
+    comment: "Ürün çok güzel, tekrar alırım.",
+    title: "Harika",
     created_at: "2024-11-01",
     aroma: "Tatlı ve ferah",
     first_name: "Ahmet",

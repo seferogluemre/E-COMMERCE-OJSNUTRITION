@@ -16,7 +16,7 @@ function BestSeller() {
         <div className="text-center">
           <h1 className="fs-3">Çok Satanlar</h1>
         </div>
-        <Row className="d-flex justify-content-center row-gap-5 ">
+        <Row className="d-flex justify-content-center row-gap-lg-5 row-gap-4">
           {products?.map((data: BestSellerPropsCS, index: number) => (
             <div
               className="col-lg-4 col-md-6 col-sm-6 col-xxl-2 d-flex justify-content-center best_seller_column"

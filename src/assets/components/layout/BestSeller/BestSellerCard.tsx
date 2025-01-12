@@ -12,7 +12,7 @@ function BestSellerCard({
   return (
     <>
       <Card className="best_seller-card border-0">
-        <CardHeader className="best-seller-card-header border-0 bg-transparent">
+        <CardHeader className="best-seller-card-header p-2 border-0 bg-transparent">
           <CardImg src={photo_src} className="best-seller-product-image" />
         </CardHeader>
         <CardBody className="best_seller-card-body">

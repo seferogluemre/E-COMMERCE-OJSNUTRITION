@@ -4,15 +4,14 @@
   .best_seller-card {
     width: 320px !important;
     height: 365px !important;
-    margin: 30px auto;
+    margin: 60px auto;
     border: 0px;
     text-align: center;
 
     .best_seller-card-header {
-      padding: 0px;
+      padding: 0 !important;
       border: none !important;
       width: 100% !important;
-
 
       .best-seller-product-image {
         width: 100% !important;
@@ -30,11 +29,12 @@
       font-size: 20px !important;
       font-weight: 600 !important;
     }
-    .best_seller-card_name{
+    .best_seller-card_name {
       font-size: 20px !important;
     }
-    .best_seller-card_title{
+    .best_seller-card_title {
       font-size: 15px !important;
+      margin: 15px 0px;
     }
   }
 }
@@ -43,5 +43,14 @@
   .best_seller_column {
     flex: 43% !important;
     width: 43% !important;
+    padding: 0px;
+    .best_seller-card {
+      margin: 2px;
+      margin-bottom: 20px;
+    }
+
+    .best_seller-card-header {
+      padding: 3px !important;
+    }
   }
 }

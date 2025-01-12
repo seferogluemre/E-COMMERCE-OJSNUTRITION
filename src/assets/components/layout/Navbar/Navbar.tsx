@@ -14,16 +14,14 @@ import { IoSearchOutline } from "react-icons/io5";
 function NavbarComp() {
   return (
     <>
-      <Navbar className="bg-body-tertiary px-0">
+      <Navbar className="bg-white px-0">
         <Container>
           <div className="d-flex align-items-center justify-content-between w-75">
             <GiHamburgerMenu className="fs-1 hamburger-menu m-1" />
-
             <NavbarBrand href="#" className="bg-transparent">
               <img src="/src/assets/images/Logo1.png" className="Navbar-Logo" />
             </NavbarBrand>
           </div>
-
           <NavbarToggle aria-controls="navbarScroll" className="d-lg-none" />
           <NavbarCollapse className="d-flex justify-content-end">
             <Form className="d-flex me-3" id="nav-search-form">

@@ -63,14 +63,14 @@ const BlazeSliderComponent = () => {
             <div className="text-start">
               <h1 className="fs-4">Gerçek Müşteri yorumları</h1>
             </div>
-          </div>
-          <div className="control-buttons d-flex align-items-center column-gap-3">
             <FiveStar />
-            <div className="controls">
-              <Button ref={prevButtonRef} className="blaze-prev">
+          </div>
+          <div className="control-buttons d-flex align-items-center  column-gap-3">
+            <div className="controls d-flex">
+              <Button ref={prevButtonRef} className="blaze-prev ">
                 <FaAngleLeft className="fs-3" />
               </Button>
-              <Button ref={nextButtonRef} className="blaze-next">
+              <Button ref={nextButtonRef} className="blaze-next ">
                 <FaAngleRight className="fs-3" />
               </Button>
             </div>

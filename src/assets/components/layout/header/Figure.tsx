@@ -17,7 +17,7 @@ function TwitchBanner() {
       <StyledBanner
         src="/src/assets/images/TwitchBanner.png"
         className="img-fluid w-100"
-        alt=""
+        alt="Twitch Banner Fotograf"
       />
     </>
   );
