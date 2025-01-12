@@ -1,5 +1,3 @@
-import { FaFacebook } from "react-icons/fa";
-import { BsInstagram } from "react-icons/bs";
 import { IoAddOutline, IoRemoveOutline } from "react-icons/io5";
 import FiveStar from "../FiveStars/FiveStar";
 import { useState } from "react";

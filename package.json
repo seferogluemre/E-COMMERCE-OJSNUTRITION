@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@4c/tsconfig": "^0.4.1",
     "blaze-slider": "^1.9.3",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",

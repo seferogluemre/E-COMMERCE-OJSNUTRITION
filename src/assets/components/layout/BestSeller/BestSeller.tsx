@@ -12,14 +12,14 @@ function BestSeller() {
 
   return (
     <>
-      <Container className="my-5 best-seller-container  " fluid>
+      <Container className="my-5 best-seller-container  ">
         <div className="text-center">
           <h1 className="fs-3">Çok Satanlar</h1>
         </div>
         <Row className="d-flex justify-content-center row-gap-lg-5 row-gap-4">
           {products?.map((data: BestSellerPropsCS, index: number) => (
             <div
-              className="col-lg-4 col-md-6 col-sm-6 col-xxl-2 d-flex justify-content-center best_seller_column"
+              className="col-lg-4 col-md-6 col-sm-6 col-xxl-2 flex-wrap d-flex justify-content-center best_seller_column"
               key={data.slug}
             >
               <BestSellerCard

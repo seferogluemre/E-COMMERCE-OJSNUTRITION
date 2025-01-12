@@ -4,15 +4,14 @@ import Header from "../../components/layout/header/Header";
 import TwitchBanner from "../../components/layout/header/Figure";
 import Categories from "../../components/layout/Categories/Categories";
 
-
 function HomePage() {
   return (
     <>
-        <Header />
-        <Categories />
-        <BestSeller />
-        <TwitchBanner />
-        <BlazeSlider />
+      <Header />
+      <Categories />
+      <BestSeller />
+      <TwitchBanner />
+      <BlazeSlider />
     </>
   );
 }
