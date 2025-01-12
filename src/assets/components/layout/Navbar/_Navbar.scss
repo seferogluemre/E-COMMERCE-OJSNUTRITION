@@ -5,11 +5,16 @@
 .hamburger-menu {
   display: none;
 }
+.custom-form-control:focus {
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
 @media (max-width: 576px) {
   #nav-dropdown,
   #nav-search-form {
     display: none !important;
   }
+
   .hamburger-menu {
     display: block;
   }
