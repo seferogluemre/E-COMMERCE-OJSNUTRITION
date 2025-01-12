@@ -5,17 +5,39 @@
 .hamburger-menu {
   display: none;
 }
+.cart-icon {
+  font-size: 35px !important;
+  display: none;
+}
+#custom-form-control {
+  display: none !important;
+}
 .custom-form-control:focus {
   box-shadow: none !important;
   border-color: transparent !important;
 }
+.badge {
+  font-size: 0.85rem !important;
+  width: 1.4rem;
+  display: none !important;
+  height: 1.4rem;
+}
+
 @media (max-width: 576px) {
   #nav-dropdown,
   #nav-search-form {
     display: none !important;
   }
-
+  .cart-icon,
+  .badge {
+    display: block !important;
+  }
   .hamburger-menu {
-    display: block;
+    display: block !important;
+  }
+}
+@media (max-width: 768px) {
+  #custom-form-control {
+    display: flex !important;
   }
 }

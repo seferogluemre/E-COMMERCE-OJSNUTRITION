@@ -45,12 +45,20 @@ function NavbarComp() {
               </Button>
             </div>
             <NavbarBrand>
-              <AiOutlineShoppingCart className="fs-1 text-primary" />
+              <div className="position-relative">
+                <AiOutlineShoppingCart className=" text-primary cart-icon" />
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger">
+                  0
+                </span>
+              </div>
             </NavbarBrand>
           </NavbarCollapse>
         </Container>
       </Navbar>
-      <Form className="d-flex rounded-4 mx-1 mb-2 align-items-center bg-body-secondary">
+      <Form
+        className="d-flex rounded-4 mx-1 mb-2 align-items-center bg-body-secondary"
+        id="custom-form-control"
+      >
         <IoSearchOutline className="fs-4" />
         <Form.Control
           type="search"
