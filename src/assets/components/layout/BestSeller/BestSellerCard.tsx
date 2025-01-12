@@ -1,6 +1,6 @@
 import { Card, CardBody, CardHeader, CardImg, CardText } from "react-bootstrap";
 import { BestSellerProps } from "../../type/type";
-import FiveStar from "../../FiveStars/FiveStar";
+import FiveStar from "../FiveStars/FiveStar";
 
 function BestSellerCard({
   name,

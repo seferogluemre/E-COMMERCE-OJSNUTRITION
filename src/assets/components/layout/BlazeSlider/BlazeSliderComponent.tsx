@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { FaAngleLeft } from "react-icons/fa";
 import { FaAngleRight } from "react-icons/fa6";
 import './BlazeSlider.scss'
-import FiveStar from "../../FiveStars/FiveStar";
+import FiveStar from "../FiveStars/FiveStar";
 import { Button } from "react-bootstrap";
 import CommentCard from "../CommentCard/CommentCard";
 
@@ -156,19 +156,19 @@ const BlazeSliderComponent = () => {
         <div className="blaze-container mt-5">
           <div className="blaze-track-container">
             <div className="blaze-track">
-            {
-              dummyCommentsData.map((review)=>(
-                <CommentCard 
-                  created_at={review.created_at}
-                  title={review.title}
-                  comment={review.comment}
-                  stars={review.stars}
-                  aroma={review.aroma}
-                  first_name={review.first_name}
-                  last_name={review.last_name}
-                />
-              ))
-            }
+              {
+                dummyCommentsData.map((review) => (
+                  <CommentCard
+                    created_at={review.created_at}
+                    title={review.title}
+                    comment={review.comment}
+                    stars={review.stars}
+                    aroma={review.aroma}
+                    first_name={review.first_name}
+                    last_name={review.last_name}
+                  />
+                ))
+              }
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import { FaFacebook } from 'react-icons/fa';
 import { BsInstagram } from 'react-icons/bs';
 import { IoAddOutline, IoRemoveOutline } from 'react-icons/io5';
-import FiveStar from '../../FiveStars/FiveStar';
+import FiveStar from '../FiveStars/FiveStar';
 import { useState } from 'react';
 
 interface FooterLink {
@@ -134,12 +134,12 @@ const Footer: React.FC = () => {
                 {/* Bottom Section */}
                 <div className=" border-muted pt-4 d-flex flex-column ">
                     <div className=" text-md-left">
-                        <p className='text-white opacity-50' style={{fontSize:"14px"}}>
-                        Copyright © - Tüm Hakları Saklıdır.
+                        <p className='text-white opacity-50' style={{ fontSize: "14px" }}>
+                            Copyright © - Tüm Hakları Saklıdır.
                         </p>
                     </div>
 
-                    
+
                 </div>
             </div>
         </footer>
