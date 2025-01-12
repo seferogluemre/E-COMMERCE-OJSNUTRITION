@@ -5,47 +5,68 @@ import {
   NavbarCollapse,
   Navbar,
   Form,
-  NavbarToggle,
 } from "react-bootstrap";
 import "./_Navbar.scss";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoSearchOutline } from "react-icons/io5";
+import { AiOutlineUser } from "react-icons/ai";
+import { GrCart } from "react-icons/gr";
+
 function NavbarComp() {
   return (
     <>
       <Navbar className="bg-white px-0">
         <Container>
-          <div className="d-flex align-items-center justify-content-between w-75">
+          <div
+            className="d-flex align-items-center justify-content-start "
+            id="navbar-left"
+          >
             <GiHamburgerMenu className="fs-1 hamburger-menu m-1" />
             <NavbarBrand href="#" className="bg-transparent">
-              <img src="/public/assets/Logo1.png" className="Navbar-Logo" />
+              <img src="/assets/Logo1.png" className="Navbar-Logo" />
             </NavbarBrand>
           </div>
-          <NavbarToggle aria-controls="navbarScroll" className="d-lg-none" />
-          <NavbarCollapse className="d-flex justify-content-end">
-            <Form className="d-flex me-3" id="nav-search-form">
-              <Form.Control
+
+          <div className="mx-5">
+            <Form className="d-flex rounded-4 align-items-center">
+              <input
                 type="search"
-                placeholder="Search"
+                placeholder="Aradıgınız ürünü yazınız...."
                 aria-label="Search"
+                id="search-input"
               />
-              <Button variant="secondary">Search</Button>
+              <button className="btn-search text-center">Ara</button>
             </Form>
-            <div className="dropdown" id="nav-dropdown">
+          </div>
+
+          <NavbarCollapse className="d-flex justify-content-center  column-gap-lg-3">
+            <div className="dropdown me-1" id="nav-dropdown-account">
               <Button
-                className="btn btn-secondary dropdown-toggle"
+                className="btn btn-secondary dropdown-toggle "
                 type="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
+                <AiOutlineUser className="fs-4" />
                 Hesap
               </Button>
             </div>
+            <div className="dropdown" id="nav-dropdown-cart">
+              <Button
+                className="btn btn-secondary dropdown-toggle "
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <GrCart className="fs-5" />
+                Sepetim
+              </Button>
+            </div>
             <NavbarBrand>
-              <div className="position-relative">
+              <div className="position-relative cart-icon-container">
                 <AiOutlineShoppingCart className=" text-primary cart-icon" />
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger">
+                <span className=" position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger">
                   0
                 </span>
               </div>

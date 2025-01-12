@@ -3,12 +3,12 @@ import "./Categories.scss";
 
 function Categories() {
   const caategoriesImagesArray = [
-    { categoriesPhoto: "/src/assets/images/categoriesImages/card1.png" },
-    { categoriesPhoto: "/src/assets/images/categoriesImages/card2.png" },
-    { categoriesPhoto: "/src/assets/images/categoriesImages/card3.png" },
-    { categoriesPhoto: "/src/assets/images/categoriesImages/card4.png" },
-    { categoriesPhoto: "/src/assets/images/categoriesImages/card5.png" },
-    { categoriesPhoto: "/src/assets/images/categoriesImages/card6.png" },
+    { categoriesPhoto: "/assets/categoriesImages/card1.png" },
+    { categoriesPhoto: "/assets/categoriesImages/card2.png" },
+    { categoriesPhoto: "/assets/categoriesImages/card3.png" },
+    { categoriesPhoto: "/assets/categoriesImages/card4.png" },
+    { categoriesPhoto: "/assets/categoriesImages/card5.png" },
+    { categoriesPhoto: "/assets/categoriesImages/card6.png" },
   ];
 
   return (
@@ -23,7 +23,6 @@ function Categories() {
               <img
                 src={category.categoriesPhoto}
                 className="img-fluid rounded-4"
-                alt=""
               />
             </div>
           ))}

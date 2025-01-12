@@ -13,7 +13,7 @@ function BestSeller() {
   return (
     <>
       <Container className="my-5 best-seller-container  ">
-        <div className="text-center">
+        <div className="text-center m-0">
           <h1 className="fs-3">Çok Satanlar</h1>
         </div>
         <Row className="d-flex justify-content-center row-gap-lg-5 row-gap-4">

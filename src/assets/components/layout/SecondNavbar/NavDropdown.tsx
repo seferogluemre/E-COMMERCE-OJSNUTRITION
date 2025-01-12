@@ -16,6 +16,9 @@ function NavDropdown() {
             Spor Gıdaları
           </a>
           <a href="#" className="dropdown-item">
+            Tüm ürünler
+          </a>
+          <a href="#" className="dropdown-item">
             Saglık
           </a>
           <a href="#" className="dropdown-item">
@@ -23,9 +26,6 @@ function NavDropdown() {
           </a>
           <a href="#" className="dropdown-item">
             Vitamin
-          </a>
-          <a href="#" className="dropdown-item">
-            Tüm Ürünler
           </a>
         </div>
       </div>

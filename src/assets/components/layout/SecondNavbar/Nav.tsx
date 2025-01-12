@@ -7,7 +7,7 @@ function Nav() {
       <Container fluid className="m-0" style={{ height: "35px" }} id="Nav">
         <div className="container px-2">
           <div className="row px-2">
-            <div className="col-4 d-flex column-gap-1 align-items-center justify-content-center">
+            <div className="col-4 d-flex column-gap-1 align-items-center justify-content-start">
               <img
                 src="/src/assets/images/icons/cargoIcon.png"
                 width={16}
@@ -18,7 +18,7 @@ function Nav() {
                 <strong>Aynı Gün kargo -</strong> 16:00'dan ÖNCEKİ SİPARİŞLERDE
               </span>
             </div>
-            <div className="col-4 d-flex column-gap-1 align-items-center justify-content-center">
+            <div className="col-4 d-flex column-gap-1 align-items-center justify-content-start">
               <img
                 src="/src/assets/images/icons/smileIcon.png"
                 width={16}
@@ -29,7 +29,7 @@ function Nav() {
                 <strong>ÜCRETSİZ KARGO</strong> - 100 TL ÜZERİ SİPARİŞLERDE
               </span>
             </div>
-            <div className="col-4 d-flex column-gap-1 align-items-center justify-content-center">
+            <div className="col-4 d-flex column-gap-1 align-items-center justify-content-start">
               <img
                 src="/src/assets/images/icons/securityIShopcon.png"
                 width={16}

@@ -14,10 +14,7 @@ function Header() {
     <>
       <div className="container-fluid mx-0 p-0 h-75">
         <div className="row mx-0 px-0">
-          <StyledImage
-            src="/src/assets/images/sliderImages/banner.jpeg"
-            className="img-fluid px-0"
-          />
+          <StyledImage src="/assets/banner.jpeg" className="img-fluid px-0" />
         </div>
       </div>
     </>
