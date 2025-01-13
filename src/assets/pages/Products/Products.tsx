@@ -13,8 +13,8 @@ import axios from "axios";
 
 function Products() {
   const { allProducts } = useLoaderData();
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
   const [products, setProducts] = useState(allProducts.data.results);
 
   useEffect(() => {
@@ -25,7 +25,6 @@ function Products() {
           const response = await axios.get(
             BASE_URL + `/products?limit=12&offset=${offset}`
           );
-
 
           if (response.data && Array.isArray(response.data.data.results)) {
             setProducts((prevProducts) => [

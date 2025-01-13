@@ -2,6 +2,15 @@ import { Container } from "react-bootstrap";
 import "./NavDropdown.scss";
 
 function NavDropdown() {
+  const Links = [
+    { Link: "Protein" },
+    { Link: "Spor Gıdaları" },
+    { Link: "Tüm ürünler" },
+    { Link: "Saglık" },
+    { Link: "Gıda" },
+    { Link: "Vitamin" },
+  ];
+
   return (
     <Container fluid className="bg-dark mx-0" id="NavDropdown">
       <div className="container">
@@ -9,24 +18,11 @@ function NavDropdown() {
           className="dropdown d-flex"
           style={{ color: "white", height: "40px", padding: "10px" }}
         >
-          <a href="/products" className="dropdown-item">
-            Protein
-          </a>
-          <a href="#" className="dropdown-item">
-            Spor Gıdaları
-          </a>
-          <a href="#" className="dropdown-item">
-            Tüm ürünler
-          </a>
-          <a href="#" className="dropdown-item">
-            Saglık
-          </a>
-          <a href="#" className="dropdown-item">
-            Gıda
-          </a>
-          <a href="#" className="dropdown-item">
-            Vitamin
-          </a>
+          {Links.map((link) => (
+            <a href="#" className="dropdown-item">
+              {link.Link}
+            </a>
+          ))}
         </div>
       </div>
     </Container>
