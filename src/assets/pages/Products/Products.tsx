@@ -1,5 +1,5 @@
 import { Container, Row } from "react-bootstrap";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { ProductListProp } from "../../components/type/type";
 import {
   BASE_URL,
@@ -13,6 +13,7 @@ import axios from "axios";
 
 function Products() {
   const { allProducts } = useLoaderData();
+  const navigate = useNavigate();
   const [page, setPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [products, setProducts] = useState(allProducts.data.results);
@@ -75,6 +76,7 @@ function Products() {
             <div
               className="col-xxl-3 col-lg-4 col-md-6 col-sm-6 my-3 product_list_card_column"
               key={product.id}
+              onClick={() => navigate("/products/" + product.slug)}
             >
               <ProductCard
                 key={product.id}
@@ -86,6 +88,7 @@ function Products() {
                 comment_count={product.comment_count}
                 id={product.id}
                 short_explanation={product.short_explanation}
+
               />
             </div>
           ))}
