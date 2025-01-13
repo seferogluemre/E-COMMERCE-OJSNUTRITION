@@ -1,12 +1,70 @@
 import { Container, Row } from "react-bootstrap";
 import { useLoaderData } from "react-router-dom";
 import { ProductListProp } from "../../components/type/type";
-import { PHOTO_URL } from "../../../services/api/products";
+import {
+  BASE_URL,
+  getAllProducts,
+  PHOTO_URL,
+} from "../../../services/api/products";
 import ProductCard from "./ProductCard";
 import "./_ProductCard.scss";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function Products() {
   const { allProducts } = useLoaderData();
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [products, setProducts] = useState(allProducts.data.results);
+
+  useEffect(() => {
+    const MoreProduct = async () => {
+      if (loading) {
+        const offset = getAllProducts(page, 12);
+        try {
+          const response = await axios.get(
+            BASE_URL + `/products?limit=12&offset=${offset}`
+          );
+
+          console.log("API Yanıtı:", response.data);
+
+          if (response.data && Array.isArray(response.data.data.results)) {
+            setProducts((prevProducts) => [
+              ...prevProducts,
+              ...response.data.data.results,
+            ]);
+          } else {
+            console.error(
+              "API yanıtı beklenilen formatta değil:",
+              response.data
+            );
+          }
+        } catch (error) {
+          console.error("API isteği sırasında bir hata oluştu:", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+    if (page > 1) {
+      MoreProduct();
+    }
+  }, [page, loading]);
+
+  const handleScroll = () => {
+    const scrollY = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    if (scrollY + windowHeight >= documentHeight - 100 && !loading) {
+      setLoading(true);
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
@@ -15,7 +73,7 @@ function Products() {
           <h1 className="fs-2">Tüm Ürünler</h1>
         </div>
         <Row>
-          {allProducts.data.results?.map((product: ProductListProp) => (
+          {products?.map((product: ProductListProp) => (
             <div
               className="col-xxl-3 col-lg-4 col-md-6 col-sm-6 my-3 product_list_card_column"
               key={product.id}
@@ -34,6 +92,11 @@ function Products() {
             </div>
           ))}
         </Row>
+        <div>
+          <div className="text-start">
+            <p>{products.length} ürün görüntüleniyor</p>
+          </div>
+        </div>
       </Container>
     </>
   );
