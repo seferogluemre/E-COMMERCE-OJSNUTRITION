@@ -88,6 +88,7 @@
 }
 
 @media (max-width: 576px) {
+
   #nav-dropdown,
   #nav-search-form {
     display: none !important;
@@ -123,6 +124,7 @@
     .cart-icon {
       display: block;
     }
+
     .badge {
       display: block !important;
     }
@@ -133,10 +135,12 @@
   #custom-form-control {
     display: flex !important;
   }
+
   .Navbar-Logo {
     position: relative !important;
     left: 180px;
   }
+
   #search-input,
   .btn-search {
     display: none !important;
