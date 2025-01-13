@@ -72,10 +72,16 @@ const BlazeSliderComponent = () => {
           </div>
           <div className="control-buttons d-flex align-items-center  column-gap-3">
             <div className="controls d-flex">
-              <Button ref={prevButtonRef} className="blaze-prev ">
+              <Button
+                ref={prevButtonRef}
+                className="blaze-prev btn bg-transparent"
+              >
                 <FaAngleLeft className="fs-3" />
               </Button>
-              <Button ref={nextButtonRef} className="blaze-next ">
+              <Button
+                ref={nextButtonRef}
+                className="blaze-next btn bg-transparent"
+              >
                 <FaAngleRight className="fs-3" />
               </Button>
             </div>

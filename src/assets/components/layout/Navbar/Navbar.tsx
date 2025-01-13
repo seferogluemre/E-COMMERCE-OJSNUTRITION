@@ -23,7 +23,7 @@ function NavbarComp() {
             id="navbar-left"
           >
             <GiHamburgerMenu className="fs-1 hamburger-menu m-1" />
-            <NavbarBrand href="#" className="bg-transparent">
+            <NavbarBrand href="/" className="bg-transparent">
               <img src="/assets/Logo1.png" className="Navbar-Logo" />
             </NavbarBrand>
           </div>

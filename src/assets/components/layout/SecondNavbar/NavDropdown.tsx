@@ -9,7 +9,7 @@ function NavDropdown() {
           className="dropdown d-flex"
           style={{ color: "white", height: "40px", padding: "10px" }}
         >
-          <a href="#" className="dropdown-item">
+          <a href="/products" className="dropdown-item">
             Protein
           </a>
           <a href="#" className="dropdown-item">

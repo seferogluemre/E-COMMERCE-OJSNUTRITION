@@ -9,10 +9,19 @@
     border: 0px;
     text-align: center;
 
+    &:hover {
+      .best-seller-product-image {
+        transform: scale(1.07);
+        cursor: pointer;
+      }
+    }
+
     .best_seller-card-header {
       padding: 0 !important;
       border: none !important;
       width: 100% !important;
+      position: relative;
+      overflow: hidden;
     }
 
     .best_seller-card-body {
@@ -38,6 +47,7 @@
 .best-seller-product-image {
   width: 100% !important;
   object-fit: cover !important;
+  transition: transform 0.3s ease-out;
   height: 300px;
 }
 

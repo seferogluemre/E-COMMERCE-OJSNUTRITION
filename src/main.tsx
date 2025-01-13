@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { HomePage, RootPage } from "./assets/pages/index";
+import { HomePage, ProductsPage, RootPage } from "./assets/pages/index";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { loader } from "./assets/components/layout/BestSeller/loader";
@@ -15,6 +15,11 @@ const routes = createBrowserRouter([
         index: true,
         loader: loader,
         element: <HomePage />,
+      },
+      {
+        path: "/products",
+        // loader:"",
+        element: <ProductsPage />,
       },
     ],
   },
