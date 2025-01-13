@@ -3,9 +3,7 @@ import { useLoaderData } from "react-router-dom";
 import BestSellerCard from "./BestSellerCard";
 import { BestSellerPropsCS } from "../../type/type";
 import "./_BestSeller.scss";
-
-export const base_url = "https://fe1111.projects.academy.onlyjs.com/api/v1";
-export const Photo_Url = "https://fe1111.projects.academy.onlyjs.com";
+import { PHOTO_URL } from "../../../../services/api/products";
 
 function BestSeller() {
   const { products } = useLoaderData();
@@ -26,7 +24,7 @@ function BestSeller() {
                 slug={data.slug}
                 key={index}
                 name={data.name}
-                photo_src={Photo_Url + data.photo_src}
+                photo_src={PHOTO_URL + data.photo_src}
                 short_explanation={data.short_explanation.toUpperCase()}
                 average_star={data.average_star}
                 comment_count={data.comment_count}

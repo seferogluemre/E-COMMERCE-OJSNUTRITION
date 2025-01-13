@@ -25,3 +25,14 @@ export interface BestSellerProps {
   comment_count?: number;
   average_star: number;
 }
+
+export interface ProductListProp {
+  average_star: number;
+  comment_count: number;
+  id: number;
+  name: string;
+  photo_src: string;
+  price_info: PriceInfo;
+  short_explanation: string;
+  slug: string;
+}

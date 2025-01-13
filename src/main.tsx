@@ -5,6 +5,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { loader } from "./assets/components/layout/BestSeller/loader";
 import ErrorPage from "./assets/pages/error-page";
+import { allProductLoader } from "./assets/pages/Products/loader";
+
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -18,7 +20,7 @@ const routes = createBrowserRouter([
       },
       {
         path: "/products",
-        // loader:"",
+        loader: allProductLoader,
         element: <ProductsPage />,
       },
     ],
