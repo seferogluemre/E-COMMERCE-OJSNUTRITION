@@ -1,4 +1,4 @@
-import { ReviewsProps } from "../../components/layout/BlazeSlider/BlazeSliderComponent";
+import { ReviewsProps } from "../../assets/components/layout/BlazeSlider/BlazeSliderComponent";
 
 export const dummyCommentsData: ReviewsProps[] = [
   {

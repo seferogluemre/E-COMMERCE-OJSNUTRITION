@@ -6,8 +6,8 @@ import {
   getAllProducts,
   PHOTO_URL,
 } from "../../../services/api/products";
-import ProductCard from "./ProductCard";
-import "./_ProductCard.scss";
+import ProductCard from "../../components/layout/ProductCard/ProductCard";
+import "../../components/layout/ProductCard/_ProductCard.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -26,7 +26,6 @@ function Products() {
             BASE_URL + `/products?limit=12&offset=${offset}`
           );
 
-          console.log("API Yanıtı:", response.data);
 
           if (response.data && Array.isArray(response.data.data.results)) {
             setProducts((prevProducts) => [

@@ -7,7 +7,7 @@ import "./BlazeSlider.scss";
 import FiveStar from "../FiveStars/FiveStar";
 import { Button } from "react-bootstrap";
 import CommentCard from "../CommentCard/CommentCard";
-import { dummyCommentsData } from "../../../store/data/CommentsDummyData";
+import { dummyCommentsData } from "../../../../store/data/CommentsDummyData";
 
 export interface ReviewsProps {
   stars: string;
