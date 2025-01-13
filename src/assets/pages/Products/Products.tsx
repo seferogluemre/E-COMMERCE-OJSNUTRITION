@@ -3,6 +3,7 @@ import { useLoaderData } from "react-router-dom";
 import { ProductListProp } from "../../components/type/type";
 import { PHOTO_URL } from "../../../services/api/products";
 import ProductCard from "./ProductCard";
+import "./_ProductCard.scss";
 
 function Products() {
   const { allProducts } = useLoaderData();
@@ -10,10 +11,13 @@ function Products() {
   return (
     <>
       <Container className="my-5">
+        <div className="text-center">
+          <h1 className="fs-2">Tüm Ürünler</h1>
+        </div>
         <Row>
           {allProducts.data.results?.map((product: ProductListProp) => (
             <div
-              className="col-xxl-3 col-lg-4 col-md-6 col-sm-6 my-3"
+              className="col-xxl-3 col-lg-4 col-md-6 col-sm-6 my-3 product_list_card_column"
               key={product.id}
             >
               <ProductCard
