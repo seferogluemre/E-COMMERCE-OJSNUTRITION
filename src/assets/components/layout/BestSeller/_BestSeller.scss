@@ -76,11 +76,18 @@
     }
   }
 }
+@media (min-width: 576px) and (max-width: 1400px) {
+  .best-seller-product-image {
+    width: 100% !important;
+    height: 280px !important;
+    object-fit: cover !important;
+  }
+}
 
 @media (min-width: 1400px) {
   .best-seller-product-image {
     width: 105% !important;
     object-fit: cover !important;
-    height: 250px;
+    height: 200px;
   }
 }

@@ -18,8 +18,8 @@ function NavDropdown() {
           className="dropdown d-flex"
           style={{ color: "white", height: "40px", padding: "10px" }}
         >
-          {Links.map((link) => (
-            <a href="#" className="dropdown-item">
+          {Links.map((link, index) => (
+            <a href={link.to} className="dropdown-item" key={index}>
               {link.Link}
             </a>
           ))}

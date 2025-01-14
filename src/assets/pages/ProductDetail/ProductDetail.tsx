@@ -1,55 +1,67 @@
-import { Container, Row, Col } from "react-bootstrap";
-import { useParams } from "react-router-dom";
-import useFetch from "../../../hooks/UseFetch";
-import { Product } from "../../../services/api/products";
+import { Container, Row } from "react-bootstrap";
+import { useLoaderData } from "react-router-dom";
+
+interface NutritionalContent {
+  ingredients: { aroma: string; value: string[] }[];
+  nutrition_facts: {
+    ingredients: { name: string; amounts: string[] }[];
+    portion_sizes: string[];
+  };
+  amino_acid_facts?: {
+    ingredients: { name: string; amounts: string[] }[];
+    portion_sizes: string[];
+  };
+}
+
+interface Variant {
+  id: string;
+  size: {
+    gram: number;
+    pieces: number;
+    total_services: number;
+  };
+  aroma: string;
+  price: {
+    profit: number;
+    total_price: number;
+    discounted_price: number;
+    price_per_servings: number;
+    discount_percentage: number;
+  };
+  photo_src: string;
+  is_available: boolean;
+}
+
+interface Product {
+  id: string;
+  name: string;
+  slug: string;
+  short_explanation: string;
+  explanation: {
+    usage: string;
+    features: string;
+    description: string;
+    nutritional_content: NutritionalContent;
+  };
+  main_category_id: string;
+  sub_category_id: string;
+  tags: string[];
+  variants: Variant[];
+  comment_count: number;
+  average_star: number;
+}
 
 function ProductDetail() {
-  const { productSlug } = useParams();
-  const { loading, error, data }: { data: Product | null } = useFetch(
-    String(productSlug)
-  );
+  // const { productSlug } = useParams();
+  // // const { loading, error, data }: { data: Product | null } = useFetch(
+  // //   String(productSlug)
+  // // );
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!data) return <div>No product found.</div>;
+  const { product } = useLoaderData() as Product[];
 
   return (
     <Container className="my-5">
-      <Row>
-        {/* <Col md={6}>
-          {hasVariants && (
-            <img
-              src={photo_url + selectedVariant.photo_src}
-              alt={data.name}
-              className="img-fluid"
-            />
-          )}
-        </Col>
-        <Col md={6}>
-          <h1>{data.name}</h1>
-          <p>{data.short_explanation}</p>
-          <h3>Açıklama</h3>
-          <p>{data.explanation.description}</p>
-          <h3>Özellikler</h3>
-          <p>{data.explanation.features}</p>
-          <h3>Fiyatlar</h3>
-          {hasVariants ? (
-            data.variants.map((variant) => (
-              <div key={variant.id}>
-                <h4>
-                  {variant.aroma} - {variant.size.gram}g
-                </h4>
-                <p>Fiyat: {variant.price.total_price}₺</p>
-                <p>İndirimli Fiyat: {variant.price.discounted_price}₺</p>
-                <p>Servis Başına Fiyat: {variant.price.price_per_servings}₺</p>
-                <p>{variant.is_available ? "Stokta Var" : "Stokta Yok"}</p>
-              </div>
-            ))
-          ) : (
-            <p>Bu ürün için mevcut varyant yok.</p>
-          )}
-        </Col> */}
-      </Row>
+      <Row></Row>
     </Container>
   );
 }

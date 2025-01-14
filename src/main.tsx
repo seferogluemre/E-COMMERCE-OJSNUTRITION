@@ -1,11 +1,17 @@
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { HomePage, ProductDetailPage, ProductsPage, RootPage } from "./assets/pages/index";
+import {
+  HomePage,
+  ProductDetailPage,
+  ProductsPage,
+  RootPage,
+} from "./assets/pages/index";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { loader } from "./assets/components/layout/BestSeller/loader";
 import ErrorPage from "./assets/pages/error-page";
 import { allProductLoader } from "./assets/pages/Products/loader";
+import { ProductDetailLoader } from "./assets/pages/ProductDetail/ProductDetailLoader";
 
 const routes = createBrowserRouter([
   {
@@ -25,8 +31,9 @@ const routes = createBrowserRouter([
       },
       {
         path: "/products/:productSlug",
-        element: <ProductDetailPage />
-      }
+        element: <ProductDetailPage />,
+        loader: ProductDetailLoader,
+      },
     ],
   },
 ]);

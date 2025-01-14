@@ -1,5 +1,5 @@
 import { Container, Row } from "react-bootstrap";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import BestSellerCard from "./BestSellerCard";
 import { BestSellerPropsCS } from "../../type/type";
 import "./_BestSeller.scss";
@@ -7,6 +7,7 @@ import { PHOTO_URL } from "../../../../services/api/products";
 
 function BestSeller() {
   const { products } = useLoaderData();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -19,6 +20,7 @@ function BestSeller() {
             <div
               className="col-lg-4 col-md-6 col-sm-6 col-xxl-2 flex-wrap d-flex justify-content-center best_seller_column"
               key={data.slug}
+              onClick={() => navigate(`/products/${data.slug}`)}
             >
               <BestSellerCard
                 slug={data.slug}
