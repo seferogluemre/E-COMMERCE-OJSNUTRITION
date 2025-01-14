@@ -5,8 +5,7 @@ import { PHOTO_URL } from "../../../services/api/products";
 import "./_ProductDetail.scss";
 import FiveStar from "../../components/layout/FiveStars/FiveStar";
 import ProductComment from "./ProductComment";
-import { FaMinus, FaPlus } from "react-icons/fa";
-import { FiMic, FiMinus } from "react-icons/fi";
+import { FaMinus } from "react-icons/fa";
 import { GoPlus } from "react-icons/go";
 import { MdShoppingCart } from "react-icons/md";
 import ProductTrust from "./ProductTrust";
@@ -43,7 +42,7 @@ interface Variant {
   is_available: boolean;
 }
 
-interface Product {
+export interface Product {
   id: string;
   name: string;
   slug: string;
