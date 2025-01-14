@@ -7,8 +7,14 @@ export async function ProductDetailLoader({ params }: LoaderFunctionArgs) {
     const response = await axios.get(
       BASE_URL + `/products/${params.productSlug}`
     );
+    const bestSellerResponse = await axios.get(
+      BASE_URL + "/products/best-sellers"
+    );
     console.log(response.data.data);
-    return { product: response.data.data };
+    return {
+      product: response.data.data,
+      bestSeller: bestSellerResponse.data.data,
+    };
   } catch (error) {
     alert("ürün detay hatası" + error);
   }

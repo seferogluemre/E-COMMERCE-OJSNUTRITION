@@ -56,6 +56,27 @@ $transition-speed: 0.3s;
     height: 65px;
     padding: 5px;
   }
+  .count-box {
+    width: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #919191 !important;
+    border-radius: 5px;
+    .product-counter-btn {
+      border: 1px solid #bebebe;
+      width: 32px;
+      background-color: #d6d6d6 !important;
+      height: 100%;
+    }
+  }
+  .add-to-cart-btn {
+    width: 350px;
+    font-size: 20px;
+    height: 60px;
+    background-color: #000000;
+    color: #fff;
+  }
 }
 
 // Styles
@@ -211,6 +232,17 @@ $transition-speed: 0.3s;
         line-height: 1.6;
         color: $text-color;
       }
+    }
+  }
+}
+
+.properties {
+  .accordion-header {
+    border: 0 !important; // Çerçeveyi kaldır
+    // ... existing code ...
+
+    .accordion-body {
+      border: 0 !important; // Çerçeveyi kaldır
     }
   }
 }

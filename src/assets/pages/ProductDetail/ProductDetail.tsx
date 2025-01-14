@@ -1,11 +1,16 @@
-import { useState } from "react";
-import { Button, Container, Row } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Accordion, Container, Row } from "react-bootstrap";
 import { useLoaderData } from "react-router-dom";
 import { PHOTO_URL } from "../../../services/api/products";
 import "./_ProductDetail.scss";
 import FiveStar from "../../components/layout/FiveStars/FiveStar";
-import { FaStar } from "react-icons/fa";
-import { dummyCommentsData } from "../../../store/data/CommentsDummyData";
+import ProductComment from "./ProductComment";
+import { FaMinus, FaPlus } from "react-icons/fa";
+import { FiMic, FiMinus } from "react-icons/fi";
+import { GoPlus } from "react-icons/go";
+import { MdShoppingCart } from "react-icons/md";
+import ProductTrust from "./ProductTrust";
+import BestSeller from "../../components/layout/BestSeller/BestSeller";
 
 interface NutritionalContent {
   ingredients: { aroma: string; value: string[] }[];
@@ -62,7 +67,12 @@ interface ColorProps {
 }
 
 function ProductDetail() {
-  const { product } = useLoaderData();
+  const { product, bestSeller } = useLoaderData();
+  const [count, setCount] = useState<number>(0);
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // Sayfa yüklendiğinde en üstte kaydır
+  }, []);
 
   const [productState, setProductState] = useState<Product[]>(
     Array.isArray(product) ? product : [product]
@@ -86,43 +96,6 @@ function ProductDetail() {
     Muhallebi: "#F5E3D7",
     Ahududu: "#D32F2F",
     Şeftali: "#FFB07C", //
-  };
-
-  const reviews = dummyCommentsData;
-  const averageRating =
-    reviews.reduce((acc, review) => acc + parseInt(review.stars), 0) /
-    reviews.length;
-  const reviewsPerPage = 5;
-  const [currentPage, setCurrentPage] = useState(1);
-  const currentReviews = reviews.slice(
-    (currentPage - 1) * reviewsPerPage,
-    currentPage * reviewsPerPage
-  );
-
-  const ratingDistribution = Array.from({ length: 5 }, (_, index) => {
-    const stars = index + 1;
-    const count = reviews.filter(
-      (review) => parseInt(review.stars) === stars
-    ).length;
-    const percentage = (count / reviews.length) * 100;
-    return { stars, count, percentage };
-  });
-
-  const pageCount = Math.ceil(reviews.length / reviewsPerPage);
-
-  const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const getVisiblePages = () => {
-    const visiblePages = [];
-    const startPage = Math.max(1, currentPage - 2);
-    const endPage = Math.min(pageCount, startPage + 4);
-
-    for (let i = startPage; i <= endPage; i++) {
-      visiblePages.push(i);
-    }
-    return visiblePages;
   };
 
   return (
@@ -201,115 +174,139 @@ function ProductDetail() {
                   )}
                 </div>
               </div>
-              <div className="cart-container">
-                <div className="d-flex">
+              <hr />
+              <div className="cart-container py-2">
+                <div className="  align-items-center justify-content-between">
                   {
-                    <h1 className="fs-2">
-                      {product.variants[1].price.total_price}TL
-                    </h1>
+                    <div className="d-flex justify-content-between">
+                      <h1 className="fs-2">
+                        {product.variants[1].price.total_price}TL
+                      </h1>
+                      <p>{product.variants[0].size.total_services}Servis</p>
+                    </div>
                   }
+                </div>
+                <div className="d-flex pt-2 justify-content-between">
+                  <div className="count-box">
+                    <button
+                      onClick={() => setCount((count) => count + 1)}
+                      className="product-counter-btn"
+                    >
+                      <GoPlus />
+                    </button>
+                    <span>{count}</span>
+                    <button
+                      onClick={() => setCount((count) => count - 1)}
+                      className="product-counter-btn"
+                    >
+                      <FaMinus />
+                    </button>
+                  </div>
+                  <div className="cart">
+                    <button className="add-to-cart-btn ">
+                      <MdShoppingCart className="fs-3" />
+                      SEPETE EKLE
+                    </button>
+                  </div>
+                </div>
+                <ProductTrust />
+              </div>
+              <hr />
+              <div className="properties pt-1">
+                <div className="text-start pb-3">
+                  <span>Son Kullanma Tarihi: 07.2025</span>
+                </div>
+                <div className="accordion-container">
+                  <Accordion className="accordion border-0">
+                    <Accordion.Item eventKey="0" className="border-0">
+                      <Accordion.Header className="accordion-header">
+                        Özellikler
+                      </Accordion.Header>
+                      <Accordion.Body className="accordion-body">
+                        {product.explanation.features}
+                      </Accordion.Body>
+                    </Accordion.Item>
+
+                    <Accordion.Item eventKey="1" className="border-0">
+                      <Accordion.Header className="accordion-header">
+                        Besin içerigi
+                      </Accordion.Header>
+                      <Accordion.Body className="accordion-body">
+                        <div className="d-flex justify-content-between">
+                          <span className="fs-5">Besin degeri</span>{" "}
+                          {`${product.variants[0].size.gram}gram,  ${product.variants[0].size.total_services} servis`}
+                        </div>
+                        <div className="list pt-4">
+                          {product.explanation.nutritional_content.nutrition_facts.ingredients.map(
+                            (data, index) => (
+                              <div
+                                className="d-flex mb-1 justify-content-between"
+                                key={index}
+                              >
+                                <li className="list-unstyled">{data.name}</li>
+                                <li className="list-unstyled">
+                                  {data.amounts}
+                                </li>
+                              </div>
+                            )
+                          )}
+                        </div>
+                        <div className="features-list pt-3">
+                          {product.explanation.nutritional_content.ingredients.map(
+                            (aroma, index) => (
+                              <p className="" key={index}>
+                                <strong className="fs-6 text-danger">
+                                  {aroma.aroma}:{" "}
+                                </strong>
+                                <span>{aroma.value}</span>
+                              </p>
+                            )
+                          )}
+                        </div>
+                        <div className="amino-acid-facts-list">
+                          {
+                            <div className="list pt-4">
+                              {product.explanation.nutritional_content.amino_acid_facts?.ingredients.map(
+                                (data, index) => (
+                                  <div
+                                    className="d-flex mb-1 justify-content-between"
+                                    key={index}
+                                  >
+                                    <li className="list-unstyled">
+                                      {data.name}
+                                    </li>
+                                    <li className="list-unstyled">
+                                      {data.amounts}
+                                    </li>
+                                  </div>
+                                )
+                              )}
+                            </div>
+                          }
+                        </div>
+                      </Accordion.Body>
+                    </Accordion.Item>
+
+                    <Accordion.Item eventKey="2" className="border-0">
+                      <Accordion.Header className="accordion-header">
+                        Kullanım Şekli
+                      </Accordion.Header>
+                      <Accordion.Body className="accordion-body">
+                        {product.explanation.usage}
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Accordion>
                 </div>
               </div>
             </div>
           </div>
         ))}
       </Row>
-      <Container className=" product-comments-detail-container pt-5">
-        <div className="product-reviews">
-          <div className="overall-rating">
-            <div className="rating-summary">
-              <h2 className="average-rating">{averageRating.toFixed(1)}</h2>
-              <div className="star-rating">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <FaStar
-                    key={star}
-                    filled={star <= Math.round(averageRating)}
-                    large={true}
-                  />
-                ))}
-              </div>
-              <p className="total-reviews">{reviews.length} YORUMA GÖRE</p>
-            </div>
-            <div className="rating-distribution">
-              {ratingDistribution.map((rating) => (
-                <div key={rating.stars} className="rating-bar">
-                  <span className="star-count">
-                    {rating.stars} <FaStar filled={true} />
-                  </span>
-                  <div className="progress-bar">
-                    <div
-                      className="progress"
-                      style={{ width: `${rating.percentage}%` }}
-                    ></div>
-                  </div>
-                  <span className="review-count">({rating.count})</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="review-list">
-            {currentReviews.map((review, index) => (
-              <div key={index} className="review-card">
-                <div className="review-header">
-                  <div>
-                    <div className="star-rating">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <FaStar
-                          key={star}
-                          filled={star <= parseInt(review.stars)}
-                        />
-                      ))}
-                    </div>
-                    <span className="verified-buyer">DOĞRULANMIŞ SATICI</span>
-                    <h3 className="reviewer-name">
-                      {review.first_name} {review.last_name}
-                    </h3>
-                  </div>
-                  <span className="review-date">
-                    {new Date(review.created_at).toLocaleDateString("tr-TR")}
-                  </span>
-                </div>
-                <p className="review-content">{review.comment}</p>
-              </div>
-            ))}
-          </div>
-          <div className="pagination pt-3">
-            <Row className="d-flex justify-content-center">
-              <div className="pagination d-flex justify-content-center">
-                {currentPage > 1 && (
-                  <Button
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    className="mx-1"
-                  >
-                    &lt;
-                  </Button>
-                )}
-                {getVisiblePages().map((page) => (
-                  <Button
-                    key={page}
-                    className={`mx-1 ${currentPage === page ? "active" : ""}`}
-                    onClick={() => handlePageChange(page)}
-                    style={{
-                      backgroundColor:
-                        currentPage === page ? "blue" : "transparent",
-                      color: currentPage === page ? "white" : "black",
-                    }}
-                  >
-                    {page}
-                  </Button>
-                ))}
-                {currentPage < pageCount && (
-                  <Button
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    className="mx-1"
-                  >
-                    &gt;
-                  </Button>
-                )}
-              </div>
-            </Row>
-          </div>
-        </div>
+      <Container className="mt-5">
+        <ProductComment />
+      </Container>
+      <Container>
+        <BestSeller best_seller={bestSeller} />
       </Container>
     </Container>
   );
