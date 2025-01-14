@@ -304,7 +304,7 @@ function ProductDetail() {
       <Container className="mt-5">
         <ProductComment />
       </Container>
-      <Container>
+      <Container className="pb-4">
         <BestSeller best_seller={bestSeller} />
       </Container>
     </Container>

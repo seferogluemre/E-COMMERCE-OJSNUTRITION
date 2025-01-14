@@ -17,7 +17,7 @@ const StyledBanner = styled.img`
 function TwitchBanner() {
   return (
     <>
-      <div className="figure-container">
+      <div className="figure-container pt-4">
         <StyledBanner
           src="/assets/TwitchBanner.png"
           className="img-fluid "

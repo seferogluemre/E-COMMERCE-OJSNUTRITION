@@ -6,7 +6,7 @@ import "./_BestSeller.scss";
 import { PHOTO_URL } from "../../../../services/api/products";
 
 const WithBestSeller = (WrappedComponent) => {
-  return (props: { best_seller?: any }) => {
+  return (props: { best_seller }) => {
     const { best_seller } = props;
     const products = useLoaderData();
 
@@ -19,14 +19,16 @@ const WithBestSeller = (WrappedComponent) => {
 function BestSeller({ best_seller }) {
   const navigate = useNavigate();
 
+  const dataToDisplay = Array.isArray(best_seller) ? best_seller : [];
+
   return (
     <Container className="my-5 best-seller-container">
       <div className="text-center m-0">
         <h1 className="fs-3">Çok Satanlar</h1>
       </div>
       <Row className="d-flex justify-content-center row-gap-lg-5 row-gap-4">
-        {best_seller &&
-          best_seller.map((data: BestSellerPropsCS, index: number) => (
+        {dataToDisplay.length > 0 ? (
+          dataToDisplay.map((data: BestSellerPropsCS, index: number) => (
             <div
               className="col-lg-4 col-md-6 col-sm-6 col-xxl-2 flex-wrap d-flex justify-content-center best_seller_column"
               key={data.slug}
@@ -43,10 +45,14 @@ function BestSeller({ best_seller }) {
                 price_info={data.price_info}
               />
             </div>
-          ))}
+          ))
+        ) : (
+          <div className="text-center">Ürün bulunamadı.</div>
+        )}
       </Row>
     </Container>
   );
 }
 
-export default WithBestSeller(BestSeller);
+const BestSellerWithWrapper = WithBestSeller(BestSeller);
+export default BestSellerWithWrapper;
