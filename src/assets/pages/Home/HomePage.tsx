@@ -7,7 +7,6 @@ import { useLoaderData } from "react-router-dom";
 
 function HomePage() {
   const { products } = useLoaderData();
-
   return (
     <>
       <Header />

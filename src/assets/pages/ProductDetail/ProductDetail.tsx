@@ -70,7 +70,7 @@ function ProductDetail() {
   const [count, setCount] = useState<number>(0);
 
   useEffect(() => {
-    window.scrollTo(0, 0); // Sayfa yüklendiğinde en üstte kaydır
+    window.scrollTo(0, 0);
   }, []);
 
   const [productState, setProductState] = useState<Product[]>(
@@ -213,7 +213,7 @@ function ProductDetail() {
               <hr />
               <div className="properties pt-1">
                 <div className="text-start pb-3">
-                  <span>Son Kullanma Tarihi: 07.2025</span>
+                  <span>Son kullanma tarihi: 07.2025</span>
                 </div>
                 <div className="accordion-container">
                   <Accordion className="accordion border-0">

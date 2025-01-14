@@ -7,6 +7,7 @@ export async function ProductDetailLoader({ params }: LoaderFunctionArgs) {
     const response = await axios.get(
       BASE_URL + `/products/${params.productSlug}`
     );
+    console.log(response.data.data);
     const bestSellerResponse = await axios.get(
       BASE_URL + "/products/best-sellers"
     );

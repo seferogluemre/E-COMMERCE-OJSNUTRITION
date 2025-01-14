@@ -3,7 +3,7 @@ import { BASE_URL } from "../../../services/api/products";
 
 export async function allProductLoader() {
   try {
-    const response = await axios.get(BASE_URL + `/products?offset=0&limit=12`);
+    const response = await axios.get(BASE_URL + `/products/?offset=0&limit=12`);
     return { allProducts: response.data };
   } catch (error) {
     alert("Hata tespit edildi:" + (error as Error).message);
