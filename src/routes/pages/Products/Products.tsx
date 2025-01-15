@@ -1,13 +1,13 @@
 import { Container, Row } from "react-bootstrap";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { ProductListProp } from "../../components/type/type";
+import { ProductListProp } from "../../../assets/components/type/type";
 import {
   BASE_URL,
   getAllProducts,
   PHOTO_URL,
 } from "../../../services/api/products";
-import ProductCard from "../../components/layout/ProductCard/ProductCard";
-import "../../components/layout/ProductCard/_ProductCard.scss";
+import ProductCard from "../../../assets/components/layout/ProductCard/ProductCard";
+import "../../../assets/components/layout/ProductCard/_ProductCard.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
 

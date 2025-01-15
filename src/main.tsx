@@ -5,13 +5,13 @@ import {
   ProductDetailPage,
   ProductsPage,
   RootPage,
-} from "./assets/pages/index";
+} from "./routes/pages/index";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { loader } from "./assets/components/layout/BestSeller/loader";
-import ErrorPage from "./assets/pages/error-page";
-import { allProductLoader } from "./assets/pages/Products/loader";
-import { ProductDetailLoader } from "./assets/pages/ProductDetail/ProductDetailLoader";
+import ErrorPage from "./routes/pages/error-page";
+import { allProductLoader } from "./routes/pages/Products/loader";
+import { ProductDetailLoader } from "./routes/pages/ProductDetail/ProductDetailLoader";
 
 const routes = createBrowserRouter([
   {

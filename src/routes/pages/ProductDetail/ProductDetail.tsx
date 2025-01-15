@@ -3,13 +3,13 @@ import { Accordion, Container, Row } from "react-bootstrap";
 import { useLoaderData } from "react-router-dom";
 import { PHOTO_URL } from "../../../services/api/products";
 import "./_ProductDetail.scss";
-import FiveStar from "../../components/layout/FiveStars/FiveStar";
+import FiveStar from "../../../assets/components/layout/FiveStars/FiveStar";
 import ProductComment from "./ProductComment";
 import { FaMinus } from "react-icons/fa";
 import { GoPlus } from "react-icons/go";
 import { MdShoppingCart } from "react-icons/md";
 import ProductTrust from "./ProductTrust";
-import BestSeller from "../../components/layout/BestSeller/BestSeller";
+import BestSeller from "../../../assets/components/layout/BestSeller/BestSeller";
 
 interface NutritionalContent {
   ingredients: { aroma: string; value: string[] }[];
