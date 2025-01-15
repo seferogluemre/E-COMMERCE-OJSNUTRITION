@@ -1,6 +1,7 @@
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {
+  ContactPage,
   HomePage,
   ProductDetailPage,
   ProductsPage,
@@ -34,6 +35,7 @@ const routes = createBrowserRouter([
         element: <ProductDetailPage />,
         loader: ProductDetailLoader,
       },
+      
     ],
   },
 ]);
