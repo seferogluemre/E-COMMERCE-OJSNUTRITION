@@ -16,8 +16,8 @@ const footerData: FooterSection[] = [
   {
     title: "OJSNUTRİTİON",
     links: [
-      { title: "İletişim", href: "#" },
-      { title: "Hakkımızda", href: "#" },
+      { title: "İletişim", href: "/contact" },
+      { title: "Hakkımızda", href: "/about" },
       { title: "Sıkça Sorulan Sorular", href: "#" },
       { title: "KVKK", href: "#" },
       { title: "Çalışma İlkelerimiz", href: "#" },
@@ -44,8 +44,8 @@ const footerData: FooterSection[] = [
   {
     title: "Popüler Ürünler",
     links: [
-      { title: "Whey Protein", href: "#" },
-      { title: "Cream of Rice", href: "#" },
+      { title: "Whey Protein", href: "/products/whey-protein" },
+      { title: "Cream of Rice", href: "/products/cream-of-rice"},
       { title: "Creatine", href: "#" },
       { title: "BCAA+", href: "#" },
       { title: "Pre-Workout", href: "#" },
