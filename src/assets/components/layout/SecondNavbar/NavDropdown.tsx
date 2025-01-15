@@ -3,12 +3,12 @@ import "./NavDropdown.scss";
 
 function NavDropdown() {
   const Links = [
-    { Link: "Protein", to: "" },
+    { Link: "Protein", to: "/" },
     { Link: "Spor Gıdaları", to: "" },
     { Link: "Tüm ürünler", to: "/products" },
-    { Link: "Saglık", to: "" },
-    { Link: "Gıda", to: "" },
-    { Link: "Vitamin", to: "" },
+    { Link: "Saglık", to: "/" },
+    { Link: "Gıda", to: "/" },
+    { Link: "Vitamin", to: "/" },
   ];
 
   return (

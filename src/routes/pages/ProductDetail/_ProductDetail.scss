@@ -206,7 +206,6 @@ $transition-speed: 0.3s;
 
         .verified-buyer {
           display: inline-block;
-          background-color: #e8f5e9;
           color: #2e7d32;
           font-size: 14px;
           padding: 4px 8px;
@@ -243,6 +242,22 @@ $transition-speed: 0.3s;
 
     .accordion-body {
       border: 0 !important; // Çerçeveyi kaldır
+    }
+  }
+}
+
+
+@media (max-width:576px){
+  .add-to-cart-btn{
+    width: 200px !important; 
+  }
+
+  .review-header{
+    display: flex;
+    flex-direction: column;
+
+    .verified-buyer{
+      font-size: 15px !important;
     }
   }
 }

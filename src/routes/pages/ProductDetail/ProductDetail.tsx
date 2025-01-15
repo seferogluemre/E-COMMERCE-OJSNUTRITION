@@ -70,8 +70,9 @@ function ProductDetail() {
   const [count, setCount] = useState<number>(0);
 
   useEffect(() => {
-    window.scrollTo(0, 0); // Sayfa yüklendiğinde en üstte kaydır
-  }, []);
+    window.scrollTo(0, 0);
+    setProductState(Array.isArray(product) ? product : [product]);
+  }, [product]);
 
   const [productState, setProductState] = useState<Product[]>(
     Array.isArray(product) ? product : [product]
@@ -111,6 +112,92 @@ function ProductDetail() {
                 alt={product.slug}
                 className="product-detail_image mb-2"
               />
+              <div className="properties pt-1 d-none d-md-block d-xl-none">
+                <div className="text-start pb-3">
+                  <span>Son kullanma tarihi: 07.2025</span>
+                </div>
+                <div className="accordion-container">
+                  <Accordion className="accordion border-0">
+                    <Accordion.Item eventKey="0" className="border-0">
+                      <Accordion.Header className="accordion-header">
+                        Özellikler
+                      </Accordion.Header>
+                      <Accordion.Body className="accordion-body">
+                        {product.explanation.features}
+                      </Accordion.Body>
+                    </Accordion.Item>
+
+                    <Accordion.Item eventKey="1" className="border-0">
+                      <Accordion.Header className="accordion-header">
+                        Besin içerigi
+                      </Accordion.Header>
+                      <Accordion.Body className="accordion-body">
+                        <div className="d-flex justify-content-between">
+                          <span className="fs-5">Besin degeri</span>{" "}
+                          {`${product.variants[0].size.gram}gram,  ${product.variants[0].size.total_services} servis`}
+                        </div>
+                        <div className="list pt-4">
+                          {product.explanation.nutritional_content.nutrition_facts.ingredients.map(
+                            (data, index) => (
+                              <div
+                                className="d-flex mb-1 justify-content-between"
+                                key={index}
+                              >
+                                <li className="list-unstyled">{data.name}</li>
+                                <li className="list-unstyled">
+                                  {data.amounts}
+                                </li>
+                              </div>
+                            )
+                          )}
+                        </div>
+                        <div className="features-list pt-3">
+                          {product.explanation.nutritional_content.ingredients.map(
+                            (aroma, index) => (
+                              <p className="" key={index}>
+                                <strong className="fs-6 text-danger">
+                                  {aroma.aroma}:{" "}
+                                </strong>
+                                <span>{aroma.value}</span>
+                              </p>
+                            )
+                          )}
+                        </div>
+                        <div className="amino-acid-facts-list">
+                          {
+                            <div className="list pt-4">
+                              {product.explanation.nutritional_content?.amino_acid_facts?.ingredients?.map(
+                                (data, index) => (
+                                  <div
+                                    className="d-flex mb-1 justify-content-between"
+                                    key={index}
+                                  >
+                                    <li className="list-unstyled">
+                                      {data.name}
+                                    </li>
+                                    <li className="list-unstyled">
+                                      {data.amounts}
+                                    </li>
+                                  </div>
+                                )
+                              )}
+                            </div>
+                          }
+                        </div>
+                      </Accordion.Body>
+                    </Accordion.Item>
+
+                    <Accordion.Item eventKey="2" className="border-0">
+                      <Accordion.Header className="accordion-header">
+                        Kullanım Şekli
+                      </Accordion.Header>
+                      <Accordion.Body className="accordion-body">
+                        {product.explanation.usage}
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Accordion>
+                </div>
+              </div>
             </div>
             <div className="col-lg-6 col-sm-12 col-xxl-6 col-md-12 product-detail_column">
               <h1 className="fs-2 m-0">{product.name}</h1>
@@ -185,7 +272,7 @@ function ProductDetail() {
                     </div>
                   }
                 </div>
-                <div className="d-flex pt-2 justify-content-between">
+                <div className="d-flex pt-2 justify-content-between column-gap-md-3">
                   <div className="count-box">
                     <button
                       onClick={() => setCount((count) => count + 1)}
@@ -193,7 +280,7 @@ function ProductDetail() {
                     >
                       <GoPlus />
                     </button>
-                    <span>{count}</span>
+                    <span className="fs-4 m-2">{count}</span>
                     <button
                       onClick={() => setCount((count) => count - 1)}
                       className="product-counter-btn"
@@ -211,9 +298,9 @@ function ProductDetail() {
                 <ProductTrust />
               </div>
               <hr />
-              <div className="properties pt-1">
+              <div className="properties pt-1 d-block d-md-none d-xl-block">
                 <div className="text-start pb-3">
-                  <span>Son Kullanma Tarihi: 07.2025</span>
+                  <span>Son kullanma tarihi: 07.2025</span>
                 </div>
                 <div className="accordion-container">
                   <Accordion className="accordion border-0">
@@ -265,7 +352,7 @@ function ProductDetail() {
                         <div className="amino-acid-facts-list">
                           {
                             <div className="list pt-4">
-                              {product.explanation.nutritional_content.amino_acid_facts?.ingredients.map(
+                              {product.explanation.nutritional_content?.amino_acid_facts?.ingredients?.map(
                                 (data, index) => (
                                   <div
                                     className="d-flex mb-1 justify-content-between"
