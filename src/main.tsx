@@ -35,7 +35,10 @@ const routes = createBrowserRouter([
         element: <ProductDetailPage />,
         loader: ProductDetailLoader,
       },
-      
+      {
+        path: "/contact",
+        element: <ContactPage />,
+      },
     ],
   },
 ]);
