@@ -4,12 +4,14 @@ import { useLoaderData } from "react-router-dom";
 import { PHOTO_URL } from "../../../services/api/products";
 import "./_ProductDetail.scss";
 import FiveStar from "../../../assets/components/layout/FiveStars/FiveStar";
-import ProductComment from "./ProductComment";
+import ProductComment from "./components/ProductComment/ProductComment";
 import { FaMinus } from "react-icons/fa";
 import { GoPlus } from "react-icons/go";
 import { MdShoppingCart } from "react-icons/md";
-import ProductTrust from "./ProductTrust";
+import ProductTrust from "./components/ProductTrust/ProductTrust";
 import BestSeller from "../../../assets/components/layout/BestSeller/BestSeller";
+import UseLocalStorage from "../../../hooks/UseSessionStorage";
+import LastView from "./components/LastView/LastView";
 
 interface NutritionalContent {
   ingredients: { aroma: string; value: string[] }[];
@@ -65,13 +67,56 @@ interface ColorProps {
   [key: string]: string;
 }
 
+export const LOCAL_KEY = "lastView";
+
 function ProductDetail() {
   const { product, bestSeller } = useLoaderData();
   const [count, setCount] = useState<number>(0);
+  const [storedValue, setStoredValue] = UseLocalStorage(LOCAL_KEY, "");
 
   useEffect(() => {
     window.scrollTo(0, 0);
     setProductState(Array.isArray(product) ? product : [product]);
+
+    const productData = {
+      price: product.variants[0].price.total_price,
+      commentCount: product.comment_count,
+      name: product.name,
+      slug: product.slug,
+      photo: PHOTO_URL + product.variants[0].photo_src,
+    };
+
+    setStoredValue((prevValue: Product[]) => {
+      const updatedValue = Array.isArray(prevValue) ? prevValue : [];
+      const existingProductIndex = updatedValue.findIndex(
+        (item) => item.id === product.id
+      );
+
+      if (existingProductIndex !== -1) {
+        updatedValue.splice(existingProductIndex, 1);
+      }
+
+      updatedValue.unshift({
+        id: product.id,
+        name: product.name,
+        slug: product.slug,
+        short_explanation: product.short_explanation,
+        explanation: product.explanation,
+        main_category_id: product.main_category_id,
+        sub_category_id: product.sub_category_id,
+        tags: product.tags,
+        variants: product.variants,
+        comment_count: product.comment_count,
+        average_star: product.average_star,
+        price: productData.price,
+        commentCount: productData.commentCount,
+        photo_src: productData.photo,
+      });
+
+      localStorage.setItem(LOCAL_KEY, JSON.stringify(updatedValue));
+
+      return updatedValue;
+    });
   }, [product]);
 
   const [productState, setProductState] = useState<Product[]>(
@@ -388,6 +433,11 @@ function ProductDetail() {
           </div>
         ))}
       </Row>
+      <Container className="my-5">
+        <Row>
+          <LastView />
+        </Row>
+      </Container>
       <Container className="mt-5">
         <ProductComment />
       </Container>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Container, Row } from "react-bootstrap";
 import { FaStar } from "react-icons/fa";
-import { dummyCommentsData } from "../../../store/data/CommentsDummyData";
+import { dummyCommentsData } from "../../../../../store/data/CommentsDummyData";
 
 function ProductComment() {
   const reviews = dummyCommentsData;
