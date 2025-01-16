@@ -1,17 +1,22 @@
 import axios from "axios";
 import { BASE_URL } from "../../../services/api/products";
 import { LoaderFunctionArgs } from "react-router-dom";
+import { Product } from "./ProductDetail";
+import { BestSellerProps } from "../../../assets/components/type/type";
 
-export async function ProductDetailLoader({ params }: LoaderFunctionArgs) {
+export async function ProductDetailLoader({
+  params,
+}: LoaderFunctionArgs): Promise<{
+  product: Product;
+  bestSeller: BestSellerProps[];
+} | void> {
   try {
     const response = await axios.get(
       BASE_URL + `/products/${params.productSlug}`
     );
-    // console.log(response.data.data);
     const bestSellerResponse = await axios.get(
       BASE_URL + "/products/best-sellers"
     );
-    // console.log(response.data.data);
     return {
       product: response.data.data,
       bestSeller: bestSellerResponse.data.data,

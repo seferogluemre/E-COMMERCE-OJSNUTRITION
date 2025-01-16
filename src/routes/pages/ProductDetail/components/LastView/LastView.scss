@@ -63,12 +63,12 @@
     .best_seller-card {
       margin: 3px;
       height: 450px !important;
-      margin-bottom: 75px;
+      margin-bottom: 15px;
       background-color: transparent;
 
       .best-seller-product-image {
-        width: 100% !important;
-        height: 290px !important;
+        max-width: 100% !important;
+        height: 190px !important;
         object-fit: cover !important;
       }
     }

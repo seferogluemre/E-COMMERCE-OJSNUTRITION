@@ -9,7 +9,7 @@ function ProductComment() {
     reviews.reduce((acc, review) => acc + parseInt(review.stars), 0) /
     reviews.length;
   const reviewsPerPage = 5;
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const currentReviews = reviews.slice(
     (currentPage - 1) * reviewsPerPage,
     currentPage * reviewsPerPage
@@ -49,11 +49,7 @@ function ProductComment() {
               <h2 className="average-rating">{averageRating.toFixed(1)}</h2>
               <div className="star-rating">
                 {[1, 2, 3, 4, 5].map((star) => (
-                  <FaStar
-                    key={star}
-                    filled={star <= Math.round(averageRating)}
-                    large={true}
-                  />
+                  <FaStar key={star} />
                 ))}
               </div>
               <p className="total-reviews">{reviews.length} YORUMA GÖRE</p>
@@ -62,8 +58,7 @@ function ProductComment() {
               {ratingDistribution.map((rating) => (
                 <div key={rating.stars} className="rating-bar">
                   <span className="star-count">
-                    {rating.stars}{" "}
-                    <FaStar className=" text-warning" filled={true} />
+                    {rating.stars} <FaStar className=" text-warning" />
                   </span>
                   <div className="progress-bar">
                     <div
@@ -84,10 +79,7 @@ function ProductComment() {
                     <div className="d-flex align-items-center column-gap-3">
                       <div className="star-rating text-warning">
                         {[1, 2, 3, 4, 5].map((star) => (
-                          <FaStar
-                            key={star}
-                            filled={star <= parseInt(review.stars)}
-                          />
+                          <FaStar key={star} />
                         ))}
                       </div>
                       <span className="verified-buyer">DOĞRULANMIŞ SATICI</span>

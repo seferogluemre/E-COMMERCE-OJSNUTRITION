@@ -28,7 +28,7 @@ function Products() {
           );
 
           if (response.data && Array.isArray(response.data.data.results)) {
-            setProducts((prevProducts) => [
+            setProducts((prevProducts: any) => [
               ...prevProducts,
               ...response.data.data.results,
             ]);

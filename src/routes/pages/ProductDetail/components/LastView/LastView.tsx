@@ -1,16 +1,14 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  Card,
-  CardBody,
-  CardHeader,
-  CardText,
   Container,
   Row,
+  Card,
+  CardHeader,
+  CardBody,
+  CardText,
 } from "react-bootstrap";
-import { LOCAL_KEY } from "../../ProductDetail";
 import { useNavigate } from "react-router-dom";
 import FiveStar from "../../../../../assets/components/layout/FiveStars/FiveStar";
-import "./LastView.scss";
 
 interface LastViewProduct {
   name: string;
@@ -20,27 +18,25 @@ interface LastViewProduct {
   price: number;
 }
 
-function LastView() {
+const LastView: React.FC = () => {
   const [lastViewProducts, setLastViewProducts] = useState<LastViewProduct[]>(
-    () => {
-      const storedProducts = localStorage.getItem(LOCAL_KEY);
-      return storedProducts ? JSON.parse(storedProducts) : [];
-    }
+    []
   );
-
   const navigate = useNavigate();
 
   return (
     <>
       <Container className="py-3">
         <div>
-          <h1 className="text-center fs-3">Son Görüntülenenler</h1>
+          {lastViewProducts.length > 0 && (
+            <h1 className="text-center fs-3">Son Görüntülenenler</h1>
+          )}
         </div>
         <Row>
           {Array.isArray(lastViewProducts) &&
-            lastViewProducts?.map((data) => (
+            lastViewProducts.slice(0, 6)?.map((data) => (
               <div
-                className="col-lg-4 col-md-6 col-sm-6 col-xxl-2 flex-wrap d-flex justify-content-center best_seller_column"
+                className="col-lg-4 col-md-6 col-sm-6 col-xxl-2 flex-wrap d-flex justify-content-center "
                 key={data.slug}
                 onClick={() => navigate(`/products/${data.slug}`)}
               >
@@ -74,6 +70,6 @@ function LastView() {
       </Container>
     </>
   );
-}
+};
 
 export default LastView;

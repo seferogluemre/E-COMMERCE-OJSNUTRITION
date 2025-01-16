@@ -239,6 +239,7 @@ $transition-speed: 0.3s;
   .accordion-header {
     border: 0 !important; // Çerçeveyi kaldır
     // ... existing code ...
+    border-bottom: 1px solid rgb(197, 197, 197) !important;
 
     .accordion-body {
       border: 0 !important; // Çerçeveyi kaldır
@@ -246,17 +247,16 @@ $transition-speed: 0.3s;
   }
 }
 
-
-@media (max-width:576px){
-  .add-to-cart-btn{
-    width: 200px !important; 
+@media (max-width: 576px) {
+  .add-to-cart-btn {
+    width: 200px !important;
   }
 
-  .review-header{
+  .review-header {
     display: flex;
     flex-direction: column;
 
-    .verified-buyer{
+    .verified-buyer {
       font-size: 15px !important;
     }
   }
