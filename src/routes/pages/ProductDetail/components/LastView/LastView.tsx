@@ -9,10 +9,11 @@ import {
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import FiveStar from "../../../../../assets/components/layout/FiveStars/FiveStar";
+import { LOCAL_KEY } from "../../ProductDetail";
 
 interface LastViewProduct {
   name: string;
-  photo: string;
+  photo_src: string;
   slug: string;
   comment_count: number;
   price: number;
@@ -23,6 +24,12 @@ const LastView: React.FC = () => {
     []
   );
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Get Product Local Data
+    const storedProducts = JSON.parse(localStorage.getItem(LOCAL_KEY) || "[]");
+    setLastViewProducts(storedProducts);
+  }, []);
 
   return (
     <>
