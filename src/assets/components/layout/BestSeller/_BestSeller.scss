@@ -47,13 +47,6 @@
   }
 }
 
-.best-seller-product-image {
-  width: 100% !important;
-  object-fit: cover !important;
-  transition: transform 0.3s ease-out;
-  height: 200px !important;
-}
-
 @media (max-width: 576px) {
   .best_seller_column {
     flex: 43% !important;
@@ -90,6 +83,6 @@
   .best-seller-product-image {
     width: 105% !important;
     object-fit: cover !important;
-    height: 200px;
+    height: 150px !important;
   }
 }

@@ -63,7 +63,7 @@
     .best_seller-card {
       margin: 3px;
       height: 450px !important;
-      margin-bottom: 10px;
+      margin-bottom: 75px;
       background-color: transparent;
 
       .best-seller-product-image {
@@ -78,6 +78,7 @@
     }
   }
 }
+
 @media (min-width: 576px) and (max-width: 1400px) {
   .best-seller-product-image {
     width: 100% !important;
