@@ -2,6 +2,7 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {
   AboutPage,
+  AccountPage,
   ContactPage,
   HomePage,
   ProductDetailPage,
@@ -26,6 +27,10 @@ const routes = createBrowserRouter([
         index: true,
         loader: loader,
         element: <HomePage />,
+      },
+      {
+        path: "/account",
+        element: <AccountPage />,
       },
       {
         path: "/products",
