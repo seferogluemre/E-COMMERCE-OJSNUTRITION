@@ -14,6 +14,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import { GrCart } from "react-icons/gr";
 import { useSearchProduct } from "../../../../store/products/useSearchProduct";
 import { useState } from "react";
+import Search from "./components/Search";
 
 function NavbarComp() {
   const [query, setQuery] = useState<string>('');
@@ -36,13 +37,14 @@ function NavbarComp() {
             <NavbarBrand href="/" className="bg-transparent">
               <img src="/assets/Logo1.png" className="Navbar-Logo" />
             </NavbarBrand>
-          </div>
+          </div>  
 
           <div className="mx-5">
             <Form className="d-flex rounded-4 align-items-center" onSubmit={(e) => {
               e.preventDefault();
 
             }}>
+              <Search />
               <input
                 type="search"
                 placeholder="Aradıgınız ürünü yazınız...."
