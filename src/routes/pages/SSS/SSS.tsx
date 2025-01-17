@@ -5,6 +5,7 @@ import Accordion from "react-bootstrap/Accordion";
 import { Container, Row } from "react-bootstrap";
 import "./SSS.scss";
 import { FaRegCreditCard } from "react-icons/fa6";
+import ContactForm from "../Contact/components/Form/Form";
 
 interface SSSItem {
   request: string;
@@ -273,6 +274,9 @@ function ControlledTabsExample() {
             </Tab>
           </Tabs>
         </div>
+      </Row>
+      <Row className="mt-3">
+        <ContactForm />
       </Row>
     </Container>
   );
