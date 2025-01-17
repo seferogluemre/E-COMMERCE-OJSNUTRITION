@@ -12,8 +12,18 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoSearchOutline } from "react-icons/io5";
 import { AiOutlineUser } from "react-icons/ai";
 import { GrCart } from "react-icons/gr";
+import { useSearchProduct } from "../../../../store/products/useSearchProduct";
+import { useState } from "react";
 
 function NavbarComp() {
+  const [query, setQuery] = useState<string>('');
+  const { searchProducts } = useSearchProduct(state => state);
+
+  const handleSearch = () => {
+    searchProducts(query);
+  };
+
+
   return (
     <>
       <Navbar className="bg-white px-0">
@@ -29,14 +39,22 @@ function NavbarComp() {
           </div>
 
           <div className="mx-5">
-            <Form className="d-flex rounded-4 align-items-center">
+            <Form className="d-flex rounded-4 align-items-center" onSubmit={(e) => {
+              e.preventDefault();
+
+            }}>
               <input
                 type="search"
                 placeholder="Aradıgınız ürünü yazınız...."
                 aria-label="Search"
                 id="search-input"
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value)
+                  handleSearch();
+                }}
               />
-              <button className="btn-search text-center">Ara</button>
+              <button type="submit" className="btn-search text-center">Ara</button>
             </Form>
           </div>
 
@@ -84,6 +102,11 @@ function NavbarComp() {
           placeholder="Aradıgınız ürünü yazınız...."
           className="border-0 rounded-4 bg-body-secondary custom-form-control"
           aria-label="Search"
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            handleSearch();
+          }}
         />
       </Form>
     </>
