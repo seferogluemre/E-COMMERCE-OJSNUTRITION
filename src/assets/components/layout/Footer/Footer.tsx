@@ -124,8 +124,9 @@ const Footer: React.FC = () => {
                 {section.title}
               </h1>
               <ul
-                className={`list-unstyled ${expandedSections.includes(index) ? "d-block" : "d-none"
-                  } d-md-block`}
+                className={`list-unstyled ${
+                  expandedSections.includes(index) ? "d-block" : "d-none"
+                } d-md-block`}
               >
                 {section.links.map((link, linkIndex) => (
                   <li key={linkIndex} className="nav-link">
