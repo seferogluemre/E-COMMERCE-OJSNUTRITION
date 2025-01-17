@@ -2,12 +2,28 @@ import { useSearchProduct } from '../../../../../store/products/useSearchProduct
 import './Search.scss';
 import { PHOTO_URL } from '../../../../../services/api/products'
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
 
 const Search = () => {
-    const { products } = useSearchProduct(state => state);
+    const { products, setProducts } = useSearchProduct(state => state);
     const navigate = useNavigate();
+    const searchRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+                setProducts([]);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [setProducts]);
+
     return (
-        <div className="search-results">
+        <div className="search-results" ref={searchRef}>
             {products.length > 0 && (
                 <div className="search-results-container">
                     {products.map((product: any) => (
