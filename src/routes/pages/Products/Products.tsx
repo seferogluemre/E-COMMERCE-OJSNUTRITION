@@ -64,7 +64,6 @@ function Products() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
   return (
     <>
       <Container className="my-5">
@@ -88,7 +87,6 @@ function Products() {
                 comment_count={product.comment_count}
                 id={product.id}
                 short_explanation={product.short_explanation}
-
               />
             </div>
           ))}

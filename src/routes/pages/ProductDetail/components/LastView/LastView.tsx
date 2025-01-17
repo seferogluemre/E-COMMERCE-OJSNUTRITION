@@ -10,6 +10,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import FiveStar from "../../../../../assets/components/layout/FiveStars/FiveStar";
 import { LOCAL_KEY } from "../../ProductDetail";
+import "./LastView.scss";
 
 interface LastViewProduct {
   name: string;
@@ -39,11 +40,11 @@ const LastView: React.FC = () => {
             <h1 className="text-center fs-3">Son Görüntülenenler</h1>
           )}
         </div>
-        <Row>
+        <Row className="mb-5">
           {Array.isArray(lastViewProducts) &&
             lastViewProducts.slice(0, 6)?.map((data) => (
               <div
-                className="col-lg-4 col-md-6 col-sm-6 col-xxl-2 flex-wrap d-flex justify-content-center "
+                className="col-lg-4 col-md-6 col-sm-6 col-xxl-2 flex-wrap d-flex justify-content-center best_seller_column"
                 key={data.slug}
                 onClick={() => navigate(`/products/${data.slug}`)}
               >

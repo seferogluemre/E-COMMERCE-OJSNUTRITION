@@ -18,7 +18,7 @@ const footerData: FooterSection[] = [
     links: [
       { title: "İletişim", href: "/contact" },
       { title: "Hakkımızda", href: "/about" },
-      { title: "Sıkça Sorulan Sorular", href: "#" },
+      { title: "Sıkça Sorulan Sorular", href: "/SSS" },
       { title: "KVKK", href: "#" },
       { title: "Çalışma İlkelerimiz", href: "#" },
       { title: "Satış Sözleşmesi", href: "#" },
@@ -45,7 +45,7 @@ const footerData: FooterSection[] = [
     title: "Popüler Ürünler",
     links: [
       { title: "Whey Protein", href: "/products/whey-protein" },
-      { title: "Cream of Rice", href: "/products/cream-of-rice"},
+      { title: "Cream of Rice", href: "/products/cream-of-rice" },
       { title: "Creatine", href: "#" },
       { title: "BCAA+", href: "#" },
       { title: "Pre-Workout", href: "#" },
@@ -124,9 +124,8 @@ const Footer: React.FC = () => {
                 {section.title}
               </h1>
               <ul
-                className={`list-unstyled ${
-                  expandedSections.includes(index) ? "d-block" : "d-none"
-                } d-md-block`}
+                className={`list-unstyled ${expandedSections.includes(index) ? "d-block" : "d-none"
+                  } d-md-block`}
               >
                 {section.links.map((link, linkIndex) => (
                   <li key={linkIndex} className="nav-link">

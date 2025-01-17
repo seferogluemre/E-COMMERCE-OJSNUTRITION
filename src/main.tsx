@@ -7,6 +7,7 @@ import {
   ProductDetailPage,
   ProductsPage,
   RootPage,
+  SSSPage,
 } from "./routes/pages/index";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -43,6 +44,10 @@ const routes = createBrowserRouter([
       {
         path: "/about",
         element: <AboutPage />,
+      },
+      {
+        path: "/SSS",
+        element: <SSSPage />,
       },
     ],
   },
