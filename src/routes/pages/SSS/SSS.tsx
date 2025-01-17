@@ -4,6 +4,7 @@ import Tabs from "react-bootstrap/Tabs";
 import Accordion from "react-bootstrap/Accordion";
 import { Container, Row } from "react-bootstrap";
 import "./SSS.scss";
+import { FaRegCreditCard } from "react-icons/fa6";
 
 interface SSSItem {
   request: string;
@@ -169,11 +170,17 @@ function ControlledTabsExample() {
     <Container className="my-5 pt-3">
       <Row className="d-flex justify-content-center">
         <div className="col-sm-12 col-lg-12 col-md-12">
+          <div className="mb-3">
+            <span className="m-3">
+              <FaRegCreditCard className="fs-4" />
+              {key}
+            </span>
+          </div>
           <Tabs
             id="controlled-tab-example"
             activeKey={key}
             onSelect={(k) => setKey(k)}
-            className="mb-3"
+            className="mb-5 pb-5"
           >
             <Tab eventKey="genel" title="genel">
               <Accordion>
@@ -267,7 +274,6 @@ function ControlledTabsExample() {
           </Tabs>
         </div>
       </Row>
-      <Row></Row>
     </Container>
   );
 }
