@@ -15,15 +15,15 @@ import { GrCart } from "react-icons/gr";
 import { useSearchProduct } from "../../../../store/products/useSearchProduct";
 import { useState } from "react";
 import Search from "./components/Search";
+import { NavLink } from "react-router-dom";
 
 function NavbarComp() {
-  const [query, setQuery] = useState<string>('');
-  const { searchProducts } = useSearchProduct(state => state);
+  const [query, setQuery] = useState<string>("");
+  const { searchProducts } = useSearchProduct((state) => state);
 
   const handleSearch = () => {
     searchProducts(query);
   };
-
 
   return (
     <>
@@ -37,13 +37,15 @@ function NavbarComp() {
             <NavbarBrand href="/" className="bg-transparent">
               <img src="/assets/Logo1.png" className="Navbar-Logo" />
             </NavbarBrand>
-          </div>  
+          </div>
 
           <div className="mx-5">
-            <Form className="d-flex rounded-4 align-items-center" onSubmit={(e) => {
-              e.preventDefault();
-
-            }}>
+            <Form
+              className="d-flex rounded-4 align-items-center"
+              onSubmit={(e) => {
+                e.preventDefault();
+              }}
+            >
               <Search />
               <input
                 type="search"
@@ -52,11 +54,13 @@ function NavbarComp() {
                 id="search-input"
                 value={query}
                 onChange={(e) => {
-                  setQuery(e.target.value)
+                  setQuery(e.target.value);
                   handleSearch();
                 }}
               />
-              <button type="submit" className="btn-search text-center">Ara</button>
+              <button type="submit" className="btn-search text-center">
+                Ara
+              </button>
             </Form>
           </div>
 
@@ -65,12 +69,24 @@ function NavbarComp() {
               <Button
                 className="btn btn-secondary dropdown-toggle "
                 type="button"
-                data-bs-toggle="dropdown"
+                data-bs-toggle="nav-dropdown-account"
                 aria-expanded="false"
               >
                 <AiOutlineUser className="fs-4" />
                 Hesap
               </Button>
+              <ul className="dropdown-menu">
+                <li>
+                  <NavLink to="/register" className="dropdown-item">
+                    Üye Ol
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/login" className="dropdown-item">
+                    Üye Girişi
+                  </NavLink>
+                </li>
+              </ul>
             </div>
             <div className="dropdown" id="nav-dropdown-cart">
               <Button

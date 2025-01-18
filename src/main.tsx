@@ -6,7 +6,6 @@ import {
   ContactPage,
   HomePage,
   ProductDetailPage,
-
   RootPage,
   SSSPage,
 } from "./routes/pages/index";
@@ -18,8 +17,9 @@ import { allProductLoader } from "./routes/pages/Products/loader";
 import { ProductDetailLoader } from "./routes/pages/ProductDetail/ProductDetailLoader";
 import React from "react";
 
-const LazyProductPage=React.lazy(()=>import('./routes/pages/Products/Products'))
-
+const LazyProductPage = React.lazy(
+  () => import("./routes/pages/Products/Products")
+);
 
 const routes = createBrowserRouter([
   {
@@ -39,9 +39,11 @@ const routes = createBrowserRouter([
       {
         path: "/products",
         loader: allProductLoader,
-        element:<React.Suspense>
-          <LazyProductPage />
-        </React.Suspense>
+        element: (
+          <React.Suspense>
+            <LazyProductPage />
+          </React.Suspense>
+        ),
       },
       {
         path: "/products/:productSlug",
