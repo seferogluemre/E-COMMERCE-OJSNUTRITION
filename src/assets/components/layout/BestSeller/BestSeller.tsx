@@ -42,7 +42,10 @@ function BestSeller({ best_seller }) {
                 short_explanation={data.short_explanation.toUpperCase()}
                 average_star={data.average_star}
                 comment_count={data.comment_count}
-                price_info={data.price_info}
+                price_info={{
+                  discounted_price: data.price_info.discounted_price,
+                  total_price: data.price_info.total_price,
+                }}
               />
             </div>
           ))

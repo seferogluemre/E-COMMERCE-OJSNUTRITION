@@ -7,7 +7,7 @@ function BestSellerCard({
   photo_src,
   comment_count,
   slug,
-  price_info: { total_price },
+  price_info,
 }: BestSellerProps) {
   return (
     <>
@@ -26,9 +26,19 @@ function BestSellerCard({
             <FiveStar />
           </CardText>
           <CardText className="m-0">{comment_count} Yorum</CardText>
-          <CardText className="best-seller-product-price">
-            {total_price}₺
-          </CardText>
+          <div className="product-price">
+            {price_info.discounted_price && (
+              <span
+                className="original-price "
+                style={{ textDecoration: "line-through" }}
+              >
+                {price_info.total_price} TL
+              </span>
+            )}
+            <span className="current-price m-1 text-danger">
+              {price_info.discounted_price || price_info.total_price} TL
+            </span>
+          </div>
         </CardBody>
       </Card>
     </>
