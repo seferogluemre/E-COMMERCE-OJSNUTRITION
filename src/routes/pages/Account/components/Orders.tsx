@@ -1,50 +1,45 @@
-import { Table, Badge } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 
 function Orders() {
   return (
     <div className="content-area">
-      <h3 className="mb-4">Siparişlerim</h3>
-      <Table responsive>
-        <thead>
-          <tr>
-            <th>Sipariş No</th>
-            <th>Tarih</th>
-            <th>Tutar</th>
-            <th>Durum</th>
-            <th>Detay</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>#12345</td>
-            <td>01.03.2024</td>
-            <td>1.250 TL</td>
-            <td>
-              <Badge bg="success">Teslim Edildi</Badge>
-            </td>
-            <td>
-              <a href="#" className="text-decoration-none">
-                Detaylar
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>#12346</td>
-            <td>28.02.2024</td>
-            <td>750 TL</td>
-            <td>
-              <Badge bg="warning" text="dark" className="w-50">
-                Kargoda
-              </Badge>
-            </td>
-            <td>
-              <a href="#" className="text-decoration-none">
-                Detaylar
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </Table>
+      <h3 className="mb-4">Siparişlerim (4)</h3>
+      <Card className="mb-3">
+        <Card.Body>
+          <h5>Teslim Edildi</h5>
+          <p>DEEP SLEEP</p>
+          <p>31 Mart 2023 Tarihinde Sipariş Verildi</p>
+          <p>427795 numaralı sipariş</p>
+          <Button variant="link">Detay Görüntüle</Button>
+        </Card.Body>
+      </Card>
+      <Card className="mb-3">
+        <Card.Body>
+          <h5>Teslim Edildi</h5>
+          <p>MELATONİN - GÜNLÜK VİTAMİN PAKETİ - BROMELAIN</p>
+          <p>14 Aralık 2022 Tarihinde Sipariş Verildi</p>
+          <p>290405 numaralı sipariş</p>
+          <Button variant="link">Detay Görüntüle</Button>
+        </Card.Body>
+      </Card>
+      <Card className="mb-3">
+        <Card.Body>
+          <h5>Teslim Edildi</h5>
+          <p>GAMER HACK - DETOX PAKETİ</p>
+          <p>19 Kasım 2022 Tarihinde Sipariş Verildi</p>
+          <p>255564 numaralı sipariş</p>
+          <Button variant="link">Detay Görüntüle</Button>
+        </Card.Body>
+      </Card>
+      <Card className="mb-3">
+        <Card.Body>
+          <h5>Teslim Edildi</h5>
+          <p>CREAM OF RICE</p>
+          <p>1 Ekim 2022 Tarihinde Sipariş Verildi</p>
+          <p>190462 numaralı sipariş</p>
+          <Button variant="link">Detay Görüntüle</Button>
+        </Card.Body>
+      </Card>
     </div>
   );
 }
