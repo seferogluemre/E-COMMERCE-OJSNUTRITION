@@ -33,7 +33,7 @@ function Addresses() {
     }
   }, []);
 
-  const handleInputChange = (e: React.FormEvent) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
