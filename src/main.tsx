@@ -6,7 +6,7 @@ import {
   ContactPage,
   HomePage,
   ProductDetailPage,
-  RootPage,
+  RootLayout,
   SSSPage,
 } from "./routes/pages/index";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -24,7 +24,7 @@ const LazyProductPage = React.lazy(
 const routes = createBrowserRouter([
   {
     path: "/",
-    element: <RootPage />,
+    element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
       {
