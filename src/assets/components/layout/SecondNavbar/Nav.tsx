@@ -5,7 +5,7 @@ function Nav() {
   return (
     <>
       <Container fluid className="m-0" style={{ height: "35px" }} id="Nav">
-        <div className="container px-2">
+        <div className="container px-2 py-sm-2">
           <div className="row px-2">
             <div className="col-4 d-flex column-gap-1 align-items-center justify-content-start">
               <img

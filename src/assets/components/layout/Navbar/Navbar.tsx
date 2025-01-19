@@ -16,10 +16,15 @@ import { useSearchProduct } from "../../../../store/products/useSearchProduct";
 import { useState } from "react";
 import Search from "./components/Search";
 import { NavLink } from "react-router-dom";
+import MobileSidebar from "./components/MobileSidebar";
 
 function NavbarComp() {
   const [query, setQuery] = useState<string>("");
   const { searchProducts } = useSearchProduct((state) => state);
+  const [show, setShow] = useState(false);
+
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
 
   const handleSearch = () => {
     searchProducts(query);
@@ -33,7 +38,10 @@ function NavbarComp() {
             className="d-flex align-items-center justify-content-start "
             id="navbar-left"
           >
-            <GiHamburgerMenu className="fs-1 hamburger-menu m-1" />
+            <GiHamburgerMenu
+              className="fs-1 hamburger-menu m-1"
+              onClick={handleShow}
+            />
             <NavbarBrand href="/" className="bg-transparent">
               <img src="/assets/Logo1.png" className="Navbar-Logo" />
             </NavbarBrand>
@@ -135,6 +143,7 @@ function NavbarComp() {
           }}
         />
       </Form>
+      <MobileSidebar show={show} handleClose={handleClose} />
     </>
   );
 }
