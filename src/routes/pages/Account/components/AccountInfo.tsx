@@ -7,12 +7,12 @@ function AccountInfo() {
       <Form>
         <Form.Group className="mb-3">
           <Form.Label>*Ad</Form.Label>
-          <Form.Control type="text" defaultValue="Gülşah" />
+          <Form.Control type="text" defaultValue="" />
         </Form.Group>
 
         <Form.Group className="mb-3">
           <Form.Label>*Soyad</Form.Label>
-          <Form.Control type="text" defaultValue="Seferoğlu" />
+          <Form.Control type="text" defaultValue="" />
         </Form.Group>
 
         <Form.Group className="mb-3">
@@ -30,7 +30,7 @@ function AccountInfo() {
           <Form.Label>*Email</Form.Label>
           <Form.Control
             type="email"
-            defaultValue="gulsahseferoglu1@gmail.com"
+            defaultValue="seferoglu.yazilim@outlook.com"
           />
         </Form.Group>
 
