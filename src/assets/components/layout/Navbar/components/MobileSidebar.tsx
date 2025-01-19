@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { Offcanvas } from "react-bootstrap";
 import DrawerList from "./DrawerList";
 import { FaArrowLeft } from "react-icons/fa";
-
+import "./MobileSidebar.scss";
+import { NavLink, useNavigate } from "react-router-dom";
 interface MobileSidebarProps {
   show: boolean;
   handleClose: () => void;
@@ -44,6 +45,7 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
     setIsDrawerOpen(false);
     handleClose();
   };
+  const navigate = useNavigate();
 
   return (
     <>
@@ -53,8 +55,8 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
             <img src="/assets/Logo1.png" width={150} />
           </Offcanvas.Title>
         </Offcanvas.Header>
-        <Offcanvas.Body className="d-flex flex-column">
-          <div className="">
+        <Offcanvas.Body className="d-flex flex-column p-0">
+          <div className="p-3">
             <ul className="list-unstyled">
               <p className="fs-3 text-black">
                 {categories?.map((item) => (
@@ -66,14 +68,36 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
                     {item.name}
                   </li>
                 ))}
+                <li onClick={() => navigate("/products")}>Tüm Ürünler</li>
               </p>
             </ul>
           </div>
-          <div className="bg-secondary position-absolute bottom-0">
-            <ul className="list-unstyled">
-              <li>İletişim</li>
-              <li>Sıkça Sorulan Sorular</li>
-              <li>Giriş yap</li>
+          <div className="mt-2 p-3 bg-body-tertiary h-100 mobile-sidebar-bottom-links">
+            <ul className="list-unstyled d-flex flex-column row-gap-2">
+              <li>
+                <NavLink
+                  to={"/account"}
+                  className="text-decoration-none text-black"
+                >
+                  Hesabım
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to={"/about"}
+                  className="text-decoration-none text-black"
+                >
+                  Müşteri yorumları
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to={"/contact"}
+                  className="text-decoration-none text-black"
+                >
+                  İletişim
+                </NavLink>
+              </li>
             </ul>
           </div>
         </Offcanvas.Body>
