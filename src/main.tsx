@@ -5,6 +5,7 @@ import {
   AccountPage,
   ContactPage,
   HomePage,
+  LoginPage,
   ProductDetailPage,
   RootLayout,
   SSSPage,
@@ -53,6 +54,10 @@ const routes = createBrowserRouter([
       {
         path: "/contact",
         element: <ContactPage />,
+      },
+      {
+        path: "/login",
+        element: <LoginPage />,
       },
       {
         path: "/about",

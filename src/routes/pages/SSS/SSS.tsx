@@ -173,7 +173,7 @@ function ControlledTabsExample() {
         <div className="col-sm-12 col-lg-12 col-md-12">
           <div className="mb-3">
             <span className="m-3">
-              <FaRegCreditCard className="fs-4" />
+              <FaRegCreditCard className="fs-3 me-1" />
               {key}
             </span>
           </div>
