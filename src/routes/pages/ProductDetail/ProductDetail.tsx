@@ -296,7 +296,7 @@ function ProductDetail() {
                   <h3 className="fs-4">Boyut:</h3>
                 </div>
                 <div className="d-flex column-gap-3 ">
-                  {product.explanation.nutritional_content.nutrition_facts.portion_sizes.map(
+                  {product.explanation.nutritional_content.nutrition_facts.portion_sizes?.map(
                     (size) => (
                       <div className="product-size-box d-flex align-items-center">
                         {size}

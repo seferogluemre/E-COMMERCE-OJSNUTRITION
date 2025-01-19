@@ -66,18 +66,18 @@ function NavbarComp() {
 
           <NavbarCollapse className="d-flex justify-content-center  column-gap-lg-3">
             <div className="dropdown me-1" id="nav-dropdown-account">
-              <Button
-                className="btn btn-secondary dropdown-toggle "
+              <button
+                className="btn btn-secondary dropdown-toggle"
                 type="button"
-                data-bs-toggle="nav-dropdown-account"
+                data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
                 <AiOutlineUser className="fs-4" />
                 Hesap
-              </Button>
+              </button>
               <ul className="dropdown-menu">
                 <li>
-                  <NavLink to="/register" className="dropdown-item">
+                  <NavLink to="/login" className="dropdown-item">
                     Üye Ol
                   </NavLink>
                 </li>
@@ -88,6 +88,7 @@ function NavbarComp() {
                 </li>
               </ul>
             </div>
+
             <div className="dropdown" id="nav-dropdown-cart">
               <Button
                 className="btn btn-secondary dropdown-toggle "
