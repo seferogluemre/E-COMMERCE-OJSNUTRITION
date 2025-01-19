@@ -4,10 +4,10 @@ import { useEffect, useRef } from "react";
 import { FaAngleLeft } from "react-icons/fa";
 import { FaAngleRight } from "react-icons/fa6";
 import "./BlazeSlider.scss";
-import FiveStar from "../FiveStars/FiveStar";
+import FiveStar from "../../../../../assets/components/layout/FiveStars/FiveStar";
 import { Button } from "react-bootstrap";
 import CommentCard from "../CommentCard/CommentCard";
-import { dummyCommentsData } from "../../../../store/data/CommentsDummyData";
+import { dummyCommentsData } from "../../../../../store/data/CommentsDummyData";
 
 export interface ReviewsProps {
   stars: string;

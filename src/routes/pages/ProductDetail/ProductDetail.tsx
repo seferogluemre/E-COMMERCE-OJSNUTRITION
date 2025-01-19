@@ -311,9 +311,9 @@ function ProductDetail() {
                   {
                     <div className="d-flex justify-content-between">
                       <h1 className="fs-2">
-                        {product.variants[1].price.total_price}TL
+                        {product.variants[1]?.price?.total_price}TL
                       </h1>
-                      <p>{product.variants[0].size.total_services}Servis</p>
+                      <p>{product.variants[0]?.size?.total_services}Servis</p>
                     </div>
                   }
                 </div>

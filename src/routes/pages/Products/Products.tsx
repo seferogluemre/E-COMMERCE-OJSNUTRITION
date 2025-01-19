@@ -6,8 +6,8 @@ import {
   getAllProducts,
   PHOTO_URL,
 } from "../../../services/api/products";
-import ProductCard from "../../../assets/components/layout/ProductCard/ProductCard";
-import "../../../assets/components/layout/ProductCard/_ProductCard.scss";
+import ProductCard from "./components/ProductCard/ProductCard";
+import "./components/ProductCard/_ProductCard.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
