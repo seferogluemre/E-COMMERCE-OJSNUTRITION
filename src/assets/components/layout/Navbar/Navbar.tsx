@@ -77,12 +77,19 @@ function NavbarComp() {
               </button>
               <ul className="dropdown-menu">
                 <li>
-                  <NavLink to="/login" className="dropdown-item">
+                  <NavLink
+                    to="/login"
+                    className="dropdown-item bg-transparent text-black"
+                  >
                     Üye Ol
                   </NavLink>
                 </li>
+                <hr className="m-0" />
                 <li>
-                  <NavLink to="/login" className="dropdown-item">
+                  <NavLink
+                    to="/login"
+                    className="dropdown-item bg-transparent text-black"
+                  >
                     Üye Girişi
                   </NavLink>
                 </li>

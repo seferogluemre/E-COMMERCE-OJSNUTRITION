@@ -20,7 +20,7 @@ function Login() {
   return (
     <>
       <Container className="my-5">
-        <Row>
+        <Row className="px-lg-5">
           <Tabs
             activeKey={activeTab}
             onSelect={(k) => setActiveTab(k!)}
@@ -39,5 +39,4 @@ function Login() {
     </>
   );
 }
-
 export default Login;
