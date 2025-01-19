@@ -30,7 +30,7 @@ const Search = () => {
     <div className="search-results" ref={searchRef}>
       {products.length > 0 && (
         <div className="search-results-container">
-          {products.map((product: ProductListProp) => (
+          {products?.map((product: ProductListProp) => (
             <div
               key={product.id}
               className="search-item"
