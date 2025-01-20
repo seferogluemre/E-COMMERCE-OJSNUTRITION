@@ -4,7 +4,7 @@ import { Offcanvas } from "react-bootstrap";
 import DrawerList from "./DrawerList";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import "./MobileSidebar.scss";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import ProductsDrawer from './ProductsDrawer';
 
 interface MobileSidebarProps {
@@ -22,6 +22,7 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
   const [subCategoryProducts, setSubCategoryProducts] = useState([]);
   const [showSubProducts, setShowSubProducts] = useState(false);
   const [subProductTitle, setSubProductTitle] = useState('');
+  const location = useLocation();
 
   async function name() {
     const categoriesResponse = axios.get(
@@ -42,6 +43,13 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
   useEffect(() => {
     name();
   }, []);
+
+  useEffect(() => {
+    handleClose();
+    setIsDrawerOpen(false);
+    setShowProducts(false);
+    setShowSubProducts(false);
+  }, [location]);
 
   const handleCategoryClick = (category) => {
     setSelectedSubChildren(category.subChildren);

@@ -70,5 +70,4 @@ function ProductsDrawer({ show, onHide, items, title, onSubCategoryClick }: Prod
     </Offcanvas>
   );
 }
-
 export default ProductsDrawer;
