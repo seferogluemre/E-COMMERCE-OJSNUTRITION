@@ -19,7 +19,7 @@ function ProductsDrawer({ show, onHide, items, title, onSubCategoryClick }: Prod
   };
 
   return (
-    <Offcanvas show={show} onHide={onHide} placement="end">
+    <Offcanvas show={show} onHide={onHide} placement="start">
       <Offcanvas.Header closeButton>
         <button
           onClick={onHide}

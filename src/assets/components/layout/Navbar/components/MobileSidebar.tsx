@@ -24,7 +24,7 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
   const [subProductTitle, setSubProductTitle] = useState('');
   const location = useLocation();
 
-  async function name() {
+  async function getCategories() {
     const categoriesResponse = axios.get(
       "https://fe1111.projects.academy.onlyjs.com/api/v1/categories"
     );
@@ -41,7 +41,7 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
   }
 
   useEffect(() => {
-    name();
+    getCategories();
   }, []);
 
   useEffect(() => {
