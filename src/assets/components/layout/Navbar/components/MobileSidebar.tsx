@@ -5,6 +5,8 @@ import DrawerList from "./DrawerList";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import "./MobileSidebar.scss";
 import { NavLink, useNavigate } from "react-router-dom";
+import ProductsDrawer from './ProductsDrawer';
+
 interface MobileSidebarProps {
   show: boolean;
   handleClose: () => void;
@@ -13,15 +15,22 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
   const [categories, setCategories] = useState([]);
   const [selectedSubChildren, setSelectedSubChildren] = useState([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [productTitle, setProductTitle] = useState('');
+  const [showProducts, setShowProducts] = useState(false);
+  const [subCategoryProducts, setSubCategoryProducts] = useState([]);
+  const [showSubProducts, setShowSubProducts] = useState(false);
+  const [subProductTitle, setSubProductTitle] = useState('');
 
   async function name() {
     const categoriesResponse = axios.get(
       "https://fe1111.projects.academy.onlyjs.com/api/v1/categories"
     );
     const categoriesData = (await categoriesResponse).data.data;
-    //console.log(categoriesData.data[1].top_sellers);
+   // console.log(categoriesData.data[1].top_sellers);
+     console.log(categoriesData.data[1].children);
     // console.log(categoriesData.data[1].children);
-    console.log(categoriesData.data[1].children);
 
     const updatedCategories = categoriesData.data.map((item) => ({
       ...item,
@@ -34,8 +43,9 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
     name();
   }, []);
 
-  const handleCategoryClick = (subChildren) => {
-    setSelectedSubChildren(subChildren);
+  const handleCategoryClick = (category) => {
+    setSelectedSubChildren(category.subChildren);
+    setSelectedCategory(category);
     setIsDrawerOpen(true);
     handleClose();
   };
@@ -49,6 +59,39 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
     handleClose();
   };
   const navigate = useNavigate();
+
+  const handleItemClick = async (items: any[], type: 'topSeller' | 'sub_children' | 'children', categoryName: string) => {
+    console.log('Items received:', items);
+    let displayItems = [];
+
+    switch (type) {
+      case 'topSeller':
+        displayItems = items || [];
+        break;
+      case 'sub_children':
+        displayItems = items.map(item => ({
+          id: item.slug,
+          name: item.name,
+          slug: item.slug,
+          order: item.order
+        }));
+        break;
+      case 'children':
+        displayItems = items;
+        break;
+    }
+
+    console.log('Display Items:', displayItems);
+    setSelectedProducts(displayItems);
+    setProductTitle(categoryName);
+    setShowProducts(true);
+  };
+
+  const handleSubCategoryClick = (items: any[], title: string) => {
+    setSubCategoryProducts(items);
+    setSubProductTitle(title);
+    setShowSubProducts(true);
+  };
 
   return (
     <>
@@ -66,7 +109,7 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
                   <li
                     className="my-3 d-flex justify-content-between"
                     key={item.id}
-                    onClick={() => handleCategoryClick(item.subChildren)}
+                    onClick={() => handleCategoryClick(item)}
                   >
                     {item.name}
                     <span className="">
@@ -119,9 +162,29 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
           </button>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <DrawerList subChildren={selectedSubChildren} />
+          <DrawerList 
+            subChildren={selectedSubChildren}
+            topSellers={selectedCategory?.top_sellers || []}
+            children={selectedCategory?.children || []}
+            onItemClick={handleItemClick}
+          />
         </Offcanvas.Body>
       </Offcanvas>
+
+      <ProductsDrawer
+        show={showProducts}
+        onHide={() => setShowProducts(false)}
+        items={selectedProducts}
+        title={productTitle}
+        onSubCategoryClick={handleSubCategoryClick}
+      />
+
+      <ProductsDrawer
+        show={showSubProducts}
+        onHide={() => setShowSubProducts(false)}
+        items={subCategoryProducts}
+        title={subProductTitle}
+      />
     </>
   );
 }
