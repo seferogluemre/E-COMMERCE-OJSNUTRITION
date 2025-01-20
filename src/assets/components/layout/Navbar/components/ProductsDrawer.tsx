@@ -32,7 +32,7 @@ function ProductsDrawer({ show, onHide, items, title, onSubCategoryClick }: Prod
       <Offcanvas.Body>
         {items.length > 0 ? (
           <div className="categories-list">
-            {items.map((item: any) => (
+            {items.map((item) => (
               <div key={item.id || item.slug} className="category-item border-bottom">
                 {item.sub_children ? (
                   // Eğer sub_children varsa, tıklanabilir kategori olarak göster
@@ -44,7 +44,6 @@ function ProductsDrawer({ show, onHide, items, title, onSubCategoryClick }: Prod
                     <FaArrowRight />
                   </div>
                 ) : (
-                  // Eğer sub_children yoksa, tıklanabilir ürün kartı olarak göster
                   <div 
                     className="product-card p-3 cursor-pointer"
                     onClick={() => handleProductClick(item.slug)}

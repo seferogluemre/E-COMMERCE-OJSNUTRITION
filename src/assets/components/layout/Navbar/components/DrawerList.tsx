@@ -26,9 +26,9 @@ function DrawerList({ subChildren, topSellers, children, onItemClick }: DrawerLi
       {subChildren && subChildren.length > 0 && (
         <div 
           className="category-header py-3 d-flex justify-content-between align-items-center cursor-pointer border-bottom"
-          onClick={() => onItemClick(subChildren, 'sub_children', 'Alt Kategoriler')}
+          onClick={() => onItemClick(subChildren, 'sub_children', 'Ürünler')}
         >
-          <h3 className="m-0">Alt Kategoriler</h3>
+          <h3 className="m-0">Ürünler</h3>
           <FaArrowRight />
         </div>
       )}
