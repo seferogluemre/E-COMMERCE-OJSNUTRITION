@@ -29,8 +29,8 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
       "https://fe1111.projects.academy.onlyjs.com/api/v1/categories"
     );
     const categoriesData = (await categoriesResponse).data.data;
-   // console.log(categoriesData.data[1].top_sellers);
-     console.log(categoriesData.data[1].children);
+    // console.log(categoriesData.data[1].top_sellers);
+    console.log(categoriesData.data[1].children);
     // console.log(categoriesData.data[1].children);
 
     const updatedCategories = categoriesData.data.map((item) => ({
@@ -170,7 +170,7 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
           </button>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <DrawerList 
+          <DrawerList
             subChildren={selectedSubChildren}
             topSellers={selectedCategory?.top_sellers || []}
             children={selectedCategory?.children || []}
