@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Offcanvas } from "react-bootstrap";
 import DrawerList from "./DrawerList";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import "./MobileSidebar.scss";
 import { NavLink, useNavigate } from "react-router-dom";
 interface MobileSidebarProps {
@@ -19,7 +19,10 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
       "https://fe1111.projects.academy.onlyjs.com/api/v1/categories"
     );
     const categoriesData = (await categoriesResponse).data.data;
-    // console.log(categoriesData.data[0].children[0].sub_children);
+    //console.log(categoriesData.data[1].top_sellers);
+    // console.log(categoriesData.data[1].children);
+    console.log(categoriesData.data[1].children);
+
     const updatedCategories = categoriesData.data.map((item) => ({
       ...item,
       subChildren: item.children[0]?.sub_children || [],
@@ -61,11 +64,14 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
               <p className="fs-3 text-black">
                 {categories?.map((item) => (
                   <li
-                    className="my-3"
+                    className="my-3 d-flex justify-content-between"
                     key={item.id}
                     onClick={() => handleCategoryClick(item.subChildren)}
                   >
                     {item.name}
+                    <span className="">
+                      <FaArrowRight />
+                    </span>
                   </li>
                 ))}
                 <li onClick={() => navigate("/products")}>Tüm Ürünler</li>
