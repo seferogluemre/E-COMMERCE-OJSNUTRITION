@@ -1,5 +1,6 @@
 import { Offcanvas } from 'react-bootstrap';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 interface ProductsDrawerProps {
   show: boolean;
@@ -10,8 +11,15 @@ interface ProductsDrawerProps {
 }
 
 function ProductsDrawer({ show, onHide, items, title, onSubCategoryClick }: ProductsDrawerProps) {
+  const navigate = useNavigate();
+
+  const handleProductClick = (slug: string) => {
+    navigate(`/products/${slug}`);
+    onHide(); // Drawer'ı kapat
+  };
+
   return (
-    <Offcanvas show={show} onHide={onHide} placement="start">
+    <Offcanvas show={show} onHide={onHide} placement="end">
       <Offcanvas.Header closeButton>
         <button
           onClick={onHide}
@@ -36,8 +44,11 @@ function ProductsDrawer({ show, onHide, items, title, onSubCategoryClick }: Prod
                     <FaArrowRight />
                   </div>
                 ) : (
-                  // Eğer sub_children yoksa, normal ürün kartı olarak göster
-                  <div className="product-card p-3">
+                  // Eğer sub_children yoksa, tıklanabilir ürün kartı olarak göster
+                  <div 
+                    className="product-card p-3 cursor-pointer"
+                    onClick={() => handleProductClick(item.slug)}
+                  >
                     <h5 className="product-name">{item.name}</h5>
                     {item.description && (
                       <p className="product-description small text-muted">{item.description}</p>
