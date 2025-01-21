@@ -140,7 +140,7 @@ function ProductDetail() {
     "Lemon Cheesecake": "/assets/icons/lemonCheescake.webp",
     Muhallebi: "/assets/icons/muhallebi.webp",
     Ahududu: "/assets/icons/ahududu.webp",
-    Şeftali: "/assets/icons/seftali.webp", 
+    Şeftali: "/assets/icons/seftali.webp",
   };
 
   return (
@@ -277,13 +277,13 @@ function ProductDetail() {
                     >
                       {item}
                       <img
-                      src={aromaColors[item.trim()] || "transparent"}
+                        src={aromaColors[item.trim()] || "transparent"}
                         style={{
                           display: "inline-block",
-                          width: "30px",
+                          width: "35px",
                           padding: "5px",
                           height: "100%",
-                         
+
                         }}
                       ></img>
                     </div>

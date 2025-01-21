@@ -74,4 +74,3 @@ const routes = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
   <RouterProvider router={routes} />
 );
-  

@@ -10,37 +10,43 @@
     }
   }
 }
+
 @media (min-width: 768px) {
   #Nav {
     height: 50px;
 
     .col-4 {
       height: 45px;
+
       span {
         font-size: 10px !important;
       }
     }
   }
 }
+
 @media (max-width: 768px) {
+
   #NavDropdown,
   #Nav {
     display: none !important;
   }
 }
-@media (min-width:768px) and (max-width:992px){
-  #NavDropdown{
+
+@media (min-width:768px) and (max-width:992px) {
+  #NavDropdown {
     .dropdown {
       padding: 0px 120px !important;
+
       .dropdown-item-container {
         position: relative;
-        
+
         .dropdown-item {
           color: white;
           text-decoration: none;
           padding: 0px !important;
           transition: color 0.3s ease;
-          
+
           &:hover {
             color: #f8f9fa;
             background-color: rgba(255, 255, 255, 0.1);
@@ -49,20 +55,20 @@
       }
     }
   }
-  
+
 }
 
 #NavDropdown {
   .dropdown {
     .dropdown-item-container {
       position: relative;
-      
+
       .dropdown-item {
         color: white;
         text-decoration: none;
         padding: 8px 16px;
         transition: color 0.3s ease;
-        
+
         &:hover {
           color: #f8f9fa;
           background-color: rgba(255, 255, 255, 0.1);
@@ -96,7 +102,7 @@
       height: 30px;
       background: transparent;
     }
-    
+
     &::after {
       content: '';
       position: absolute;
@@ -118,7 +124,7 @@
 
       h4 {
         color: #333;
-        font-size: 1rem !important;
+        font-size: 1.1rem !important;
         margin-bottom: 12px;
         font-weight: 500 !important;
         text-transform: uppercase;
@@ -135,8 +141,8 @@
         text-decoration: none;
         display: block;
         padding: 4px 0;
-        font-size: 0.7rem !important;
-        
+        font-size: 0.9rem !important;
+
         &:hover {
           color: #000;
         }
@@ -149,7 +155,7 @@
 
       h4 {
         color: #333;
-        font-size: 0.9rem !important;
+        font-size: 1rem !important;
         margin-bottom: 16px;
         font-weight: 500;
         text-transform: uppercase;
@@ -177,13 +183,13 @@
 
         .seller-info {
           h5 {
-            font-size: 0.7rem !important;
+            font-size: 0.9rem !important;
             margin: 0 0 4px 0;
             font-weight: 600;
           }
 
           p {
-            font-size: 0.6rem !important;
+            font-size: 0.8rem !important;
             color: #666;
             margin: 0;
           }

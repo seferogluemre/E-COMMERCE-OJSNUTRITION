@@ -22,7 +22,7 @@ export const isAuthenticated = () => {
 export const login = async (email: string, password: string) => {
   try {
     const dataForApi: LoginApiData = {
-      username: email,  
+      username: email,
       password: password,
     };
 

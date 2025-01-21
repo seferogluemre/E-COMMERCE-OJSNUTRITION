@@ -75,9 +75,9 @@ function Signup() {
   return (
     <>
       {alert && (
-        <Alert 
-          variant={alert.type} 
-          onClose={() => setAlert(null)} 
+        <Alert
+          variant={alert.type}
+          onClose={() => setAlert(null)}
           dismissible
           className="mb-4"
         >
@@ -89,8 +89,8 @@ function Signup() {
           <div className="col-6">
             <FormGroup controlId="signupFirstName">
               <FormLabel>Ad</FormLabel>
-              <FormControl 
-                type="text" 
+              <FormControl
+                type="text"
                 {...register("firstName")}
                 isInvalid={!!errors.firstName}
               />
@@ -102,8 +102,8 @@ function Signup() {
           <div className="col-6">
             <FormGroup controlId="signupLastName">
               <FormLabel>Soyad</FormLabel>
-              <FormControl 
-                type="text" 
+              <FormControl
+                type="text"
                 {...register("lastName")}
                 isInvalid={!!errors.lastName}
               />
@@ -116,8 +116,8 @@ function Signup() {
 
         <FormGroup className="mb-3" controlId="signupEmail">
           <FormLabel>E-Posta</FormLabel>
-          <FormControl 
-            type="email" 
+          <FormControl
+            type="email"
             {...register("email")}
             isInvalid={!!errors.email}
           />
@@ -128,8 +128,8 @@ function Signup() {
 
         <FormGroup className="mb-4" controlId="signupPassword">
           <FormLabel>Şifre</FormLabel>
-          <FormControl 
-            type="password" 
+          <FormControl
+            type="password"
             {...register("password")}
             isInvalid={!!errors.password}
           />

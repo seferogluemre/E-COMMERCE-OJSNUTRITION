@@ -71,7 +71,7 @@ function NavDropdown() {
       if (window.scrollY > 0) {
         // Sayfa kaydırılmaya başlandıysa
         setHoveredLink(null);
-      } 
+      }
     };
     window.addEventListener('scroll', handleScroll);
 
@@ -101,7 +101,7 @@ function NavDropdown() {
                       <div key={child.id} className="category-item">
                         <h4>{child.name}</h4>
                         <div className="sub-items">
-                          {child.sub_children?.slice(0,7).map((subChild, idx) => (
+                          {child.sub_children?.slice(0, 7).map((subChild, idx) => (
                             <NavLink key={idx} to={`/products/${subChild.slug}`} className="category-link">
                               {subChild.name}
                             </NavLink>
@@ -113,14 +113,14 @@ function NavDropdown() {
                   <div className="top-sellers">
                     <h4>En Çok Satanlar</h4>
                     {getCategoryBySlug(link.category.toLowerCase())?.top_sellers.map((seller, idx) => (
-                      <NavLink to={`/products/${seller.slug}`} className="text-decoration-none"> 
-                      <div key={idx} className="top-seller-item">
-                        <img src={PHOTO_URL + seller.picture_src} alt={seller.name} />
-                        <div className="seller-info ">
-                          <h5>{seller.name}</h5>
-                          <p>{seller.description}</p>
+                      <NavLink to={`/products/${seller.slug}`} className="text-decoration-none">
+                        <div key={idx} className="top-seller-item">
+                          <img src={PHOTO_URL + seller.picture_src} alt={seller.name} />
+                          <div className="seller-info ">
+                            <h5>{seller.name}</h5>
+                            <p>{seller.description}</p>
+                          </div>
                         </div>
-                      </div>
                       </NavLink>
                     ))}
                   </div>

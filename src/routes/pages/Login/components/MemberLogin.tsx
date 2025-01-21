@@ -2,8 +2,6 @@ import { Button, FormControl, FormGroup, FormLabel } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { BASE_URL } from "../../../../services/api/products";
-import { setAuthUser, setTokenAndAuthUser } from "../../../../services/api/collections/storage";
 import { login } from "../../../../services/api/collections/auth";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -14,12 +12,6 @@ interface ILoginFormInputs {
   password: string;
 }
 
-// API'ye gönderilecek veriler için interface tanımı
-interface ILoginApiData {
-  username: string;
-  password: string;
-  api_key: string;
-}
 
 // Form validation şeması
 const schema = yup.object().shape({
@@ -57,7 +49,7 @@ function MemberLogin() {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}> 
+      <form onSubmit={handleSubmit(onSubmit)}>
         {loginError && (
           <div className="alert alert-danger mb-3" role="alert">
             {loginError}
@@ -77,9 +69,9 @@ function MemberLogin() {
         </FormGroup>
         <FormGroup className="mb-3" controlId="loginPassword">
           <FormLabel>Şifre</FormLabel>
-          <FormControl 
-            type="password" 
-            placeholder="Şifrenizi girin" 
+          <FormControl
+            type="password"
+            placeholder="Şifrenizi girin"
             {...register("password")}
             isInvalid={!!errors.password}
           />
