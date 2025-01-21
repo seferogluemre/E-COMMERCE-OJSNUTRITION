@@ -5,8 +5,6 @@ const USER_STORAGE_KEY="user";
 const REFRESH_TOKEN_STORAGE_KEY = "refresh_token";
 
 
-
-
 function setAccessToken(access_token: string) {
   localStorage.setItem(ACCESS_TOKEN_STORAGE_KEY, access_token);
 }
