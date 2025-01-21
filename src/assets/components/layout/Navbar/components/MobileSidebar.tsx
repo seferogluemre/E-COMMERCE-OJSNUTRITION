@@ -5,39 +5,44 @@ import DrawerList from "./DrawerList";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import "./MobileSidebar.scss";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
-import ProductsDrawer from './ProductsDrawer';
+import ProductsDrawer from "./ProductsDrawer";
+import { CategoriesResponseProps, CategoryProps, ChildProps, MobileSidebarProps } from "./SidebarType";
 
-interface MobileSidebarProps {
-  show: boolean;
-  handleClose: () => void;
-}
+
 function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
-  const [categories, setCategories] = useState([]);
-  const [selectedSubChildren, setSelectedSubChildren] = useState([]);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedProducts, setSelectedProducts] = useState([]);
-  const [productTitle, setProductTitle] = useState('');
-  const [showProducts, setShowProducts] = useState(false);
-  const [subCategoryProducts, setSubCategoryProducts] = useState([]);
-  const [showSubProducts, setShowSubProducts] = useState(false);
-  const [subProductTitle, setSubProductTitle] = useState('');
+  //State
+  const [categories, setCategories] = useState<CategoryProps[]>([]);
+  const [selectedSubChildren, setSelectedSubChildren] = useState<CategoryProps["subChildren"]>([]);
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+  const [selectedCategory, setSelectedCategory] = useState<CategoryProps["subChildren" | "top_sellers" | "children"]>([]);
+  const [selectedProducts, setSelectedProducts] = useState<CategoryProps[]>([]);
+  const [productTitle, setProductTitle] = useState("");
+  const [showProducts, setShowProducts] = useState<boolean>(false);
+  const [subCategoryProducts, setSubCategoryProducts] = useState<ChildProps[]>([]);
+  const [showSubProducts, setShowSubProducts] = useState<boolean>(false);
+  const [subProductTitle, setSubProductTitle] = useState("");
   const location = useLocation();
 
   async function getCategories() {
-    const categoriesResponse = axios.get(
-      "https://fe1111.projects.academy.onlyjs.com/api/v1/categories"
-    );
-    const categoriesData = (await categoriesResponse).data.data;
-    // console.log(categoriesData.data[1].top_sellers);
-    console.log(categoriesData.data[1].children);
-    // console.log(categoriesData.data[1].children);
+    try {
+      const categoriesResponse = await axios.get(
+        "https://fe1111.projects.academy.onlyjs.com/api/v1/categories"
+      );
 
-    const updatedCategories = categoriesData.data.map((item) => ({
-      ...item,
-      subChildren: item.children[0]?.sub_children || [],
-    }));
-    setCategories(updatedCategories);
+      const categoriesData: CategoriesResponseProps[] =
+        categoriesResponse.data.data;
+      console.log(categoriesData);
+
+      // Çocuk verilerini işleyin
+      const updatedCategories = categoriesData.data?.map((item: CategoryProps) => ({
+        ...item,
+        subChildren: item.children?.[0]?.sub_children || [], // Opsiyonel alanları kontrol edin
+      }));
+
+      setCategories(updatedCategories);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
   }
 
   useEffect(() => {
@@ -53,9 +58,9 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
 
   const handleCategoryClick = (category) => {
     setSelectedSubChildren(category.subChildren);
-    setSelectedCategory(category);
-    setIsDrawerOpen(true);
-    handleClose();
+    setSelectedCategory(category); // Tüm kategori bilgilerini set ediyorsunuz
+    setIsDrawerOpen(true); // Çekmeceyi açıyorsunuz
+    handleClose(); // Muhtemelen başka bir UI işlemini kapatıyorsunuz
   };
 
   const handleDrawerClose = () => {
@@ -68,34 +73,38 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
   };
   const navigate = useNavigate();
 
-  const handleItemClick = async (items: any[], type: 'topSeller' | 'sub_children' | 'children', categoryName: string) => {
-    console.log('Items received:', items);
+  const handleItemClick = async (
+    items: any[],
+    type: "topSeller" | "sub_children" | "children",
+    categoryName: string
+  ) => {
+    console.log("Items received:", items);
     let displayItems = [];
 
     switch (type) {
-      case 'topSeller':
+      case "topSeller":
         displayItems = items || [];
         break;
-      case 'sub_children':
-        displayItems = items.map(item => ({
+      case "sub_children":
+        displayItems = items.map((item) => ({
           id: item.slug,
           name: item.name,
           slug: item.slug,
-          order: item.order
+          order: item.order,
         }));
         break;
-      case 'children':
+      case "children":
         displayItems = items;
         break;
     }
 
-    console.log('Display Items:', displayItems);
+    console.log("Display Items:", displayItems);
     setSelectedProducts(displayItems);
     setProductTitle(categoryName);
     setShowProducts(true);
   };
 
-  const handleSubCategoryClick = (items: any[], title: string) => {
+  const handleSubCategoryClick = (items: ChildProps[], title: string) => {
     setSubCategoryProducts(items);
     setSubProductTitle(title);
     setShowSubProducts(true);
@@ -113,14 +122,14 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
           <div className="p-3">
             <ul className="list-unstyled">
               <p className="fs-3 text-black">
-                {categories?.map((item) => (
+                {categories?.map((item: CategoryProps) => (
                   <li
                     className="my-3 d-flex justify-content-between"
                     key={item.id}
                     onClick={() => handleCategoryClick(item)}
                   >
                     {item.name}
-                    <span className="">
+                    <span >
                       <FaArrowRight />
                     </span>
                   </li>
