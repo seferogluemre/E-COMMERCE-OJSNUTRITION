@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import "./NavDropdown.scss";
 import { PHOTO_URL } from "../../../../services/api/products";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 interface SubChild {
   name: string;
@@ -34,7 +34,7 @@ interface Category {
   children: Child[];
   top_sellers: TopSeller[];
 }
-  
+
 function NavDropdown() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
@@ -68,7 +68,7 @@ function NavDropdown() {
   return (
     <Container fluid className="bg-dark mx-0" id="NavDropdown">
       <div className="container-sm">
-        <div className="dropdown d-flex justify-content-center column-gap-5" style={{ color: "white", height: "40px", padding: "10px" }}>
+        <div className="dropdown d-flex align-items-center justify-content-center column-gap-5" style={{ color: "white", height: "40px", padding: "10px" }}>
           {Links.map((link, index) => (
             <div
               key={index}
@@ -87,9 +87,9 @@ function NavDropdown() {
                         <h4>{child.name}</h4>
                         <div className="sub-items">
                           {child.sub_children?.map((subChild, idx) => (
-                            <a key={idx} href={`/products/${subChild.slug}`} className="category-link">
+                            <NavLink key={idx} to={`/products/${subChild.slug}`} className="category-link">
                               {subChild.name}
-                            </a>
+                            </NavLink>
                           ))}
                         </div>
                       </div>
@@ -98,13 +98,15 @@ function NavDropdown() {
                   <div className="top-sellers">
                     <h4>En Çok Satanlar</h4>
                     {getCategoryBySlug(link.category.toLowerCase())?.top_sellers.map((seller, idx) => (
+                      <NavLink to={`/products/${seller.slug}`} className="text-decoration-none"> 
                       <div key={idx} className="top-seller-item">
-                        <img src={PHOTO_URL +seller.picture_src} alt={seller.name} />
-                        <div className="seller-info">
+                        <img src={PHOTO_URL + seller.picture_src} alt={seller.name} />
+                        <div className="seller-info ">
                           <h5>{seller.name}</h5>
                           <p>{seller.description}</p>
                         </div>
                       </div>
+                      </NavLink>
                     ))}
                   </div>
                 </div>
