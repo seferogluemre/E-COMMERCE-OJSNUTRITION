@@ -82,7 +82,7 @@ function ProductComment() {
                           <FaStar key={star} />
                         ))}
                       </div>
-                      <span className="verified-buyer">DOĞRULANMIŞ SATICI</span>
+                      <span className="verified-buyer">DOĞRULANMIŞ MÜŞTERİ</span>
                     </div>
                     <h3 className="reviewer-name">
                       {review.first_name} {review.last_name}

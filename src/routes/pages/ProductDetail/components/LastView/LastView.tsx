@@ -34,13 +34,13 @@ const LastView: React.FC = () => {
 
   return (
     <>
-      <Container className="py-3">
+      <Container className="py-lg-3 py-sm-1">
         <div>
           {lastViewProducts.length > 0 && (
             <h1 className="text-center fs-3">Son Görüntülenenler</h1>
           )}
         </div>
-        <Row className="mb-5">
+        <Row className="mb-2">
           {Array.isArray(lastViewProducts) &&
             lastViewProducts.slice(0, 6)?.map((data) => (
               <div

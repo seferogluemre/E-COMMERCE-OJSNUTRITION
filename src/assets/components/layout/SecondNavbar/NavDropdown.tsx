@@ -40,12 +40,12 @@ function NavDropdown() {
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
   const Links = [
-    { Link: "Protein", to: "/", category: "protein" },
-    { Link: "Spor Gıdaları", to: "", category: "spor-gidalari" },
+    { Link: "Protein", to: "/products", category: "protein" },
+    { Link: "Spor Gıdaları", to: "/products", category: "spor-gidalari" },
     { Link: "Tüm ürünler", to: "/products", category: "products" },
-    { Link: "Saglık", to: "/", category: "saglik" },
-    { Link: "Gıda", to: "/", category: "gida" },
-    { Link: "Vitamin", to: "/", category: "vitamin" },
+    { Link: "Saglık", to: "/products", category: "saglik" },
+    { Link: "Gıda", to: "/products", category: "gida" },
+    { Link: "Vitamin", to: "/products", category: "vitamin" },
   ];
 
   useEffect(() => {
@@ -65,9 +65,24 @@ function NavDropdown() {
     return categories.find((cat) => cat.slug === slug);
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      //Eger scroll kaydırılmaya başlarsa setHoverLink null yapılıyor ve modal kapatılıyor
+      if (window.scrollY > 0) {
+        // Sayfa kaydırılmaya başlandıysa
+        setHoveredLink(null);
+      } 
+    };
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <Container fluid className="bg-dark mx-0" id="NavDropdown">
-      <div className="container-sm">
+      <div className="container">
         <div className="dropdown d-flex align-items-center justify-content-center column-gap-5" style={{ color: "white", height: "40px", padding: "10px" }}>
           {Links.map((link, index) => (
             <div
@@ -86,7 +101,7 @@ function NavDropdown() {
                       <div key={child.id} className="category-item">
                         <h4>{child.name}</h4>
                         <div className="sub-items">
-                          {child.sub_children?.map((subChild, idx) => (
+                          {child.sub_children?.slice(0,7).map((subChild, idx) => (
                             <NavLink key={idx} to={`/products/${subChild.slug}`} className="category-link">
                               {subChild.name}
                             </NavLink>

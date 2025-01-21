@@ -207,9 +207,10 @@ $transition-speed: 0.3s;
         .verified-buyer {
           display: inline-block;
           color: #2e7d32;
-          font-size: 14px;
-          padding: 4px 8px;
-          border-radius: 4px;
+          background-color: #BBDCC7;
+          font-size: 13px !important;
+          padding: 4px 8px; 
+          border-radius: 20px;
           margin-top: 10px;
         }
 
