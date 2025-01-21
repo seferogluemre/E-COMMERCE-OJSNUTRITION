@@ -2,15 +2,47 @@ import { Container } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./NavDropdown.scss";
+import { PHOTO_URL } from "../../../../services/api/products";
+import { Link } from "react-router-dom";
 
+interface SubChild {
+  name: string;
+  slug: string;
+  order: number;
+}
+
+interface Child {
+  id: string;
+  name: string;
+  slug: string;
+  order: number;
+  sub_children?: SubChild[];
+}
+
+interface TopSeller {
+  name: string;
+  slug: string;
+  description: string;
+  picture_src: string;
+}
+
+interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  order: number;
+  children: Child[];
+  top_sellers: TopSeller[];
+}
+  
 function NavDropdown() {
-  const [categories, setCategories] = useState([]);
-  const [hoveredLink, setHoveredLink] = useState(null);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
   const Links = [
     { Link: "Protein", to: "/", category: "protein" },
     { Link: "Spor Gıdaları", to: "", category: "spor-gidalari" },
-    { Link: "Tüm ürünler", to: "/products", category: "all" },
+    { Link: "Tüm ürünler", to: "/products", category: "products" },
     { Link: "Saglık", to: "/", category: "saglik" },
     { Link: "Gıda", to: "/", category: "gida" },
     { Link: "Vitamin", to: "/", category: "vitamin" },
@@ -23,16 +55,20 @@ function NavDropdown() {
   async function getCategories() {
     try {
       const response = await axios.get("https://fe1111.projects.academy.onlyjs.com/api/v1/categories");
-      setCategories(response.data.data.data.);
+      setCategories(response.data.data.data);
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
   }
 
+  const getCategoryBySlug = (slug: string) => {
+    return categories.find((cat) => cat.slug === slug);
+  };
+
   return (
     <Container fluid className="bg-dark mx-0" id="NavDropdown">
-      <div className="container">
-        <div className="dropdown d-flex" style={{ color: "white", height: "40px", padding: "10px" }}>
+      <div className="container-sm">
+        <div className="dropdown d-flex justify-content-center column-gap-5" style={{ color: "white", height: "40px", padding: "10px" }}>
           {Links.map((link, index) => (
             <div
               key={index}
@@ -45,18 +81,32 @@ function NavDropdown() {
               </a>
               {hoveredLink === link.Link && (
                 <div className="category-modal">
-                  {categories.map((category) => (
-                    <div key={category.id} className="category-item">
-                      <h4>{category.name}</h4>
-                      {category.children?.map((child) => (
-                        <div key={child.id}>
-                          <a href={`/category/${child.slug}`}>
-                            {child.name}
-                          </a>
+                  <div className="categories-section">
+                    {getCategoryBySlug(link.category.toLowerCase())?.children.map((child) => (
+                      <div key={child.id} className="category-item">
+                        <h4>{child.name}</h4>
+                        <div className="sub-items">
+                          {child.sub_children?.map((subChild, idx) => (
+                            <a key={idx} href={`/products/${subChild.slug}`} className="category-link">
+                              {subChild.name}
+                            </a>
+                          ))}
                         </div>
-                      ))}
-                    </div>
-                  ))}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="top-sellers">
+                    <h4>En Çok Satanlar</h4>
+                    {getCategoryBySlug(link.category.toLowerCase())?.top_sellers.map((seller, idx) => (
+                      <div key={idx} className="top-seller-item">
+                        <img src={PHOTO_URL +seller.picture_src} alt={seller.name} />
+                        <div className="seller-info">
+                          <h5>{seller.name}</h5>
+                          <p>{seller.description}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
