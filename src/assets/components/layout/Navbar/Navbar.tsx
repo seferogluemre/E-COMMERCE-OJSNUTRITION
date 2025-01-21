@@ -17,17 +17,28 @@ import { useState } from "react";
 import Search from "./components/Search";
 import { NavLink } from "react-router-dom";
 import MobileSidebar from "./components/MobileSidebar";
+import { isAuthenticated } from "../../../../services/api/collections/auth";
+import { getAuthUser, removeTokenAndAuthUser } from "../../../../services/api/collections/storage";
+import { useNavigate } from "react-router-dom";
 
 function NavbarComp() {
   const [query, setQuery] = useState<string>("");
   const { searchProducts } = useSearchProduct((state) => state);
   const [show, setShow] = useState(false);
+  const user = getAuthUser() ? JSON.parse(getAuthUser()!) : null;
+  const authenticated = isAuthenticated();
+  const navigate = useNavigate();
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
 
   const handleSearch = () => {
     searchProducts(query);
+  };
+
+  const handleLogout = () => {
+    removeTokenAndAuthUser();
+    navigate("/");
   };
 
   return (
@@ -72,7 +83,7 @@ function NavbarComp() {
             </Form>
           </div>
 
-          <NavbarCollapse className="d-flex justify-content-center  column-gap-lg-3">
+          <NavbarCollapse className="d-flex justify-content-center column-gap-lg-3">
             <div className="dropdown me-1" id="nav-dropdown-account">
               <button
                 className="btn btn-secondary dropdown-toggle"
@@ -81,26 +92,50 @@ function NavbarComp() {
                 aria-expanded="false"
               >
                 <AiOutlineUser className="fs-4" />
-                Hesap
+                {authenticated && user ? `${user.first_name}` : "Hesap"}
               </button>
               <ul className="dropdown-menu">
-                <li>
-                  <NavLink
-                    to="/login"
-                    className="dropdown-item bg-transparent text-black"
-                  >
-                    Üye Ol
-                  </NavLink>
-                </li>
-                <hr className="m-0" />
-                <li>
-                  <NavLink
-                    to="/login"
-                    className="dropdown-item bg-transparent text-black"
-                  >
-                    Üye Girişi
-                  </NavLink>
-                </li>
+                {authenticated && user ? (
+                  <>
+                    <li>
+                      <NavLink
+                        to="/account"
+                        className="dropdown-item bg-transparent text-black"
+                      >
+                        Hesabım
+                      </NavLink>
+                    </li>
+                    <hr className="m-0" />
+                    <li>
+                      <button
+                        onClick={handleLogout}
+                        className="dropdown-item bg-transparent text-black"
+                      >
+                        Çıkış Yap
+                      </button>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li>
+                      <NavLink
+                        to="/login"
+                        className="dropdown-item bg-transparent text-black"
+                      >
+                        Üye Ol
+                      </NavLink>
+                    </li>
+                    <hr className="m-0" />
+                    <li>
+                      <NavLink
+                        to="/login"
+                        className="dropdown-item bg-transparent text-black"
+                      >
+                        Üye Girişi
+                      </NavLink>
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
 

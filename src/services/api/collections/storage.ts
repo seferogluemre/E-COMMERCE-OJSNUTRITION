@@ -4,7 +4,6 @@ const ACCESS_TOKEN_STORAGE_KEY = "access_token";
 const USER_STORAGE_KEY="user";
 const REFRESH_TOKEN_STORAGE_KEY = "refresh_token";
 
-const isAuthenticated=false;
 
 
 

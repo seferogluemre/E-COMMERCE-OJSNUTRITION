@@ -2,9 +2,7 @@ import { Button, FormControl, FormGroup, FormLabel } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { BASE_URL } from "../../../../services/api/products";
-import { setAuthUser } from "../../../../services/api/collections/storage";
-import { register } from "../../../../services/api/collections/auth";
+import { register as registerUser } from "../../../../services/api/collections/auth";
 
 // Form verileri için interface tanımı
 interface IFormInputs {
@@ -45,7 +43,7 @@ function Signup() {
 
   const onSubmit = async (formData: IFormInputs) => {
     try {
-      const result = await register(formData);
+      const result = await registerUser(formData);
       if (result.success) {
         console.log("Kayıt başarılı:", result.data);
         // Burada yönlendirme yapabilirsiniz
