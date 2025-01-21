@@ -4,6 +4,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { BASE_URL } from "../../../../services/api/products";
 import { setAuthUser, setTokenAndAuthUser } from "../../../../services/api/collections/storage";
+import { login } from "../../../../services/api/collections/auth";
+import { useNavigate } from "react-router-dom";
 
 // Form verileri için interface tanımı
 interface ILoginFormInputs {
@@ -32,30 +34,16 @@ function MemberLogin() {
   } = useForm<ILoginFormInputs>({
     resolver: yupResolver(schema),
   });
+  const navigate=useNavigate();
 
   const onSubmit = async (formData: ILoginFormInputs) => {
     try {
-      const dataForApi: ILoginApiData = {
-        username: formData.email,
-        password: formData.password,
-        api_key: "370718"
-      };
-
-      const response = await fetch(BASE_URL+"/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(dataForApi),
-      });
-
-      const jsonResponse = await response.json();
-
-      setTokenAndAuthUser(jsonResponse.access_token, jsonResponse.refresh_token);
-      if (response.ok) {
-        console.log("Giriş başarılı:", jsonResponse);
+      const result = await login(formData.email, formData.password);
+      if (result.success) {
+        console.log("Giriş başarılı:", result.data);
+        navigate("/");
       } else {
-        console.error("Giriş hatası:", jsonResponse);
+        console.error("Giriş hatası:", result.error);
       }
     } catch (error) {
       console.error("Bir hata oluştu:", error);
