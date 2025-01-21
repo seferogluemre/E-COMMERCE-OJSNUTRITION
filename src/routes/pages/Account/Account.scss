@@ -3,3 +3,93 @@
     flex-direction: row !important;
   }
 }
+
+// Adres formu stilleri
+.address-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+
+    input, 
+    select, 
+    textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    button {
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: darken(#007bff, 10%);
+      }
+    }
+  }
+
+  .address-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+
+    .address-card {
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      h3 {
+        margin-top: 0;
+        color: #333;
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+      }
+
+      p {
+        color: #666;
+        margin: 5px 0;
+      }
+    }
+  }
+}
+
+// Responsive tasarım için ek media query'ler
+@media (max-width: 768px) {
+  .address-container {
+    padding: 15px;
+
+    .address-cards {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .address-container {
+    form {
+      gap: 10px;
+    }
+
+    .address-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+}

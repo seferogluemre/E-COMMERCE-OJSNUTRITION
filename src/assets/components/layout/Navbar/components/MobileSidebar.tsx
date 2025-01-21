@@ -7,9 +7,14 @@ import "./MobileSidebar.scss";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import ProductsDrawer from "./ProductsDrawer";
 import { CategoriesResponseProps, CategoryProp, CategoryProps, ChildProps, MobileSidebarProps } from "./SidebarType";
+import { isAuthenticated } from "../../../../../services/api/collections/auth";
+import { getAuthUser, removeTokenAndAuthUser } from "../../../../../services/api/collections/storage";
 
 
 function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
+  const user = getAuthUser() ? JSON.parse(getAuthUser()!) : null;
+  const authenticated = isAuthenticated();
+  const navigate = useNavigate();
   //State
   const [categories, setCategories] = useState<CategoryProps[]>([]);
   const [selectedSubChildren, setSelectedSubChildren] = useState<CategoriesResponseProps["subChildren"]>([]);
@@ -69,7 +74,6 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
     setIsDrawerOpen(false);
     handleClose();
   };
-  const navigate = useNavigate();
 
   const handleItemClick = async (
     items: any[],
@@ -89,8 +93,8 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
           name: item.name,
           slug: item.slug,
           order: item.order,
-        }));
-        break;
+          }));
+          break;
       case "children":
         displayItems = items;
         break;
@@ -106,6 +110,11 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
     setSubCategoryProducts(items);
     setSubProductTitle(title);
     setShowSubProducts(true);
+  };
+
+  const handleLogout = () => {
+    removeTokenAndAuthUser();
+    navigate("/");
   };
 
   return (
@@ -138,14 +147,45 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
           </div>
           <div className="mt-2 p-3 bg-body-tertiary h-100 mobile-sidebar-bottom-links">
             <ul className="list-unstyled d-flex flex-column row-gap-2">
-              <li>
-                <NavLink
-                  to={"/account"}
-                  className="text-decoration-none text-black"
-                >
-                  Hesabım
-                </NavLink>
-              </li>
+              {authenticated && user ? (
+                <>
+                  <li>
+                    <NavLink
+                      to="/account"
+                      className="text-decoration-none text-black"
+                    >
+                      Hesabım
+                    </NavLink>
+                  </li>
+                  <li>
+                    <button
+                      onClick={handleLogout}
+                      className="text-decoration-none text-black border-0 bg-transparent"
+                    >
+                      Çıkış Yap
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li>
+                    <NavLink
+                      to="/login"
+                      className="text-decoration-none text-black"
+                    >
+                      Üye Girişi
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/login"
+                      className="text-decoration-none text-black"
+                    >
+                      Üye Ol
+                    </NavLink>
+                  </li>
+                </>
+              )}
               <li>
                 <NavLink
                   to={"/about"}
