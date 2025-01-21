@@ -11,7 +11,7 @@ interface ILoginFormInputs {
 
 // API'ye gönderilecek veriler için interface tanımı
 interface ILoginApiData {
-  email: string;
+  username: string;
   password: string;
   api_key: string;
 }
@@ -34,7 +34,7 @@ function MemberLogin() {
   const onSubmit = async (formData: ILoginFormInputs) => {
     try {
       const dataForApi: ILoginApiData = {
-        email: formData.email,
+        username: formData.email,
         password: formData.password,
         api_key: "370718"
       };
@@ -74,7 +74,6 @@ function MemberLogin() {
             <div className="text-danger">{errors.email.message}</div>
           )}
         </FormGroup>
-
         <FormGroup className="mb-3" controlId="loginPassword">
           <FormLabel>Şifre</FormLabel>
           <FormControl 
