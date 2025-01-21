@@ -6,15 +6,15 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import "./MobileSidebar.scss";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import ProductsDrawer from "./ProductsDrawer";
-import { CategoriesResponseProps, CategoryProps, ChildProps, MobileSidebarProps } from "./SidebarType";
+import { CategoriesResponseProps, CategoryProp, CategoryProps, ChildProps, MobileSidebarProps } from "./SidebarType";
 
 
 function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
   //State
   const [categories, setCategories] = useState<CategoryProps[]>([]);
-  const [selectedSubChildren, setSelectedSubChildren] = useState<CategoryProps["subChildren"]>([]);
+  const [selectedSubChildren, setSelectedSubChildren] = useState<CategoriesResponseProps["subChildren"]>([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
-  const [selectedCategory, setSelectedCategory] = useState<CategoryProps["subChildren" | "top_sellers" | "children"]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<CategoryProp>();
   const [selectedProducts, setSelectedProducts] = useState<CategoryProps[]>([]);
   const [productTitle, setProductTitle] = useState("");
   const [showProducts, setShowProducts] = useState<boolean>(false);
@@ -57,6 +57,7 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
   }, [location]);
 
   const handleCategoryClick = (category) => {
+
     setSelectedSubChildren(category.subChildren);
     setSelectedCategory(category); // Tüm kategori bilgilerini set ediyorsunuz
     setIsDrawerOpen(true); // Çekmeceyi açıyorsunuz
@@ -181,7 +182,7 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
         <Offcanvas.Body>
           <DrawerList
             subChildren={selectedSubChildren}
-            topSellers={selectedCategory?.top_sellers || []}
+            top_sellers={selectedCategory?.top_sellers || []}
             children={selectedCategory?.children || []}
             onItemClick={handleItemClick}
           />

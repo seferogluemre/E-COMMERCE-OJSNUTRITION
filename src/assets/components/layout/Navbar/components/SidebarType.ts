@@ -13,18 +13,18 @@ export interface ChildProps {
 }
 
 export interface CategoriesResponseProps {
-    id: string;
-    name: string;
-    slug: string;
-    order: number;
+    id?: string;
+    name?: string;
+    slug?: string;
+    order?: number;
     children?: ChildProps[]; // Opsiyonel yapıldı
-    top_sellers?: {
-        name: string;
-        slug: string;
-        description: string;
-        picture_src: string;
-    }[]; // Array olarak tanımlandı:
-    subChildren?: SubChild[]
+    top_sellers?: TopSeller[]; // Kullanılabilir tür tanımlandı
+    subChildren?: SubChildProps[]; // Doğru tür referansı kullanıldı
+    onItemClick: (
+        items: any[],
+        type: "topSeller" | "sub_children" | "children",
+        categoryName: string
+    ) => void;
 }
 
 export interface SubChild {
@@ -38,7 +38,7 @@ export interface Child {
     name: string;
     slug: string;
     order: number;
-    sub_children: SubChild[];
+    sub_children?: SubChild[]; // Opsiyonel hale getirildi
 }
 
 export interface TopSeller {
@@ -53,10 +53,15 @@ export interface CategoryProps {
     name: string;
     slug: string;
     order: number;
-    children: Child[];
-    top_sellers: TopSeller[];
-    subChildren?: SubChild[];
+    children?: Child[]; // Opsiyonel hale getirildi
+    top_sellers?: TopSeller[]; // Opsiyonel hale getirildi
+    subChildren?: SubChild[]; // Doğru tür referansı kullanıldı
 }
+export type CategoryProp = {
+    subChildren: SubChild[];
+    top_sellers: TopSeller[];
+    children: Child[];
+};
 
 export interface MobileSidebarProps {
     show: boolean;

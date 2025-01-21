@@ -1,29 +1,20 @@
 import { FaArrowRight } from "react-icons/fa";
+import { CategoriesResponseProps } from "./SidebarType";
 
-interface DrawerListProps {
-  subChildren: any[];
-  topSellers: any[];
-  children: any[];
-  onItemClick: (
-    items: any[],
-    type: "topSeller" | "sub_children" | "children",
-    categoryName: string
-  ) => void;
-}
 
 function DrawerList({
   subChildren,
-  topSellers,
+  top_sellers,
   children,
   onItemClick,
-}: DrawerListProps) {
+}: CategoriesResponseProps) {
   return (
     <div>
       {/* Çok Satanlar Başlığı */}
-      {topSellers && topSellers.length > 0 && (
+      {top_sellers && top_sellers.length > 0 && (
         <div
           className="category-header py-3 d-flex justify-content-between align-items-center cursor-pointer border-bottom"
-          onClick={() => onItemClick(topSellers, "topSeller", "Çok Satanlar")}
+          onClick={() => onItemClick(top_sellers, "topSeller", "Çok Satanlar")}
         >
           <h3 className="m-0">Çok Satanlar</h3>
           <FaArrowRight />
