@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { Button, FormControl, FormGroup, FormLabel } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { BASE_URL } from "../../../../services/api/products";
 
 // Form verileri için interface tanımı
 interface IFormInputs {
@@ -50,7 +50,7 @@ function Signup() {
         api_key: "370718"
       };
 
-      const response = await fetch("https://fe1111.projects.academy.onlyjs.com/api/v1/auth/register", {
+      const response = await fetch(BASE_URL+"/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -131,19 +131,6 @@ function Signup() {
         <Button variant="dark" type="submit" className="w-100 mb-3">
           ÜYE OL
         </Button>
-        <div className="text-center">
-          <span className="text-muted">Zaten hesabınız var mı? </span>
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              setKey("login");
-            }}
-            className="text-decoration-none"
-          >
-            Giriş Yap
-          </a>
-        </div>
       </form>
     </>
   );
