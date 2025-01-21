@@ -18,7 +18,10 @@ import Search from "./components/Search";
 import { NavLink } from "react-router-dom";
 import MobileSidebar from "./components/MobileSidebar";
 import { isAuthenticated } from "../../../../services/api/collections/auth";
-import { getAuthUser, removeTokenAndAuthUser } from "../../../../services/api/collections/storage";
+import {
+  getAuthUser,
+  removeTokenAndAuthUser,
+} from "../../../../services/api/collections/storage";
 import { useNavigate } from "react-router-dom";
 
 function NavbarComp() {
@@ -92,7 +95,9 @@ function NavbarComp() {
                 aria-expanded="false"
               >
                 <AiOutlineUser className="fs-4" />
-                {authenticated && user ? `${user.firstName || user.first_name}` : "Hesap"}
+                {authenticated && user
+                  ? `${user.firstName || user.first_name}`
+                  : "Hesap"}
               </button>
               <ul className="dropdown-menu">
                 {authenticated && user ? (

@@ -1,5 +1,10 @@
 import { BASE_URL } from "../products";
-import { setTokenAndAuthUser, setAuthUser, getAccessToken, removeTokenAndAuthUser } from "./storage";
+import {
+  setTokenAndAuthUser,
+  setAuthUser,
+  getAccessToken,
+  removeTokenAndAuthUser,
+} from "./storage";
 
 interface LoginApiData {
   username: string;
@@ -19,11 +24,17 @@ export const isAuthenticated = () => {
   return !!getAccessToken();
 };
 
-export const login = async (email: string, password: string) => {
+export const login = async (
+  email: string,
+  password: string,
+  apiKey: string
+) => {
   try {
-    const dataForApi: LoginApiData = {
+    // API'ye gönderilecek veriler
+    const dataForApi: LoginApiData & { api_key: string } = {
       username: email,
       password: password,
+      api_key: apiKey, // Üçüncü parametre olarak apiKey eklendi
     };
 
     const response = await fetch(`${BASE_URL}/auth/login`, {
@@ -37,11 +48,17 @@ export const login = async (email: string, password: string) => {
     const jsonResponse = await response.json();
 
     if (response.ok) {
-      setTokenAndAuthUser(jsonResponse.access_token, jsonResponse.refresh_token);
-      localStorage.setItem('user', JSON.stringify({
-        firstName: jsonResponse.first_name,
-        lastName: jsonResponse.last_name
-      }));
+      setTokenAndAuthUser(
+        jsonResponse.access_token,
+        jsonResponse.refresh_token
+      );
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          firstName: jsonResponse.first_name,
+          lastName: jsonResponse.last_name,
+        })
+      );
       return { success: true, data: jsonResponse };
     } else {
       return { success: false, error: jsonResponse };
@@ -64,7 +81,7 @@ export const register = async (formData: {
       email: formData.email,
       password: formData.password,
       password2: formData.password,
-      api_key: "370718"
+      api_key: "370718",
     };
 
     const response = await fetch(`${BASE_URL}/auth/register`, {
@@ -81,7 +98,7 @@ export const register = async (formData: {
       const userData = {
         firstName: formData.firstName,
         lastName: formData.lastName,
-        email: formData.email
+        email: formData.email,
       };
       setAuthUser(userData);
       return { success: true, data: jsonResponse };
@@ -95,5 +112,5 @@ export const register = async (formData: {
 
 export const logout = () => {
   removeTokenAndAuthUser();
-  localStorage.removeItem('user');
+  localStorage.removeItem("user");
 };

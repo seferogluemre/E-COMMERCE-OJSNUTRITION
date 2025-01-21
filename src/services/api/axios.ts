@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { BASE_URL } from './products';
-import {getAccessToken} from './collections/storage'
+import axios from "axios";
+import { BASE_URL } from "./products";
+import { getAccessToken } from "./collections/storage";
 
 export const createAxiosInstance = () => {
   const token = getAccessToken();
@@ -8,10 +8,10 @@ export const createAxiosInstance = () => {
   const instance = axios.create({
     baseURL: BASE_URL,
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': token ? `Bearer ${token}` : ''
-    }
+      "Content-Type": "application/json",
+      Authorization: token ? `Bearer ${token}` : "",
+    },
   });
 
   return instance;
-}; 
+};

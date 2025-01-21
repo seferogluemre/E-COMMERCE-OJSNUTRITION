@@ -4,25 +4,26 @@ import { createAxiosInstance } from "../../../../services/api/axios";
 
 function AccountInfo() {
   const [userData, setUserData] = useState({
-    first_name: '',
-    last_name: '',
-    phone_number: '',
-    email: '',
+    first_name: "",
+    last_name: "",
+    phone_number: "",
+    email: "",
   });
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState(userData);
+  const [phoneNumber, setPhoneNumber] = useState<number>();
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const api = createAxiosInstance();
-        const response = await api.get('/users/my-account');
+        const response = await api.get("/users/my-account");
         const data = response.data.data;
-        console.log("Giriş yapan kullanıcı:",response.data.data)
+        console.log("Giriş yapan kullanıcı:", response.data.data);
         setUserData(data);
         setFormData(data);
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error("Error fetching user data:", error);
       } finally {
         setLoading(false);
       }
@@ -33,52 +34,38 @@ function AccountInfo() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Telefon numarası kontrolü ve formatı
-    let phoneNumber = formData.phone_number?.replace(/\D/g, ''); 
-    if (phoneNumber && phoneNumber.length !== 11) {
-      alert('Telefon numarası 11 haneli olmalıdır!');
-      return;
-    }
-
-    // Eğer telefon numarası boşsa null gönder
-    if (!phoneNumber) {
-      phoneNumber = null;
-    }
-
     try {
       const api = createAxiosInstance();
       const requestData = {
         first_name: formData.first_name,
         last_name: formData.last_name,
-        phone_number: phoneNumber // string'e çevir
+        phone_number: Number(phoneNumber),
       };
-      
-      console.log('Gönderilen veri:', requestData);
-      
-      const response = await api.put('/users/my-account', requestData);
-      console.log('API yanıtı:', response.data);
 
-      if (response.data.status === 'success') {
-        // State'leri güncelle
+      console.log("Tel no" + phoneNumber);
+      console.log("Gönderilen veri:", requestData);
+
+      const response = await api.put("/users/my-account", requestData);
+      console.log("API yanıtı:", response.data);
+      if (response.data.status === "success") {
         const updatedData = response.data.data;
         setUserData(updatedData);
         setFormData(updatedData);
-        
-        alert('Bilgileriniz başarıyla güncellendi!');
+
+        alert("Bilgileriniz başarıyla güncellendi!");
       }
-    } catch (error: any) {
-      console.error('Error updating user data:', error);
-      console.error('Error response:', error.response?.data);
-      alert('Bilgileriniz güncellenirken bir hata oluştu!');
+    } catch (error) {
+      console.error("Error updating user data:", error);
+      alert("Bilgileriniz güncellenirken bir hata oluştu!");
     }
   };
 
@@ -92,8 +79,8 @@ function AccountInfo() {
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
           <Form.Label>*Ad</Form.Label>
-          <Form.Control 
-            type="text" 
+          <Form.Control
+            type="text"
             name="first_name"
             value={formData.first_name}
             onChange={handleInputChange}
@@ -102,8 +89,8 @@ function AccountInfo() {
 
         <Form.Group className="mb-3">
           <Form.Label>*Soyad</Form.Label>
-          <Form.Control 
-            type="text" 
+          <Form.Control
+            type="text"
             name="last_name"
             value={formData.last_name}
             onChange={handleInputChange}
@@ -117,21 +104,13 @@ function AccountInfo() {
               <img src="https://flagcdn.com/w20/tr.png" alt="TR" width="20" />
               +90
             </span>
-            <Form.Control 
-              type="tel" 
+            <Form.Control
+              type="tel"
               name="phone_number"
-              value={formData.phone_number}
-              onChange={(e) => {
-                // Sadece rakamların girilmesine izin ver
-                const value = e.target.value.replace(/\D/g, '');
-                handleInputChange({
-                  ...e,
-                  target: { ...e.target, value }
-                } as React.ChangeEvent<HTMLInputElement>);
-              }}
-              pattern="[0-9]{11}"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
               placeholder="05XXXXXXXXX"
-              maxLength={11}
+              maxLength={12}
             />
           </div>
         </Form.Group>

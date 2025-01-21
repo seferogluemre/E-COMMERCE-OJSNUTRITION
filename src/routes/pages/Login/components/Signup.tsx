@@ -1,4 +1,10 @@
-import { Button, FormControl, FormGroup, FormLabel, Alert } from "react-bootstrap";
+import {
+  Button,
+  FormControl,
+  FormGroup,
+  FormLabel,
+  Alert,
+} from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -29,8 +35,14 @@ interface User {
 const schema = yup.object().shape({
   firstName: yup.string().required("Ad alanı zorunludur"),
   lastName: yup.string().required("Soyad alanı zorunludur"),
-  email: yup.string().email("Geçerli bir email giriniz").required("Email alanı zorunludur"),
-  password: yup.string().min(6, "Şifre en az 6 karakter olmalıdır").required("Şifre alanı zorunludur"),
+  email: yup
+    .string()
+    .email("Geçerli bir email giriniz")
+    .required("Email alanı zorunludur"),
+  password: yup
+    .string()
+    .min(6, "Şifre en az 6 karakter olmalıdır")
+    .required("Şifre alanı zorunludur"),
 });
 
 function Signup() {
@@ -43,7 +55,7 @@ function Signup() {
   });
 
   const [alert, setAlert] = useState<{
-    type: 'success' | 'danger';
+    type: "success" | "danger";
     message: string;
   } | null>(null);
 
@@ -52,21 +64,21 @@ function Signup() {
       const result = await registerUser(formData);
       if (result.success) {
         setAlert({
-          type: 'success',
-          message: 'Kullanıcı kaydı başarıyla oluşturuldu!'
+          type: "success",
+          message: "Kullanıcı kaydı başarıyla oluşturuldu!",
         });
         console.log("Kayıt başarılı:", result.data);
       } else {
         setAlert({
-          type: 'danger',
-          message: `Kayıt hatası: ${result.error}`
+          type: "danger",
+          message: `Kayıt hatası: ${result.error}`,
         });
         console.error("Kayıt hatası:", result.error);
       }
     } catch (error) {
       setAlert({
-        type: 'danger',
-        message: 'Bir hata oluştu, lütfen tekrar deneyiniz.'
+        type: "danger",
+        message: "Bir hata oluştu, lütfen tekrar deneyiniz.",
       });
       console.error("Bir hata oluştu:", error);
     }

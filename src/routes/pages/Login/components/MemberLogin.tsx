@@ -12,10 +12,12 @@ interface ILoginFormInputs {
   password: string;
 }
 
-
 // Form validation şeması
 const schema = yup.object().shape({
-  email: yup.string().email("Geçerli bir email giriniz").required("Email alanı zorunludur"),
+  email: yup
+    .string()
+    .email("Geçerli bir email giriniz")
+    .required("Email alanı zorunludur"),
   password: yup.string().required("Şifre alanı zorunludur"),
 });
 
@@ -33,12 +35,17 @@ function MemberLogin() {
   const onSubmit = async (formData: ILoginFormInputs) => {
     try {
       setLoginError(null); // Her denemede hata mesajını sıfırla
-      const result = await login(formData.email, formData.password);
+      // API key
+      const apiKey = "370718";
+      // API çağrısı
+      const result = await login(formData.email, formData.password, apiKey);
       if (result.success) {
         console.log("Giriş başarılı:", result.data);
         navigate("/");
       } else {
-        setLoginError("E-posta veya şifre hatalı. Lütfen bilgilerinizi kontrol ediniz.");
+        setLoginError(
+          "E-posta veya şifre hatalı. Lütfen bilgilerinizi kontrol ediniz."
+        );
         console.error("Giriş hatası:", result.error);
       }
     } catch (error) {
