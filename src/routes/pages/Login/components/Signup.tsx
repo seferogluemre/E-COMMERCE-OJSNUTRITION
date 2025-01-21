@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { BASE_URL } from "../../../../services/api/products";
 import { setAuthUser } from "../../../../services/api/collections/storage";
+import { register } from "../../../../services/api/collections/auth";
 
 // Form verileri için interface tanımı
 interface IFormInputs {
@@ -44,30 +45,12 @@ function Signup() {
 
   const onSubmit = async (formData: IFormInputs) => {
     try {
-      const dataForApi: User = {
-        first_name: formData.firstName,
-        last_name: formData.lastName,
-        email: formData.email,
-        password: formData.password,
-        password2: formData.password,
-        api_key: "370718"
-      };
-
-      const response = await fetch(BASE_URL+"/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(dataForApi),
-      });
-
-      const jsonResponse = await response.json();
-      if (response.ok) {
-        setAuthUser(jsonResponse.data);
-        console.log("Kayıt başarılı:", jsonResponse);
+      const result = await register(formData);
+      if (result.success) {
+        console.log("Kayıt başarılı:", result.data);
+        // Burada yönlendirme yapabilirsiniz
       } else {
-        // Hata durumu
-        console.error("Kayıt hatası:", jsonResponse);
+        console.error("Kayıt hatası:", result.error);
       }
     } catch (error) {
       console.error("Bir hata oluştu:", error);
