@@ -124,23 +124,23 @@ function ProductDetail() {
   );
 
   const aromaColors: ColorProps = {
-    Bisküvi: "#D8C3A5",
-    Çikolata: "#3E2723",
-    Muz: "#FFEB3B",
-    "Salted Caramel": "#D2691E",
-    "Choco Nut": "#8B4513",
+    Bisküvi: "/assets/icons/bisküvi.webp",
+    Çikolata: "/assets/icons/çikolata.webp",
+    Muz: "/assets/icons/muz.webp",
+    "Salted Caramel": "/assets/icons/karamel.webp",
+    "Choco Nut": "/assets/icons/çokonat.webp",
     "Hindistan Cevizi": "#FFEBCD",
-    "Raspberry Cheesecake": "#E91E63",
-    Çilek: "#FF1744",
-    Aromasız: "#C0C0C0",
-    Karpuz: "#FF637D",
-    Limonata: "#FFF700",
-    "Fruit Fusion": "#FF4500",
-    "Yeşil Elma": "#8DB600",
-    "Lemon Cheesecake": "#F5EA7E",
-    Muhallebi: "#F5E3D7",
-    Ahududu: "#D32F2F",
-    Şeftali: "#FFB07C", //
+    "Raspberry Cheesecake": "/assets/icons/rasperryChescake.webp",
+    Çilek: "/assets/icons/çilek.webp",
+    Aromasız: "/assets/icons/aromasız.webp",
+    Karpuz: "/assets/icons/karpuz.webp",
+    Limonata: "/assets/icons/limonata.webp",
+    "Fruit Fusion": "/assets/icons/fruitfusion.webp",
+    "Yeşil Elma": "/assets/icons/yesilelma.webp",
+    "Lemon Cheesecake": "/assets/icons/lemonCheescake.webp",
+    Muhallebi: "/assets/icons/muhallebi.webp",
+    Ahududu: "/assets/icons/ahududu.webp",
+    Şeftali: "/assets/icons/seftali.webp", 
   };
 
   return (
@@ -276,16 +276,16 @@ function ProductDetail() {
                       className="product-detail-variant-item flex-wrap d-flex column-gap-3 justify-content-center align-items-center"
                     >
                       {item}
-                      <span
+                      <img
+                      src={aromaColors[item.trim()] || "transparent"}
                         style={{
                           display: "inline-block",
-                          width: "20px",
-                          padding: "4ßpx",
+                          width: "30px",
+                          padding: "5px",
                           height: "100%",
-                          backgroundColor:
-                            aromaColors[item.trim()] || "transparent",
+                         
                         }}
-                      ></span>
+                      ></img>
                     </div>
                   ))}
                 </div>
