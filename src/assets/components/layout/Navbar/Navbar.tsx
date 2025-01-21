@@ -92,7 +92,7 @@ function NavbarComp() {
                 aria-expanded="false"
               >
                 <AiOutlineUser className="fs-4" />
-                {authenticated && user ? `${user.first_name}` : "Hesap"}
+                {authenticated && user ? `${user.firstName || user.first_name}` : "Hesap"}
               </button>
               <ul className="dropdown-menu">
                 {authenticated && user ? (

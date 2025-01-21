@@ -4,7 +4,6 @@ import { setTokenAndAuthUser, setAuthUser, getAccessToken, removeTokenAndAuthUse
 interface LoginApiData {
   username: string;
   password: string;
-  api_key: string;
 }
 
 interface RegisterApiData {
@@ -23,9 +22,8 @@ export const isAuthenticated = () => {
 export const login = async (email: string, password: string) => {
   try {
     const dataForApi: LoginApiData = {
-      username: email,
+      username: email,  
       password: password,
-      api_key: "370718"
     };
 
     const response = await fetch(`${BASE_URL}/auth/login`, {
@@ -40,6 +38,10 @@ export const login = async (email: string, password: string) => {
 
     if (response.ok) {
       setTokenAndAuthUser(jsonResponse.access_token, jsonResponse.refresh_token);
+      localStorage.setItem('user', JSON.stringify({
+        firstName: jsonResponse.first_name,
+        lastName: jsonResponse.last_name
+      }));
       return { success: true, data: jsonResponse };
     } else {
       return { success: false, error: jsonResponse };
@@ -76,7 +78,12 @@ export const register = async (formData: {
     const jsonResponse = await response.json();
 
     if (response.ok) {
-      setAuthUser(jsonResponse.data);
+      const userData = {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email
+      };
+      setAuthUser(userData);
       return { success: true, data: jsonResponse };
     } else {
       return { success: false, error: jsonResponse };
@@ -88,4 +95,5 @@ export const register = async (formData: {
 
 export const logout = () => {
   removeTokenAndAuthUser();
+  localStorage.removeItem('user');
 };

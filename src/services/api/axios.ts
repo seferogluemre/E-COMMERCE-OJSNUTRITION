@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { BASE_URL } from './products';
-import {getAccessToken,getRefreshToken} from './collections/storage'
+import {getAccessToken} from './collections/storage'
 
 export const createAxiosInstance = () => {
   const token = getAccessToken();
@@ -12,7 +12,6 @@ export const createAxiosInstance = () => {
       'Authorization': token ? `Bearer ${token}` : ''
     }
   });
-
 
   return instance;
 }; 

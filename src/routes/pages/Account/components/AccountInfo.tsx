@@ -8,7 +8,6 @@ function AccountInfo() {
     last_name: '',
     phone_number: '',
     email: '',
-    marketing_consent: false
   });
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState(userData);
@@ -19,6 +18,7 @@ function AccountInfo() {
         const api = createAxiosInstance();
         const response = await api.get('/users/my-account');
         const data = response.data.data;
+        console.log("Giriş yapan kullanıcı:",response.data.data)
         setUserData(data);
         setFormData(data);
       } catch (error) {
@@ -42,24 +42,42 @@ function AccountInfo() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Telefon numarası kontrolü
-    const phoneNumber = formData.phone_number?.replace(/\D/g, ''); 
+    // Telefon numarası kontrolü ve formatı
+    let phoneNumber = formData.phone_number?.replace(/\D/g, ''); 
     if (phoneNumber && phoneNumber.length !== 11) {
       alert('Telefon numarası 11 haneli olmalıdır!');
       return;
     }
 
+    // Eğer telefon numarası boşsa null gönder
+    if (!phoneNumber) {
+      phoneNumber = null;
+    }
+
     try {
       const api = createAxiosInstance();
-      await api.put('/users/my-account', {
+      const requestData = {
         first_name: formData.first_name,
         last_name: formData.last_name,
-        phone_number: phoneNumber, // Temizlenmiş telefon numarasını gönder
-        marketing_consent: formData.marketing_consent
-      });
-      alert('Bilgileriniz başarıyla güncellendi!');
-    } catch (error) {
+        phone_number: phoneNumber // string'e çevir
+      };
+      
+      console.log('Gönderilen veri:', requestData);
+      
+      const response = await api.put('/users/my-account', requestData);
+      console.log('API yanıtı:', response.data);
+
+      if (response.data.status === 'success') {
+        // State'leri güncelle
+        const updatedData = response.data.data;
+        setUserData(updatedData);
+        setFormData(updatedData);
+        
+        alert('Bilgileriniz başarıyla güncellendi!');
+      }
+    } catch (error: any) {
       console.error('Error updating user data:', error);
+      console.error('Error response:', error.response?.data);
       alert('Bilgileriniz güncellenirken bir hata oluştu!');
     }
   };
@@ -103,7 +121,14 @@ function AccountInfo() {
               type="tel" 
               name="phone_number"
               value={formData.phone_number}
-              onChange={handleInputChange}
+              onChange={(e) => {
+                // Sadece rakamların girilmesine izin ver
+                const value = e.target.value.replace(/\D/g, '');
+                handleInputChange({
+                  ...e,
+                  target: { ...e.target, value }
+                } as React.ChangeEvent<HTMLInputElement>);
+              }}
               pattern="[0-9]{11}"
               placeholder="05XXXXXXXXX"
               maxLength={11}
@@ -125,7 +150,6 @@ function AccountInfo() {
           <Form.Check
             type="checkbox"
             name="marketing_consent"
-            checked={formData.marketing_consent}
             onChange={handleInputChange}
             label={
               <span>

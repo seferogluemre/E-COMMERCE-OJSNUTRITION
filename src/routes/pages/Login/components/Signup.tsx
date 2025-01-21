@@ -1,8 +1,9 @@
-import { Button, FormControl, FormGroup, FormLabel } from "react-bootstrap";
+import { Button, FormControl, FormGroup, FormLabel, Alert } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { register as registerUser } from "../../../../services/api/collections/auth";
+import { useState } from "react";
 
 // Form verileri için interface tanımı
 interface IFormInputs {
@@ -41,26 +42,52 @@ function Signup() {
     resolver: yupResolver(schema),
   });
 
+  const [alert, setAlert] = useState<{
+    type: 'success' | 'danger';
+    message: string;
+  } | null>(null);
+
   const onSubmit = async (formData: IFormInputs) => {
     try {
       const result = await registerUser(formData);
       if (result.success) {
+        setAlert({
+          type: 'success',
+          message: 'Kullanıcı kaydı başarıyla oluşturuldu!'
+        });
         console.log("Kayıt başarılı:", result.data);
-        // Burada yönlendirme yapabilirsiniz
       } else {
+        setAlert({
+          type: 'danger',
+          message: `Kayıt hatası: ${result.error}`
+        });
         console.error("Kayıt hatası:", result.error);
       }
     } catch (error) {
+      setAlert({
+        type: 'danger',
+        message: 'Bir hata oluştu, lütfen tekrar deneyiniz.'
+      });
       console.error("Bir hata oluştu:", error);
     }
   };
 
   return (
     <>
+      {alert && (
+        <Alert 
+          variant={alert.type} 
+          onClose={() => setAlert(null)} 
+          dismissible
+          className="mb-4"
+        >
+          {alert.message}
+        </Alert>
+      )}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="row g-3 mb-3">
           <div className="col-6">
-            <FormGroup controlId="registerFirstName">
+            <FormGroup controlId="signupFirstName">
               <FormLabel>Ad</FormLabel>
               <FormControl 
                 type="text" 
@@ -73,7 +100,7 @@ function Signup() {
             </FormGroup>
           </div>
           <div className="col-6">
-            <FormGroup controlId="registerLastName">
+            <FormGroup controlId="signupLastName">
               <FormLabel>Soyad</FormLabel>
               <FormControl 
                 type="text" 
@@ -87,7 +114,7 @@ function Signup() {
           </div>
         </div>
 
-        <FormGroup className="mb-3" controlId="registerEmail">
+        <FormGroup className="mb-3" controlId="signupEmail">
           <FormLabel>E-Posta</FormLabel>
           <FormControl 
             type="email" 
@@ -99,7 +126,7 @@ function Signup() {
           )}
         </FormGroup>
 
-        <FormGroup className="mb-4" controlId="registerPassword">
+        <FormGroup className="mb-4" controlId="signupPassword">
           <FormLabel>Şifre</FormLabel>
           <FormControl 
             type="password" 

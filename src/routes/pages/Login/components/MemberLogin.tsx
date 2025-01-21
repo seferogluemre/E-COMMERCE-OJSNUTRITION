@@ -6,6 +6,7 @@ import { BASE_URL } from "../../../../services/api/products";
 import { setAuthUser, setTokenAndAuthUser } from "../../../../services/api/collections/storage";
 import { login } from "../../../../services/api/collections/auth";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 // Form verileri için interface tanımı
 interface ILoginFormInputs {
@@ -34,18 +35,22 @@ function MemberLogin() {
   } = useForm<ILoginFormInputs>({
     resolver: yupResolver(schema),
   });
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+  const [loginError, setLoginError] = useState<string | null>(null);
 
   const onSubmit = async (formData: ILoginFormInputs) => {
     try {
+      setLoginError(null); // Her denemede hata mesajını sıfırla
       const result = await login(formData.email, formData.password);
       if (result.success) {
         console.log("Giriş başarılı:", result.data);
         navigate("/");
       } else {
+        setLoginError("E-posta veya şifre hatalı. Lütfen bilgilerinizi kontrol ediniz.");
         console.error("Giriş hatası:", result.error);
       }
     } catch (error) {
+      setLoginError("Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.");
       console.error("Bir hata oluştu:", error);
     }
   };
@@ -53,6 +58,11 @@ function MemberLogin() {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}> 
+        {loginError && (
+          <div className="alert alert-danger mb-3" role="alert">
+            {loginError}
+          </div>
+        )}
         <FormGroup className="mb-3" controlId="loginEmail">
           <FormLabel>E-Posta</FormLabel>
           <FormControl
