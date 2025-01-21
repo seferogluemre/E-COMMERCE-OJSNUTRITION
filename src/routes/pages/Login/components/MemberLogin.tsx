@@ -49,6 +49,9 @@ function MemberLogin() {
 
       const jsonResponse = await response.json();
       
+      localStorage.setItem("access_token", jsonResponse.access_token);
+      localStorage.setItem("refresh_token", jsonResponse.refresh_token);
+
       if (response.ok) {
         console.log("Giriş başarılı:", jsonResponse);
       } else {
