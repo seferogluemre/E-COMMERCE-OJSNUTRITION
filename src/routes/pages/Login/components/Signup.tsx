@@ -4,6 +4,24 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
+// Form verileri için interface tanımı
+interface IFormInputs {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
+// API'ye gönderilecek veriler için interface tanımı
+interface IApiData {
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+  password2: string;
+  api_key: string;
+}
+
 // Form validation şeması
 const schema = yup.object().shape({
   firstName: yup.string().required("Ad alanı zorunludur"),
@@ -17,20 +35,19 @@ function Signup() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<IFormInputs>({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (formData) => {
+  const onSubmit = async (formData: IFormInputs) => {
     try {
-      // Form datasını API'nin beklediği formata dönüştürüyoruz
-      const dataForApi = {
+      const dataForApi: IApiData = {
         first_name: formData.firstName,
         last_name: formData.lastName,
         email: formData.email,
         password: formData.password,
-        password2: formData.password, // Şifre doğrulama için aynı şifreyi gönderiyoruz
-        api_key: "370718"  // api_key olarak değiştirildi
+        password2: formData.password,
+        api_key: "370718"
       };
 
       const response = await fetch("https://fe1111.projects.academy.onlyjs.com/api/v1/auth/register", {
