@@ -31,14 +31,12 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
 
       const categoriesData: CategoriesResponseProps[] =
         categoriesResponse.data.data;
-      console.log(categoriesData);
 
       // Çocuk verilerini işleyin
       const updatedCategories = categoriesData.data?.map((item: CategoryProps) => ({
         ...item,
-        subChildren: item.children?.[0]?.sub_children || [], // Opsiyonel alanları kontrol edin
+        subChildren: item.children?.[0]?.sub_children || [],
       }));
-
       setCategories(updatedCategories);
     } catch (error) {
       console.error("Error fetching categories:", error);
@@ -57,7 +55,6 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
   }, [location]);
 
   const handleCategoryClick = (category) => {
-
     setSelectedSubChildren(category.subChildren);
     setSelectedCategory(category); // Tüm kategori bilgilerini set ediyorsunuz
     setIsDrawerOpen(true); // Çekmeceyi açıyorsunuz
