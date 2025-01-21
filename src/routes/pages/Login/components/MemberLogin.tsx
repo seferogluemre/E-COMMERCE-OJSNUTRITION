@@ -2,6 +2,8 @@ import { Button, FormControl, FormGroup, FormLabel } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { BASE_URL } from "../../../../services/api/products";
+import { setAuthUser, setTokenAndAuthUser } from "../../../../services/api/collections/storage";
 
 // Form verileri için interface tanımı
 interface ILoginFormInputs {
@@ -39,7 +41,7 @@ function MemberLogin() {
         api_key: "370718"
       };
 
-      const response = await fetch("https://fe1111.projects.academy.onlyjs.com/api/v1/auth/login", {
+      const response = await fetch(BASE_URL+"/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -48,10 +50,8 @@ function MemberLogin() {
       });
 
       const jsonResponse = await response.json();
-      
-      localStorage.setItem("access_token", jsonResponse.access_token);
-      localStorage.setItem("refresh_token", jsonResponse.refresh_token);
 
+      setTokenAndAuthUser(jsonResponse.access_token, jsonResponse.refresh_token);
       if (response.ok) {
         console.log("Giriş başarılı:", jsonResponse);
       } else {

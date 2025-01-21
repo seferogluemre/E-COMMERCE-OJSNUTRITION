@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { BASE_URL } from "../../../../services/api/products";
+import { setAuthUser } from "../../../../services/api/collections/storage";
 
 // Form verileri için interface tanımı
 interface IFormInputs {
@@ -13,10 +14,12 @@ interface IFormInputs {
 }
 
 // API'ye gönderilecek veriler için interface tanımı
-interface IApiData {
+interface User {
+  id: number;
   first_name: string;
   last_name: string;
   email: string;
+  username: string;
   password: string;
   password2: string;
   api_key: string;
@@ -41,7 +44,7 @@ function Signup() {
 
   const onSubmit = async (formData: IFormInputs) => {
     try {
-      const dataForApi: IApiData = {
+      const dataForApi: User = {
         first_name: formData.firstName,
         last_name: formData.lastName,
         email: formData.email,
@@ -59,9 +62,8 @@ function Signup() {
       });
 
       const jsonResponse = await response.json();
-      
       if (response.ok) {
-        // Başarılı kayıt işlemi
+        setAuthUser(jsonResponse.data);
         console.log("Kayıt başarılı:", jsonResponse);
       } else {
         // Hata durumu
