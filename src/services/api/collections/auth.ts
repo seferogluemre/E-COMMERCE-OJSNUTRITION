@@ -52,13 +52,6 @@ export const login = async (
         jsonResponse.access_token,
         jsonResponse.refresh_token
       );
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          firstName: jsonResponse.first_name,
-          lastName: jsonResponse.last_name,
-        })
-      );
       return { success: true, data: jsonResponse };
     } else {
       return { success: false, error: jsonResponse };

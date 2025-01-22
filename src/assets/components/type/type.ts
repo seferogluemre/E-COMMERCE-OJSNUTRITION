@@ -37,7 +37,6 @@ export interface ProductListProp {
   slug: string;
 }
 
-
 //User Types
 export interface User {
   id: number;
@@ -46,4 +45,3 @@ export interface User {
   first_name: string;
   last_name: string;
 }
-

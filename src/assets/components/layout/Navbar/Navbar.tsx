@@ -96,7 +96,7 @@ function NavbarComp() {
               >
                 <AiOutlineUser className="fs-4" />
                 {authenticated && user
-                  ? `${user.firstName || user.first_name}`
+                  ? `${user.first_name || user.first_name}`
                   : "Hesap"}
               </button>
               <ul className="dropdown-menu">

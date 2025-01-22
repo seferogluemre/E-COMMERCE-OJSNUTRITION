@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card, Button, Row, Col, Form } from "react-bootstrap";
-import axios from "axios";
-import { BASE_URL } from "../../../../services/api/products";
 import { useNavigate } from "react-router-dom";
-import {
-  getAccessToken,
-  removeTokenAndAuthUser,
-} from "../../../../services/api/collections/storage";
-
+import { createAxiosInstance } from "../../../../services/api/axios";
 interface UserAddress {
   title: string;
   firstName: string;
@@ -17,37 +11,6 @@ interface UserAddress {
   district: string;
   phone: string;
 }
-
-// Token kontrolü yapan yardımcı fonksiyon
-const checkToken = () => {
-  const token = getAccessToken();
-  if (!token) {
-    return false;
-  }
-  return token;
-};
-
-const createAxiosInstance = () => {
-  const token = checkToken();
-  if (!token) {
-    throw new Error("No token found");
-  }
-  return axios.create({
-    baseURL: BASE_URL,
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-  });
-};
-
-// Token'ları temizleyip login sayfasına yönlendiren yardımcı fonksiyon
-const handleSessionExpired = (navigate: any) => {
-  if (!checkToken()) {
-    removeTokenAndAuthUser(); // storage.ts'deki fonksiyonu kullanıyoruz
-    navigate("/login");
-  }
-};
 
 function Addresses() {
   const navigate = useNavigate();
@@ -65,7 +28,7 @@ function Addresses() {
   const [cities, setCities] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
-  const [addresses, setAddresses] = useState([]);
+  const [addresses, setAddreses] = useState([]);
 
   useEffect(() => {
     const storedAddress = localStorage.getItem("userAddress");
@@ -91,9 +54,6 @@ function Addresses() {
         setCities(response.data.data.results);
       } catch (error) {
         console.error("Error fetching cities:", error);
-        if (error.response?.status === 401) {
-          handleSessionExpired(navigate);
-        }
       }
     };
     fetchCities();
@@ -118,9 +78,6 @@ function Addresses() {
         setDistricts(response.data.data.results);
       } catch (error) {
         console.error("Error fetching districts:", error);
-        if (error.response?.status === 401) {
-          handleSessionExpired(navigate);
-        }
       }
     };
     fetchDistricts();
@@ -148,62 +105,6 @@ function Addresses() {
     }));
   };
 
-  // Form gönderme
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const api = createAxiosInstance();
-      const selectedCityData = cities.find(
-        (city) => city.name === formData.city
-      );
-      const selectedDistrictData = districts.find(
-        (district) => district.name === formData.district
-      );
-
-      if (!selectedCityData || !selectedDistrictData) {
-        alert("Lütfen şehir ve ilçe seçiniz");
-        return;
-      }
-
-      // Format phone number to ensure it starts with 0 and contains only numbers
-      const formattedPhone = formData.phone.replace(/\D/g, "");
-      const phoneNumber = formattedPhone.startsWith("0")
-        ? formattedPhone
-        : `0${formattedPhone}`;
-
-      const addressData = {
-        title: formData.title.trim(),
-        country_id: 226,
-        region_id: parseInt(selectedCityData.id), // Ensure it's a number
-        subregion_id: parseInt(selectedDistrictData.id), // Ensure it's a number
-        full_address: formData.address.trim(),
-        phone_number: phoneNumber,
-        first_name: formData.firstName.trim(),
-        last_name: formData.lastName.trim(),
-      };
-
-      // Log the request data for debugging
-      console.log("Sending address data:", addressData);
-
-      const response = await api.post("/users/addresses", addressData);
-
-      fetchAddresses();
-      setShowForm(false);
-      setFormData({
-        title: "",
-        firstName: "",
-        lastName: "",
-        address: "",
-        city: "",
-        district: "",
-        phone: "",
-      });
-      setSelectedCity("");
-    } catch (error) {
-      console.error("Error submitting address:", error);
-    }
-  };
-
   // Adresleri getirme
   const fetchAddresses = async () => {
     try {
@@ -214,13 +115,10 @@ function Addresses() {
           offset: 0,
         },
       });
-      setAddresses(response.data.data.results);
+      setAddreses(response.data.data.results);
       console.log(response.data);
     } catch (error) {
       console.error("Error fetching addresses:", error);
-      if (error.response?.status === 401) {
-        handleSessionExpired(navigate);
-      }
     }
   };
 
@@ -232,7 +130,7 @@ function Addresses() {
     <div className="content-area">
       <h3 className="mb-4">Adreslerim</h3>
       {showForm ? (
-        <Form onSubmit={handleSubmit}>
+        <Form>
           <Form.Group controlId="formTitle">
             <Form.Label>*Adres Başlığı</Form.Label>
             <Form.Control
