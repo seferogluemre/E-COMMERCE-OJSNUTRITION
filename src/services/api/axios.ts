@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from "./products";
+import { BASE_URL } from "./types";
 import { getAccessToken } from "./collections/storage";
 
 export const createAxiosInstance = () => {

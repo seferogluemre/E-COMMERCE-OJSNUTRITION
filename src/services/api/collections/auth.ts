@@ -1,4 +1,4 @@
-import { BASE_URL } from "../products";
+import { BASE_URL } from "../types";
 import {
   setTokenAndAuthUser,
   setAuthUser,

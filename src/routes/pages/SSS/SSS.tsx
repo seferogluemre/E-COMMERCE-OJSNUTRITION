@@ -23,12 +23,12 @@ const SSS: SSSData = {
     {
       request: "OJS Nutrition Ürünlerinin menşei neresi?",
       reply:
-        "Ürünlerin hammaddeleri ithal olup, paketlenmesi Türkiye'de yapılmaktadır. Proteinocean marka ürünlerin menşei Türkiye'dir.",
+        "Ürünlerin hammaddeleri ithal olup, paketlenmesi Türkiye'de yapılmaktadır. OJSNUTRİTİON marka ürünlerin menşei Türkiye'dir.",
     },
     {
-      request: "PROTEINOCEAN ürünlerinin menşei neresi?",
+      request: "OJSNUTRİTİON ürünlerinin menşei neresi?",
       reply:
-        "Ürünlerin hammaddeleri ithal olup, paketlenmesi Türkiye'de yapılmaktadır. Proteinocean marka ürünlerin menşei Türkiye'dir.",
+        "Ürünlerin hammaddeleri ithal olup, paketlenmesi Türkiye'de yapılmaktadır. OJSNUTRİTİON marka ürünlerin menşei Türkiye'dir.",
     },
     {
       request: "Hangi sertifikalarınız var?",
@@ -45,9 +45,9 @@ const SSS: SSSData = {
       reply: "Buraya tıklayarak bize mesaj bırakabilirsiniz.",
     },
     {
-      request: "PROTEINOCEAN ürünleri nerede satılıyor?",
+      request: "OJSNUTRİTİON ürünleri nerede satılıyor?",
       reply:
-        "Ürünlerimizi www.proteinocean.com'da ve başlıca büyük alışveriş sitelerinde bulabilirsiniz.",
+        "Ürünlerimizi www.ojsnutrition.com'da ve başlıca büyük alışveriş sitelerinde bulabilirsiniz.",
     },
     {
       request: "Yüksek proteinli ürünleri kimler kullanabilir?",
@@ -97,9 +97,9 @@ const SSS: SSSData = {
   ],
   ürünler: [
     {
-      request: "PROTEİNOCEAN ürünlerinin menşei neresi?",
+      request: "OJSNUTRİTİON ürünlerinin menşei neresi?",
       reply:
-        "Ürünlerin hammaddeleri ithal olup, paketlenmesi Türkiye'de yapılmaktadır. Proteinocean marka ürünlerin menşei Türkiye'dir.",
+        "Ürünlerin hammaddeleri ithal olup, paketlenmesi Türkiye'de yapılmaktadır. OJSNUTRİTİON marka ürünlerin menşei Türkiye'dir.",
     },
     {
       request: "Hangi sertifikalarınız var?",
@@ -119,7 +119,7 @@ const SSS: SSSData = {
     {
       request: "Sattığınız ürünler ilaç mıdır?",
       reply:
-        "İlaç değildir. PROTEİNOCEAN markalı ürünlerimiz sporcu gıdasıdır.",
+        "İlaç değildir. OSJNUTRİTİON markalı ürünlerimiz sporcu gıdasıdır.",
     },
     {
       request:

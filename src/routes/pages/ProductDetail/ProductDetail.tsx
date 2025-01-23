@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Accordion, Container, Row } from "react-bootstrap";
 import { useLoaderData } from "react-router-dom";
-import { PHOTO_URL } from "../../../services/api/products";
+import { PHOTO_URL } from "../../../services/api/types";
 import "./_ProductDetail.scss";
 import FiveStar from "../../../assets/components/layout/FiveStars/FiveStar";
 import ProductComment from "./components/ProductComment/ProductComment";
@@ -122,7 +122,7 @@ function ProductDetail() {
       return updatedValue;
     });
 
-    setSelectedAroma(null);
+    setSelectedAroma(-1);
     setSelectedSize(-1);
   }, [product]);
 

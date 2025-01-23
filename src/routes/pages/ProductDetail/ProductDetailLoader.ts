@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from "../../../services/api/products";
+import { BASE_URL } from "../../../services/api/types";
 import { LoaderFunctionArgs } from "react-router-dom";
 import { Product } from "./ProductDetail";
 import { BestSellerProps } from "../../../assets/components/type/type";

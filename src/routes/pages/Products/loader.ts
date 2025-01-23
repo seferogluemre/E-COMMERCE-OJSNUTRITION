@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from "../../../services/api/products";
+import { BASE_URL } from "../../../services/api/types";
 
 export async function allProductLoader() {
   try {

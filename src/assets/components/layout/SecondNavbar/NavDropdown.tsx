@@ -2,7 +2,7 @@ import { Container } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./NavDropdown.scss";
-import { PHOTO_URL } from "../../../../services/api/products";
+import { PHOTO_URL } from "../../../../services/api/types";
 import { NavLink } from "react-router-dom";
 
 interface SubChild {
@@ -54,7 +54,9 @@ function NavDropdown() {
 
   async function getCategories() {
     try {
-      const response = await axios.get("https://fe1111.projects.academy.onlyjs.com/api/v1/categories");
+      const response = await axios.get(
+        "https://fe1111.projects.academy.onlyjs.com/api/v1/categories"
+      );
       setCategories(response.data.data.data);
     } catch (error) {
       console.error("Error fetching categories:", error);
@@ -73,17 +75,20 @@ function NavDropdown() {
         setHoveredLink(null);
       }
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   return (
     <Container fluid className="bg-dark mx-0" id="NavDropdown">
       <div className="container">
-        <div className="dropdown d-flex align-items-center justify-content-center column-gap-5" style={{ color: "white", height: "40px", padding: "10px" }}>
+        <div
+          className="dropdown d-flex align-items-center justify-content-center column-gap-5"
+          style={{ color: "white", height: "40px", padding: "10px" }}
+        >
           {Links.map((link, index) => (
             <div
               key={index}
@@ -97,25 +102,41 @@ function NavDropdown() {
               {hoveredLink === link.Link && (
                 <div className="category-modal">
                   <div className="categories-section">
-                    {getCategoryBySlug(link.category.toLowerCase())?.children.map((child) => (
+                    {getCategoryBySlug(
+                      link.category.toLowerCase()
+                    )?.children.map((child) => (
                       <div key={child.id} className="category-item">
                         <h4>{child.name}</h4>
                         <div className="sub-items">
-                          {child.sub_children?.slice(0, 7).map((subChild, idx) => (
-                            <NavLink key={idx} to={`/products/${subChild.slug}`} className="category-link">
-                              {subChild.name}
-                            </NavLink>
-                          ))}
+                          {child.sub_children
+                            ?.slice(0, 7)
+                            .map((subChild, idx) => (
+                              <NavLink
+                                key={idx}
+                                to={`/products/${subChild.slug}`}
+                                className="category-link"
+                              >
+                                {subChild.name}
+                              </NavLink>
+                            ))}
                         </div>
                       </div>
                     ))}
                   </div>
                   <div className="top-sellers">
                     <h4>En Çok Satanlar</h4>
-                    {getCategoryBySlug(link.category.toLowerCase())?.top_sellers.map((seller, idx) => (
-                      <NavLink to={`/products/${seller.slug}`} className="text-decoration-none">
+                    {getCategoryBySlug(
+                      link.category.toLowerCase()
+                    )?.top_sellers.map((seller, idx) => (
+                      <NavLink
+                        to={`/products/${seller.slug}`}
+                        className="text-decoration-none"
+                      >
                         <div key={idx} className="top-seller-item">
-                          <img src={PHOTO_URL + seller.picture_src} alt={seller.name} />
+                          <img
+                            src={PHOTO_URL + seller.picture_src}
+                            alt={seller.name}
+                          />
                           <div className="seller-info ">
                             <h5>{seller.name}</h5>
                             <p>{seller.description}</p>

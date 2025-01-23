@@ -5,7 +5,7 @@ import {
   BASE_URL,
   getAllProducts,
   PHOTO_URL,
-} from "../../../services/api/products";
+} from "../../../services/api/types";
 import ProductCard from "./components/ProductCard/ProductCard";
 import "./components/ProductCard/_ProductCard.scss";
 import { useEffect, useState } from "react";

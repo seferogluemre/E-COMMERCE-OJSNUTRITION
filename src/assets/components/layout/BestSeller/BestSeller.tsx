@@ -3,7 +3,7 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 import BestSellerCard from "./BestSellerCard";
 import { BestSellerPropsCS } from "../../type/type";
 import "./_BestSeller.scss";
-import { PHOTO_URL } from "../../../../services/api/products";
+import { PHOTO_URL } from "../../../../services/api/types";
 
 const WithBestSeller = (WrappedComponent) => {
   return (props: { best_seller }) => {

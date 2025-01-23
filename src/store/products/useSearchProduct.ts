@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
-import { BASE_URL } from "../../services/api/products";
+import { BASE_URL } from "../../services/api/types";
 import { ProductListProp } from "../../assets/components/type/type";
 
 interface SearchState {
