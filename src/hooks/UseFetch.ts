@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BASE_URL } from "../services/api/types";
+import { BASE_URL } from "../routes/pages/Products/components/types";
 import axios from "axios";
 
 const useFetch = <T>(slug: string) => {

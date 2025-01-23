@@ -2,7 +2,7 @@ import { Container } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./NavDropdown.scss";
-import { PHOTO_URL } from "../../../../services/api/types";
+import { PHOTO_URL } from "../../../../routes/pages/Products/components/types";
 import { NavLink } from "react-router-dom";
 
 interface SubChild {

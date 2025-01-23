@@ -1,5 +1,5 @@
 import { Card, Button } from "react-bootstrap";
-import { PHOTO_URL } from "../../../../services/api/types";
+import { PHOTO_URL } from "../../Products/components/types";
 
 function Orders() {
   return (

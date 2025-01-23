@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Accordion, Container, Row } from "react-bootstrap";
 import { useLoaderData } from "react-router-dom";
-import { PHOTO_URL } from "../../../services/api/types";
+import { PHOTO_URL } from "../Products/components/types";
 import "./_ProductDetail.scss";
 import FiveStar from "../../../assets/components/layout/FiveStars/FiveStar";
 import ProductComment from "./components/ProductComment/ProductComment";

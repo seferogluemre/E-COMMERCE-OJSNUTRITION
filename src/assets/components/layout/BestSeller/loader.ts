@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from "../../../../services/api/types";
+import { BASE_URL } from "../../../../routes/pages/Products/components/types";
 
 export async function loader() {
   const bestSellerResponse = await axios.get(

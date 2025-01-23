@@ -1,6 +1,6 @@
 import { useSearchProduct } from "../../../../../store/products/useSearchProduct";
 import "./Search.scss";
-import { PHOTO_URL } from "../../../../../services/api/types";
+import { PHOTO_URL } from "../../../../../routes/pages/Products/components/types";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { ProductListProp } from "../../../type/type";

@@ -1,5 +1,5 @@
 import { createAxiosInstance } from "../axios";
-import { BASE_URL } from "../types";
+import { BASE_URL } from "../../../routes/pages/Products/components/types";
 import {
   setTokenAndAuthUser,
   setAuthUser,
@@ -124,12 +124,6 @@ export const getUserData = async () => {
   }
 };
 
-
-export const logout = () => {
-  removeTokenAndAuthUser();
-  localStorage.removeItem("user");
-};
-
 export const updateUserData = async (userData: User) => {
   try {
     const api = createAxiosInstance();
@@ -146,10 +140,15 @@ export const updateUserData = async (userData: User) => {
         "Content-Type": "application/json",
       }
     });
-
     return response.data; // Başarılıysa dönen yanıtı döndük
   } catch (error) {
     console.error("KULLANICI GÜNNCELLENİRKEN HATA OLUŞTU", error);
     throw error;
   }
 };
+
+export const logout = () => {
+  removeTokenAndAuthUser();
+  localStorage.removeItem("user");
+};
+
