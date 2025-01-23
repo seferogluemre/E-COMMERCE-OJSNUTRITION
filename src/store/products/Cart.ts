@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { useToastStore } from "../toast/ToastStore";
 
-interface CartItem {
+export interface CartItem {
   id: string;
   name: string;
   aroma: string;
@@ -14,7 +14,7 @@ interface CartItem {
   photo_src: string;
 }
 
-interface CartStore {
+export interface CartStore {
   items: CartItem[];
   addToCart: (item: CartItem) => void;
   removeFromCart: (itemId: string) => void;

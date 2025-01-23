@@ -2,6 +2,7 @@ import { Button, Offcanvas } from "react-bootstrap";
 import { CgShoppingCart } from "react-icons/cg";
 import { PHOTO_URL } from "../../../../../../routes/pages/Products/components/types";
 import { useCartStore } from "../../../../../../store/products/Cart";
+import { useNavigate } from "react-router-dom";
 
 interface CartProps {
   show: boolean;
@@ -11,6 +12,7 @@ interface CartProps {
 function MyCart({ show, handleCloseTwo }: CartProps) {
   const { items, removeFromCart, updateQuantity, getTotalPrice } =
     useCartStore();
+  const navigate = useNavigate();
 
   return (
     <Offcanvas show={show} onHide={handleCloseTwo} placement="end">
@@ -109,7 +111,11 @@ function MyCart({ show, handleCloseTwo }: CartProps) {
                 <strong>TOPLAM</strong>
                 <strong>{getTotalPrice()} TL</strong>
               </div>
-              <Button variant="dark" className="w-100">
+              <Button
+                variant="dark"
+                className="w-100"
+                onClick={() => navigate(items.length > 0 ? "/payment" : "/")}
+              >
                 DEVAM ET
               </Button>
             </div>

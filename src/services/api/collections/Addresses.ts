@@ -1,13 +1,13 @@
 import { createAxiosInstance } from "../axios";
 
-interface UserAddress {
+export interface UserAddress {
   title: string;
-  firstName: string;
-  lastName: string;
-  address: string;
+  first_name: string;
+  last_name: string;
+  full_address: string;
   city: string;
   district: string;
-  phone: string;
+  phone_number: string;
 }
 
 export interface City {

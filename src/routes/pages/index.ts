@@ -6,4 +6,5 @@ export { default as ContactPage } from "./Contact/Contact.tsx";
 export { default as AboutPage } from "./About/About.tsx";
 export { default as SSSPage } from "./SSS/SSS.tsx";
 export { default as AccountPage } from "./Account/Account.tsx";
-export { default as LoginPage } from './Login/Login.tsx'
+export { default as LoginPage } from "./Login/Login.tsx";
+export { default as PaymentPage } from "./Payment/Payment.tsx";
