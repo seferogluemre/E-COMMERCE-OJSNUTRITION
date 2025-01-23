@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, Button, Row, Col, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { createAxiosInstance } from "../../../../services/api/axios";
-import { fetchAddresses, handleSubmitAddress } from "../../../../services/api/collections/Addresses";
+import { City, District, fetchAddresses, handleSubmitAddress } from "../../../../services/api/collections/Addresses";
 
 interface UserAddress {
   title: string;
@@ -17,8 +17,8 @@ interface UserAddress {
 function Addresses() {
   const navigate = useNavigate();
   const [userAddress, setUserAddress] = useState<UserAddress | null>(null);
-  const [showForm, setShowForm] = useState(false);
-  const [formData, setFormData] = useState({
+  const [showForm, setShowForm] = useState<boolean>(false);
+  const [formData, setFormData] = useState<UserAddress>({
     title: "",
     firstName: "",
     lastName: "",
@@ -27,10 +27,10 @@ function Addresses() {
     district: "",
     phone: "",
   });
-  const [cities, setCities] = useState([]);
-  const [districts, setDistricts] = useState([]);
-  const [selectedCity, setSelectedCity] = useState("");
-  const [addresses, setAddreses] = useState([]);
+  const [cities, setCities] = useState<City[]>([]);
+  const [districts, setDistricts] = useState<District[]>([]);
+  const [selectedCity, setSelectedCity] = useState<string>("");
+  const [addresses, setAddreses] = useState<UserAddress[]>([]);
 
   useEffect(() => {
     const storedAddress = localStorage.getItem("userAddress");
@@ -90,12 +90,18 @@ function Addresses() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await handleSubmitAddress(formData, cities, districts, navigate, setShowForm, fetchAddresses);
+    await handleSubmitAddress(
+      formData, 
+      cities, 
+      districts, 
+      setShowForm,
+      fetchAddresses
+    );
   };
 
-  const handleCityChange = (e) => {
+  const handleCityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedCity = e.target.value;
     setSelectedCity(selectedCity);
     setFormData((prev) => ({
@@ -104,7 +110,7 @@ function Addresses() {
     }));
   };
 
-  const handleDistrictChange = (e) => {
+  const handleDistrictChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedDistrict = e.target.value;
     setFormData((prev) => ({
       ...prev,
@@ -113,7 +119,7 @@ function Addresses() {
   };
 
   useEffect(() => {
-    fetchAddresses(navigate, setAddreses, setUserAddress, setShowForm);
+    fetchAddresses(setAddreses, setUserAddress, setShowForm);
   }, [navigate]);
 
   return (

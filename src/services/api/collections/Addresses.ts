@@ -11,16 +11,15 @@ interface UserAddress {
   phone: string;
 }
 
-interface City {
+export interface City {
   name: string;
   id: number;
 }
 
-interface District {
+export  interface District {
   name: string;
   id: number;
 }
-
 
 
 export const fetchAddresses = async (
@@ -58,7 +57,7 @@ export const fetchAddresses = async (
   }
 };
 
-export const handleSubmitAddress = async (formData:UserAddress, cities:City[], districts:District[], navigate:NavigateFunction, setShowForm: (show: boolean) => void, fetchAddresses: (setAddresses: (addresses: UserAddress[]) => void, setUserAddress: (address: UserAddress) => void, setShowForm: (show: boolean) => void) => Promise<void> ) => {
+export const handleSubmitAddress = async (formData:UserAddress, cities:City[], districts:District[], setShowForm: (show: boolean) => void, fetchAddresses: (setAddresses: (addresses: UserAddress[]) => void, setUserAddress: (address: UserAddress) => void, setShowForm: (show: boolean) => void) => Promise<void> ) => {
   const formattedPhone = `+90${formData.phone.replace(/^\+90/, "")}`;
   const fullAddress = `${formData.address}, ${formData.district}, ${formData.city}`;
 
