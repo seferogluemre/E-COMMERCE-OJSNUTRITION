@@ -8,7 +8,6 @@ import {
   UserAddress,
   City,
   District,
-  handleSubmitAddress,
 } from "../../../services/api/collections/Addresses";
 import { createAxiosInstance } from "../../../services/api/axios";
 import { PHOTO_URL } from "../Products/components/types";
@@ -26,12 +25,12 @@ function Payment() {
   const [selectedCity, setSelectedCity] = useState<string>("");
   const [formData, setFormData] = useState<UserAddress>({
     title: "",
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     address: "",
     city: "",
     district: "",
-    phone: "",
+    phone_number: "",
   });
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
@@ -162,15 +161,15 @@ function Payment() {
     // Adresi localStorage'a kaydet
     const addressData = {
       ...formData,
-      full_address: formData.address,
-      first_name: formData.firstName,
-      last_name: formData.lastName,
-      phone_number: formData.phone,
+      full_address: formData.full_address,
+      first_name: formData.first_name,
+      last_name: formData.last_name,
+      phone_number: formData.phone_number,
     };
 
     localStorage.setItem("guestAddress", JSON.stringify(addressData));
     setSelectedAddress(addressData);
-    setCurrentStep(2); // Otomatik olarak 2. adıma geç
+    setCurrentStep(2);
   };
 
   return (
@@ -275,7 +274,7 @@ function Payment() {
                               <input
                                 type="text"
                                 className="form-control"
-                                name="firstName"
+                                name="first_name"
                                 onChange={handleInputChange}
                                 required
                               />
@@ -285,7 +284,7 @@ function Payment() {
                               <input
                                 type="text"
                                 className="form-control"
-                                name="lastName"
+                                name="last_name"
                                 onChange={handleInputChange}
                                 required
                               />
@@ -298,7 +297,7 @@ function Payment() {
                             <input
                               type="tel"
                               className="form-control"
-                              name="phone"
+                              name="phone_number"
                               pattern="[0-9]{10,11}"
                               placeholder="05XXXXXXXXX"
                               onChange={handleInputChange}
