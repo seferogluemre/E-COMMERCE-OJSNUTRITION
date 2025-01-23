@@ -17,7 +17,6 @@ function AccountInfo() {
         const api = createAxiosInstance();
         const response = await api.get("/users/my-account");
         const data = response.data.data;
-        console.log("Giriş yapan kullanıcı:", response.data.data);
         setUserData(data);
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -25,7 +24,6 @@ function AccountInfo() {
         setLoading(false);
       }
     };
-
     fetchUserData();
   }, []);
 

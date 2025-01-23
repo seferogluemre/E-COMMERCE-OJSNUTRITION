@@ -77,7 +77,6 @@ function ProductDetail() {
   useEffect(() => {
     window.scrollTo(0, 0);
     setProductState(Array.isArray(product) ? product : [product]);
-
     const productData = {
       price: product.variants[0].price.total_price,
       commentCount: product.comment_count,
@@ -142,6 +141,7 @@ function ProductDetail() {
     Ahududu: "/assets/icons/ahududu.webp",
     Şeftali: "/assets/icons/seftali.webp",
   };
+  console.log(productState[0]);
 
   return (
     <Container className="my-5">
@@ -283,7 +283,6 @@ function ProductDetail() {
                           width: "35px",
                           padding: "5px",
                           height: "100%",
-
                         }}
                       ></img>
                     </div>
@@ -296,13 +295,25 @@ function ProductDetail() {
                   <h3 className="fs-4">Boyut:</h3>
                 </div>
                 <div className="d-flex column-gap-3 ">
-                  {product.explanation.nutritional_content.nutrition_facts.portion_sizes?.map(
-                    (size) => (
-                      <div className="product-size-box d-flex align-items-center">
-                        {size}
-                      </div>
+                  {Array.from(
+                    new Set(
+                      product.variants.map(
+                        (item) =>
+                          `${item.size.gram}-${item.size.total_services}`
+                      ) // Sadece size.gram değerlerini alıyoruz
                     )
-                  )}
+                  ).map((size, index) => {
+                    const [gram, total_services] = size.split("-");
+                    return (
+                      <div
+                        className="product-size-box d-flex align-items-center flex-column"
+                        key={index}
+                      >
+                        <span>{gram}G</span>
+                        <span>{total_services} Servis</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
               <hr />
