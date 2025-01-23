@@ -14,6 +14,7 @@ import UseLocalStorage from "../../../hooks/UseSessionStorage";
 import LastView from "./components/LastView/LastView";
 import { AiOutlineCheck } from "react-icons/ai";
 import { ProductImage } from "./components/ProductImage";
+import { ProductListProp } from "../../../assets/components/type/type";
 
 interface NutritionalContent {
   ingredients: { aroma: string; value: string[] }[];
@@ -77,6 +78,7 @@ function ProductDetail() {
   const [storedValue, setStoredValue] = UseLocalStorage(LOCAL_KEY, "");
   const [selectedSize, setSelectedSize] = useState<number>();
   const [selectedAroma, setSelectedAroma] = useState<number>();
+  const [photoSrc, setPhotoSrc] = useState<string>("");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -116,14 +118,17 @@ function ProductDetail() {
         commentCount: productData.commentCount,
         photo_src: productData.photo,
       });
-
+      // Ürün aromaları varsa state'i 
+      if (product.variants && product.variants.length > 0) {
+        setPhotoSrc(product.variants[0].photo_src);
+      }
       localStorage.setItem(LOCAL_KEY, JSON.stringify(updatedValue));
 
       return updatedValue;
     });
 
-    setSelectedAroma(-1);
-    setSelectedSize(-1);
+    setSelectedAroma(0);
+    setSelectedSize(0);
   }, [product]);
 
   const [productState, setProductState] = useState<Product[]>(
@@ -149,19 +154,20 @@ function ProductDetail() {
     Ahududu: "/assets/icons/ahududu.webp",
     Şeftali: "/assets/icons/seftali.webp",
   };
+
   console.log(productState[0]);
 
   return (
     <Container className="my-5">
       <Row>
-        {productState?.map((product) => (
+        {productState?.map((product: Product) => (
           <div
             key={product.id}
             className="row d-flex justify-content-center px-sm-3"
           >
             <div className="col-lg-6 col-sm-12 col-xxl-6 col-md-12 product-detail_column">
               <ProductImage
-                src={PHOTO_URL + product.variants[0].photo_src}
+                src={PHOTO_URL + photoSrc}
                 magnifierHeight={180}
                 magnifierWidth={180}
                 zoomLevel={1.3}
@@ -281,14 +287,23 @@ function ProductDetail() {
                   {Array.from(
                     new Set(product.variants.map((variant) => variant.aroma))
                   ).map((item, index) => {
-                    const isSelected = selectedAroma == index;
+                    const isSelected = selectedAroma === index;
+
+                    // Seçilen aroma ile ilişkili photo_src değerini bul.
+                    const selectedVariant = product.variants.find(
+                      (variant) => variant.aroma === item
+                    );
+
                     return (
                       <div
                         key={index}
-                        className={`product-detail-variant-item flex-wrap d-flex column-gap-3 justify-content-center align-items-center ${
-                          isSelected ? "border-primary" : ""
-                        }`}
-                        onClick={() => setSelectedAroma(index)}
+                        className={`product-detail-variant-item flex-wrap d-flex column-gap-3 justify-content-center align-items-center ${isSelected ? "border-primary" : ""
+                          }`}
+                        onClick={() => {
+                          setSelectedAroma(index); // Seçili aromayı güncelle.
+                          setPhotoSrc(selectedVariant ? selectedVariant.photo_src : product.variants[0].photo_src); // photo_src güncelle.
+                          console.log("Selected Photo Src:", selectedVariant ? selectedVariant.photo_src : product.variants[0].photo_src); // Konsola yazdır.
+                        }}
                       >
                         {item}
                         <img
@@ -299,7 +314,7 @@ function ProductDetail() {
                             padding: "5px",
                             height: "100%",
                           }}
-                        ></img>
+                        />
                         {isSelected && (
                           <div className="tick-icon">
                             <AiOutlineCheck
@@ -313,6 +328,8 @@ function ProductDetail() {
                     );
                   })}
                 </div>
+
+
               </div>
               <hr />
               <div className="product-size-container mt-2">
@@ -338,9 +355,8 @@ function ProductDetail() {
 
                     return (
                       <div
-                        className={`product-size-box d-flex align-items-center flex-column ${
-                          isSelected ? "border-primary" : ""
-                        }`}
+                        className={`product-size-box d-flex align-items-center flex-column ${isSelected ? "border-primary" : ""
+                          }`}
                         key={index}
                         onClick={() => setSelectedSize(index)}
                       >

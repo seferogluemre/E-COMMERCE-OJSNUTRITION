@@ -20,7 +20,6 @@ function MyCart({ show, handleCloseTwo }: CartProps) {
   ]);
 
 
-
   return (
     <Offcanvas show={show} onHide={handleCloseTwo} placement="end">
       <Offcanvas.Header closeButton>
