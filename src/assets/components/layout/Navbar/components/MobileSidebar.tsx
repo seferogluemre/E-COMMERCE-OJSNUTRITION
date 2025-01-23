@@ -93,8 +93,8 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
           name: item.name,
           slug: item.slug,
           order: item.order,
-          }));
-          break;
+        }));
+        break;
       case "children":
         displayItems = items;
         break;

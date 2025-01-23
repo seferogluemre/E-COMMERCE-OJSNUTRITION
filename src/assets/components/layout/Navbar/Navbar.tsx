@@ -23,6 +23,7 @@ import {
   removeTokenAndAuthUser,
 } from "../../../../services/api/collections/storage";
 import { useNavigate } from "react-router-dom";
+import MyCart from "./components/MyCart/MyCart";
 
 function NavbarComp() {
   const [query, setQuery] = useState<string>("");
@@ -43,6 +44,11 @@ function NavbarComp() {
     removeTokenAndAuthUser();
     navigate("/");
   };
+
+  const [showTwo, setShowTwo] = useState(false);
+
+  const handleShowTwo = () => setShowTwo(true);
+  const handleCloseTwo = () => setShowTwo(false);
 
   return (
     <>
@@ -144,19 +150,25 @@ function NavbarComp() {
               </ul>
             </div>
 
-            <div className="dropdown" id="nav-dropdown-cart">
-              <Button
-                className="btn btn-secondary dropdown-toggle "
-                type="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <GrCart className="fs-5" />
-                Sepetim
-              </Button>
+            <div className="border-0 position-relative" id="nav-dropdown-cart">
+              <span className="position-absolute top-0 px-2 start-100 translate-middle rounded-circle bg-danger">
+                0
+              </span>
+
+              <div className="cart-icon-container">
+                <Button
+                  id="nav-dropdown-cart"
+                  className="btn btn-secondary"
+                  onClick={handleShowTwo}
+                >
+                  <GrCart className="fs-5" />
+                  Sepetim
+                </Button>
+                <MyCart handleCloseTwo={handleCloseTwo} show={showTwo} />
+              </div>
             </div>
             <NavbarBrand>
-              <div className="position-relative cart-icon-container">
+              <div className="position-relative cart-icon-container" onClick={() => handleShowTwo()}>
                 <AiOutlineShoppingCart className=" text-primary cart-icon" />
                 <span className=" position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger">
                   0
