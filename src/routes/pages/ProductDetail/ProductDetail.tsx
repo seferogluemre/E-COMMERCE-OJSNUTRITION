@@ -14,7 +14,6 @@ import UseLocalStorage from "../../../hooks/UseSessionStorage";
 import LastView from "./components/LastView/LastView";
 import { AiOutlineCheck } from "react-icons/ai";
 import { ProductImage } from "./components/ProductImage";
-import { ProductListProp } from "../../../assets/components/type/type";
 
 interface NutritionalContent {
   ingredients: { aroma: string; value: string[] }[];
@@ -158,6 +157,39 @@ function ProductDetail() {
 
   console.log(productState[0]);
 
+  const updatePhotoBasedOnSelection = (selectedAromaIndex: number, selectedSizeIndex: number) => {
+    if (selectedAromaIndex === undefined || selectedSizeIndex === undefined) return;
+
+    const selectedAromaName = Array.from(
+      new Set(product.variants.map((variant) => variant.aroma))
+    )[selectedAromaIndex];
+
+    const selectedSizeInfo = [...new Map(
+      product.variants.map((item) => [
+        `${item.size.gram}-${item.size.total_services}`,
+        {
+          gram: item.size.gram,
+          totalServices: item.size.total_services,
+        },
+      ])
+    ).values()][selectedSizeIndex];
+
+
+    // Find variant that matches both selected aroma and size
+    const matchingVariant = product.variants.find(
+      (variant) =>
+        variant.aroma === selectedAromaName &&
+        variant.size.gram === selectedSizeInfo.gram &&
+        variant.size.total_services === selectedSizeInfo.totalServices
+    );
+
+    console.log(matchingVariant.photo_src);
+
+    if (matchingVariant) {
+      setPhotoSrc(matchingVariant.photo_src);
+    }
+  };
+
   return (
     <Container className="my-5">
       <Row>
@@ -299,8 +331,8 @@ function ProductDetail() {
                         className={`product-detail-variant-item flex-wrap d-flex column-gap-3 justify-content-center align-items-center ${isSelected ? "border-primary" : ""
                           }`}
                         onClick={() => {
-                          setSelectedAroma(index); // Seçili aromayı güncelle.
-                          setPhotoSrc(selectedVariant ? selectedVariant.photo_src : product.variants[0].photo_src); //o anki bulunan aroma indexe eşitse onun fotograf kaynagını aldık ve state'i güncelleyerek fotografı degiştirdik
+                          setSelectedAroma(index);
+                          updatePhotoBasedOnSelection(index, selectedSize);
                         }}
                       >
                         {item}
@@ -356,7 +388,7 @@ function ProductDetail() {
                         key={index}
                         onClick={() => {
                           setSelectedSize(index);
-                          setPhotoSrc(photo_src);
+                          updatePhotoBasedOnSelection(selectedAroma, index);
                         }}
                       >
                         <span>{gram}G</span>

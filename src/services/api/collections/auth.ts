@@ -6,7 +6,6 @@ import {
   getAccessToken,
   removeTokenAndAuthUser,
 } from "./storage";
-import { useNavigate } from "react-router-dom";
 
 
 interface LoginApiData {
