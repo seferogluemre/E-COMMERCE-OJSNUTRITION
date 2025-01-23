@@ -179,7 +179,7 @@ function NavbarComp() {
               >
                 <AiOutlineShoppingCart className=" text-primary cart-icon" />
                 <span className=" position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger">
-                  0
+                  {getTotalItems()}
                 </span>
               </div>
             </NavbarBrand>

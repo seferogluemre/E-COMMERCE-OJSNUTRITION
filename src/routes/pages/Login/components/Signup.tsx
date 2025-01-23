@@ -10,6 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { register as registerUser } from "../../../../services/api/collections/auth";
 import { useState } from "react";
+import ToastNotification from "../../../../assets/components/layout/ToastNotification/ToastNotification";
 
 // Form verileri için interface tanımı
 interface IFormInputs {
@@ -87,14 +88,12 @@ function Signup() {
   return (
     <>
       {alert && (
-        <Alert
-          variant={alert.type}
+        <ToastNotification
+          message={alert.message}
           onClose={() => setAlert(null)}
-          dismissible
-          className="mb-4"
-        >
-          {alert.message}
-        </Alert>
+          show={alert.show}
+          delay={3000}
+        />
       )}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="row g-3 mb-3">

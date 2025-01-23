@@ -267,6 +267,7 @@ function ProductDetail() {
         quantity: count,
         photo_src: photoSrc,
       });
+
       setCount(0); // Reset count after adding to cart
     }
   };

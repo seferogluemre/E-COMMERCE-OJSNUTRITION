@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { useToastStore } from "../toast/ToastStore";
 
 interface CartItem {
   id: string;
@@ -61,6 +62,10 @@ export const useCartStore = create<CartStore>((set, get) => ({
 
       // Save to localStorage
       saveToLocalStorage(newItems);
+
+      // Show toast notification
+      useToastStore.getState().showToast("Ürün sepetinize eklendi");
+
       return { items: newItems };
     });
   },
@@ -70,6 +75,10 @@ export const useCartStore = create<CartStore>((set, get) => ({
       const newItems = state.items.filter((item) => item.id !== itemId);
       // Save to localStorage
       saveToLocalStorage(newItems);
+
+      // Show toast notification
+      useToastStore.getState().showToast("Ürün sepetinizden kaldırıldı");
+
       return { items: newItems };
     });
   },
@@ -83,6 +92,10 @@ export const useCartStore = create<CartStore>((set, get) => ({
       );
       // Save to localStorage
       saveToLocalStorage(newItems);
+
+      // Show toast notification
+      useToastStore.getState().showToast("Ürün miktarı güncellendi");
+
       return { items: newItems };
     });
   },

@@ -6,7 +6,7 @@ import {
   getAccessToken,
   removeTokenAndAuthUser,
 } from "./storage";
-
+import { useToastStore } from "../../../store/toast/ToastStore";
 
 interface LoginApiData {
   username: string;
@@ -21,7 +21,6 @@ interface RegisterApiData {
   password2: string;
   api_key: string;
 }
-
 
 export interface User {
   first_name: string;
@@ -67,11 +66,16 @@ export const register = async (formData: {
         email: formData.email,
       };
       setAuthUser(userData);
+      useToastStore.getState().showToast("Kayıt işlemi başarıyla tamamlandı");
       return { success: true, data: jsonResponse };
     } else {
+      useToastStore.getState().showToast("Kayıt işlemi başarısız oldu");
       return { success: false, error: jsonResponse };
     }
   } catch (error) {
+    useToastStore
+      .getState()
+      .showToast("Bir hata oluştu, lütfen tekrar deneyin");
     return { success: false, error };
   }
 };
@@ -110,42 +114,57 @@ export const login = async (
     });
 
     const jsonResponse = await response.json();
-   
+
     if (response.ok) {
       setTokenAndAuthUser(
         jsonResponse.access_token,
         jsonResponse.refresh_token
       );
       const userResponse = await getUserData();
-      setAuthUser(userResponse)
+      setAuthUser(userResponse);
+      useToastStore.getState().showToast("Giriş başarıyla yapıldı");
       return { success: true, data: jsonResponse };
     } else {
+      useToastStore.getState().showToast("Giriş başarısız oldu");
       return { success: false, error: jsonResponse };
     }
   } catch (error) {
+    useToastStore
+      .getState()
+      .showToast("Bir hata oluştu, lütfen tekrar deneyin");
     return { success: false, error };
   }
 };
-
 
 export const updateUserData = async (userData: User) => {
   try {
     const api = createAxiosInstance();
 
     // Telefon numarasına +90 ekliyoruz
-    const updatedPhoneNumber = `+90${userData.phone_number?.replace(/^\+90/, "")}`;
+    const updatedPhoneNumber = `+90${userData.phone_number?.replace(
+      /^\+90/,
+      ""
+    )}`;
 
-    const response = await api.put("/users/my-account", {
-      first_name: userData.first_name,
-      last_name: userData.last_name,
-      phone_number: updatedPhoneNumber,
-    }, {
-      headers: {
-        "Content-Type": "application/json",
+    const response = await api.put(
+      "/users/my-account",
+      {
+        first_name: userData.first_name,
+        last_name: userData.last_name,
+        phone_number: updatedPhoneNumber,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
-    });
+    );
+    useToastStore.getState().showToast("Bilgileriniz başarıyla güncellendi");
     return response.data; // Başarılıysa dönen yanıtı döndük
   } catch (error) {
+    useToastStore
+      .getState()
+      .showToast("Bilgileriniz güncellenirken bir hata oluştu");
     console.error("KULLANICI GÜNNCELLENİRKEN HATA OLUŞTU", error);
     throw error;
   }
@@ -154,6 +173,6 @@ export const updateUserData = async (userData: User) => {
 export const logout = () => {
   removeTokenAndAuthUser();
   localStorage.removeItem("user");
-  window.location.href="/"
+  useToastStore.getState().showToast("Başarıyla çıkış yapıldı");
+  window.location.href = "/";
 };
-
