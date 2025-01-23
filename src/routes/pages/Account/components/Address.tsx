@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, Row, Col, Form } from "react-bootstrap";
+import { Card, Button, Row, Col, Form, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { createAxiosInstance } from "../../../../services/api/axios";
-import { City, District, fetchAddresses, handleSubmitAddress } from "../../../../services/api/collections/Addresses";
+import {
+  City,
+  District,
+  fetchAddresses,
+  handleSubmitAddress,
+} from "../../../../services/api/collections/Addresses";
 
 interface UserAddress {
   title: string;
@@ -93,9 +98,9 @@ function Addresses() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await handleSubmitAddress(
-      formData, 
-      cities, 
-      districts, 
+      formData,
+      cities,
+      districts,
       setShowForm,
       fetchAddresses
     );
@@ -127,6 +132,10 @@ function Addresses() {
       <h3 className="mb-4">Adreslerim</h3>
       {showForm ? (
         <Form onSubmit={handleSubmit}>
+          <Alert variant="success">
+            <Alert.Heading>Adres Bulunamadı</Alert.Heading>
+            <p>Kayıtlı adresiniz bulunamadı. Lütfen yeni adres ekleyiniz.</p>
+          </Alert>
           <Form.Group controlId="formTitle">
             <Form.Label>*Adres Başlığı</Form.Label>
             <Form.Control
@@ -212,7 +221,9 @@ function Addresses() {
               giriniz
             </Form.Text>
           </Form.Group>
-          <Button type="submit" onClick={handleSubmit}>Kaydet</Button>
+          <Button type="submit" onClick={handleSubmit}>
+            Kaydet
+          </Button>
         </Form>
       ) : (
         <Row>

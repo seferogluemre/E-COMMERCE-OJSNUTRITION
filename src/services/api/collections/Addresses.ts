@@ -1,6 +1,5 @@
 import { createAxiosInstance } from "../axios";
 
-
 interface UserAddress {
   title: string;
   firstName: string;
@@ -16,11 +15,10 @@ export interface City {
   id: number;
 }
 
-export  interface District {
+export interface District {
   name: string;
   id: number;
 }
-
 
 export const fetchAddresses = async (
   setAddresses: (addresses: UserAddress[]) => void,
@@ -45,7 +43,7 @@ export const fetchAddresses = async (
         address: firstAddress.full_address,
         city: firstAddress.region?.name || "",
         district: firstAddress.subregion?.name || "",
-        phone: firstAddress.phone_number
+        phone: firstAddress.phone_number,
       });
       setShowForm(false);
     } else {
@@ -57,15 +55,27 @@ export const fetchAddresses = async (
   }
 };
 
-export const handleSubmitAddress = async (formData:UserAddress, cities:City[], districts:District[], setShowForm: (show: boolean) => void, fetchAddresses: (setAddresses: (addresses: UserAddress[]) => void, setUserAddress: (address: UserAddress) => void, setShowForm: (show: boolean) => void) => Promise<void> ) => {
+export const handleSubmitAddress = async (
+  formData: UserAddress,
+  cities: City[],
+  districts: District[],
+  setShowForm: (show: boolean) => void,
+  fetchAddresses: (
+    setAddresses: (addresses: UserAddress[]) => void,
+    setUserAddress: (address: UserAddress) => void,
+    setShowForm: (show: boolean) => void
+  ) => Promise<void>
+) => {
   const formattedPhone = `+90${formData.phone.replace(/^\+90/, "")}`;
   const fullAddress = `${formData.address}, ${formData.district}, ${formData.city}`;
 
   const addressData = {
     title: formData.title,
     country_id: 226,
-    region_id: cities.find((city:City) => city.name === formData.city)?.id,
-    subregion_id: districts.find((district:District) => district.name === formData.district)?.id,
+    region_id: cities.find((city: City) => city.name === formData.city)?.id,
+    subregion_id: districts.find(
+      (district: District) => district.name === formData.district
+    )?.id,
     full_address: fullAddress,
     phone_number: formattedPhone,
     first_name: formData.firstName,
@@ -85,4 +95,4 @@ export const handleSubmitAddress = async (formData:UserAddress, cities:City[], d
   } catch (error) {
     console.error("Adres gönderilirken hata oluştu:", error);
   }
-}; 
+};
