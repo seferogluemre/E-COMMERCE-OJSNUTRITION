@@ -44,7 +44,8 @@ export const useCartStore = create<CartStore>((set, get) => ({
         (i) =>
           i.id === item.id &&
           i.aroma === item.aroma &&
-          i.size.gram === item.size.gram
+          i.size.gram === item.size.gram &&
+          i.size.total_services === item.size.total_services
       );
 
       let newItems;
@@ -52,7 +53,8 @@ export const useCartStore = create<CartStore>((set, get) => ({
         newItems = state.items.map((i) =>
           i.id === item.id &&
           i.aroma === item.aroma &&
-          i.size.gram === item.size.gram
+          i.size.gram === item.size.gram &&
+          i.size.total_services === item.size.total_services
             ? { ...i, quantity: i.quantity + item.quantity }
             : i
         );
@@ -87,9 +89,17 @@ export const useCartStore = create<CartStore>((set, get) => ({
     if (quantity < 1) return; // Prevent negative quantities
 
     set((state) => {
+      const targetItem = state.items.find((item) => item.id === itemId);
+      if (!targetItem) return state;
+
       const newItems = state.items.map((item) =>
-        item.id === itemId ? { ...item, quantity } : item
+        item.id === itemId &&
+        item.aroma === targetItem.aroma &&
+        item.size.gram === targetItem.size.gram
+          ? { ...item, quantity }
+          : item
       );
+
       // Save to localStorage
       saveToLocalStorage(newItems);
 
@@ -110,3 +120,5 @@ export const useCartStore = create<CartStore>((set, get) => ({
     return items.length;
   },
 }));
+
+console.log(localStorage.getItem("BasketItems"));

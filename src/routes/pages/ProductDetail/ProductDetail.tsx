@@ -14,7 +14,8 @@ import UseLocalStorage from "../../../hooks/UseSessionStorage";
 import LastView from "./components/LastView/LastView";
 import { AiOutlineCheck } from "react-icons/ai";
 import { ProductImage } from "./components/ProductImage";
-import { useCartStore } from "../../../store/products/Cart";
+import { useCartStore, CartItem } from "../../../store/products/Cart";
+import { useToastStore } from "../../../store/toast/ToastStore";
 
 interface NutritionalContent {
   ingredients: { aroma: string; value: string[] }[];
@@ -73,9 +74,12 @@ interface ColorProps {
 export const LOCAL_KEY = "lastView";
 
 function ProductDetail() {
-  const { product, bestSeller } = useLoaderData();
+  const { product, bestSeller } = useLoaderData() as {
+    product: Product;
+    bestSeller: Product[];
+  };
   const [count, setCount] = useState<number>(0);
-  const [storedValue, setStoredValue] = UseLocalStorage(LOCAL_KEY, "");
+  const [, setStoredValue] = UseLocalStorage(LOCAL_KEY, "");
   const [selectedSize, setSelectedSize] = useState<number>();
   const [selectedAroma, setSelectedAroma] = useState<number>();
   const [photoSrc, setPhotoSrc] = useState<string>("");
@@ -84,32 +88,38 @@ function ProductDetail() {
   const [originalPrice, setOriginalPrice] = useState<number>(0);
   const [discountPercentage, setDiscountPercentage] = useState<number>(0);
   const { addToCart } = useCartStore();
+  const toast = useToastStore();
 
   const updatePhotoBasedOnSelection = (
-    selectedAromaIndex: number,
-    selectedSizeIndex: number
+    selectedAromaIndex: number | undefined,
+    selectedSizeIndex: number | undefined
   ) => {
     if (selectedAromaIndex === undefined || selectedSizeIndex === undefined)
       return;
 
     const selectedAromaName = Array.from(
-      new Set(product.variants.map((variant) => variant.aroma))
+      new Set(product.variants.map((variant: Variant) => variant.aroma))
     )[selectedAromaIndex];
+
+    interface SizeInfo {
+      gram: number;
+      totalServices: number;
+    }
 
     const selectedSizeInfo = [
       ...new Map(
-        product.variants.map((item) => [
+        product.variants.map((item: Variant) => [
           `${item.size.gram}-${item.size.total_services}`,
           {
             gram: item.size.gram,
             totalServices: item.size.total_services,
-          },
+          } as SizeInfo,
         ])
       ).values(),
-    ][selectedSizeIndex];
+    ][selectedSizeIndex] as SizeInfo;
 
     const matchingVariant = product.variants.find(
-      (variant) =>
+      (variant: Variant) =>
         variant.aroma === selectedAromaName &&
         variant.size.gram === selectedSizeInfo.gram &&
         variant.size.total_services === selectedSizeInfo.totalServices
@@ -252,23 +262,54 @@ function ProductDetail() {
       selectedSize !== undefined
     ) {
       const selectedAromaName = Array.from(
-        new Set(product.variants.map((variant) => variant.aroma))
+        new Set(product.variants.map((variant: Variant) => variant.aroma))
       )[selectedAroma];
 
-      addToCart({
+      interface SizeInfo {
+        gram: number;
+        totalServices: number;
+      }
+
+      const selectedSizeInfo = [
+        ...new Map(
+          product.variants.map((item: Variant) => [
+            `${item.size.gram}-${item.size.total_services}`,
+            {
+              gram: item.size.gram,
+              totalServices: item.size.total_services,
+            } as SizeInfo,
+          ])
+        ).values(),
+      ][selectedSize] as SizeInfo;
+
+      const selectedVariant = product.variants.find(
+        (variant: Variant) =>
+          variant.aroma === selectedAromaName &&
+          variant.size.gram === selectedSizeInfo.gram &&
+          variant.size.total_services === selectedSizeInfo.totalServices
+      );
+
+      if (!selectedVariant) {
+        toast.showToast("Ürün seçimi yapılamadı");
+        return;
+      }
+
+      const cartItem: CartItem = {
         id: product.id,
         name: product.name,
         aroma: selectedAromaName,
         size: {
-          gram: product.variants[0].size.gram,
-          total_services: totalServices,
+          gram: selectedSizeInfo.gram,
+          total_services: selectedSizeInfo.totalServices,
         },
         price: matchingTotalPrice,
         quantity: count,
-        photo_src: photoSrc,
-      });
+        photo_src: selectedVariant.photo_src,
+      };
 
-      setCount(0); // Reset count after adding to cart
+      addToCart(cartItem);
+      setCount(0);
+      toast.showToast("Ürün sepete eklendi");
     }
   };
 

@@ -82,13 +82,7 @@ function MyCart({ show, handleCloseTwo }: CartProps) {
                           -
                         </button>
                       )}
-                      <button
-                        type="button"
-                        className="btn btn-outline-secondary btn-sm"
-                        disabled
-                      >
-                        {item.quantity}
-                      </button>
+                      <span className="mx-2">{item.quantity}</span>
                       <button
                         type="button"
                         className="btn btn-outline-secondary btn-sm"

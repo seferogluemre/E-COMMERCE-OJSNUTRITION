@@ -19,6 +19,8 @@ function Payment() {
   const [selectedAddress, setSelectedAddress] = useState<UserAddress | null>(
     null
   );
+  const [userAddresses, setUserAddresses] = useState<UserAddress[]>([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cities, setCities] = useState<City[]>([]);
   const [districts, setDistricts] = useState<District[]>([]);
   const [selectedCity, setSelectedCity] = useState<string>("");
@@ -34,19 +36,42 @@ function Payment() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   useEffect(() => {
-    // Sepet öğelerini getir
+    // Check if user is logged in
+    const token = localStorage.getItem("access_token");
+    setIsLoggedIn(!!token);
+
+    // Fetch user addresses if logged in
+    if (token) {
+      fetchUserAddresses();
+    }
+
+    // Get cart items
     const basketItems = localStorage.getItem("BasketItems");
     if (basketItems) {
       setCartItems(JSON.parse(basketItems));
     }
 
-    // Kayıtlı adresi kontrol et
-    const savedAddress = localStorage.getItem("guestAddress");
-    if (savedAddress) {
-      const parsedAddress = JSON.parse(savedAddress);
-      setSelectedAddress(parsedAddress);
+    // Check saved guest address
+    if (!token) {
+      const savedAddress = localStorage.getItem("guestAddress");
+      if (savedAddress) {
+        const parsedAddress = JSON.parse(savedAddress);
+        setSelectedAddress(parsedAddress);
+      }
     }
   }, []);
+
+  const fetchUserAddresses = async () => {
+    try {
+      await fetchAddresses(
+        setUserAddresses,
+        (address) => setSelectedAddress(address),
+        () => {}
+      );
+    } catch (error) {
+      console.error("Error fetching user addresses:", error);
+    }
+  };
 
   // Şehirleri getirme
   useEffect(() => {
@@ -193,7 +218,44 @@ function Payment() {
                 <div className="card">
                   <div className="card-body">
                     <h5 className="card-title">Teslimat Adresi</h5>
-                    {!selectedAddress ? (
+                    {isLoggedIn ? (
+                      <div className="user-addresses">
+                        {userAddresses.map((address) => (
+                          <div
+                            key={address.id}
+                            className={`saved-address p-3 border rounded mb-3 ${
+                              selectedAddress?.id === address.id
+                                ? "border-primary"
+                                : ""
+                            }`}
+                            onClick={() => handleAddressSelect(address)}
+                            style={{ cursor: "pointer" }}
+                          >
+                            <h5 className="text-danger">{address.title}</h5>
+                            <p className="mb-0">
+                              {address.first_name} {address.last_name}
+                            </p>
+                            <p className="my-2">{address.full_address}</p>
+                            <div className="address-info">
+                              <p className="mb-0">
+                                {address.city} {address.district}
+                              </p>
+                            </div>
+                            <p className="mb-0 text-primary">
+                              {address.phone_number}
+                            </p>
+                          </div>
+                        ))}
+                        {selectedAddress && (
+                          <button
+                            className="btn btn-dark w-100"
+                            onClick={() => setCurrentStep(2)}
+                          >
+                            Kargo ile Devam Et
+                          </button>
+                        )}
+                      </div>
+                    ) : (
                       <div className="address-form">
                         <h6>Misafir Kullanıcı - Adres Bilgileri</h6>
                         <form onSubmit={handleFormSubmit}>
@@ -293,33 +355,6 @@ function Payment() {
                           </button>
                         </form>
                       </div>
-                    ) : (
-                      <>
-                        <div className="saved-address p-3 border rounded mb-3">
-                          <h5 className="text-danger">
-                            {selectedAddress.title}
-                          </h5>
-                          <p className="mb-0">
-                            {selectedAddress.first_name}{" "}
-                            {selectedAddress.last_name}
-                          </p>
-                          <p className="my-2">{selectedAddress.full_address}</p>
-                          <div className="address-info">
-                            <p className="mb-0">
-                              {selectedAddress.city} {selectedAddress.district}
-                            </p>
-                          </div>
-                          <p className="mb-0 text-primary">
-                            {selectedAddress.phone_number}
-                          </p>
-                        </div>
-                        <button
-                          className="btn btn-dark w-100"
-                          onClick={() => setCurrentStep(2)}
-                        >
-                          Kargo ile Devam Et
-                        </button>
-                      </>
                     )}
                   </div>
                 </div>

@@ -42,8 +42,8 @@ export function setAuthUser(user: User) {
 export function getAuthUser() {
   return localStorage.getItem(USER_STORAGE_KEY);
 }
-export function removeAuthUser(){
-  localStorage.removeItem(USER_STORAGE_KEY)
+export function removeAuthUser() {
+  localStorage.removeItem(USER_STORAGE_KEY);
 }
 export function removeTokenAndAuthUser() {
   removeAccessToken();
