@@ -1,9 +1,31 @@
 import { createAxiosInstance } from "../axios";
 
+
+interface UserAddress {
+  title: string;
+  firstName: string;
+  lastName: string;
+  address: string;
+  city: string;
+  district: string;
+  phone: string;
+}
+
+interface City {
+  name: string;
+  id: number;
+}
+
+interface District {
+  name: string;
+  id: number;
+}
+
+
+
 export const fetchAddresses = async (
-  navigate: any,
-  setAddresses: (addresses: any[]) => void,
-  setUserAddress: (address: any) => void,
+  setAddresses: (addresses: UserAddress[]) => void,
+  setUserAddress: (address: UserAddress) => void,
   setShowForm: (show: boolean) => void
 ) => {
   try {
@@ -36,15 +58,15 @@ export const fetchAddresses = async (
   }
 };
 
-export const handleSubmitAddress = async (formData, cities, districts, navigate, setShowForm, fetchAddresses) => {
+export const handleSubmitAddress = async (formData:UserAddress, cities:City[], districts:District[], navigate:NavigateFunction, setShowForm: (show: boolean) => void, fetchAddresses: (setAddresses: (addresses: UserAddress[]) => void, setUserAddress: (address: UserAddress) => void, setShowForm: (show: boolean) => void) => Promise<void> ) => {
   const formattedPhone = `+90${formData.phone.replace(/^\+90/, "")}`;
   const fullAddress = `${formData.address}, ${formData.district}, ${formData.city}`;
 
   const addressData = {
     title: formData.title,
     country_id: 226,
-    region_id: cities.find(city => city.name === formData.city)?.id,
-    subregion_id: districts.find(district => district.name === formData.district)?.id,
+    region_id: cities.find((city:City) => city.name === formData.city)?.id,
+    subregion_id: districts.find((district:District) => district.name === formData.district)?.id,
     full_address: fullAddress,
     phone_number: formattedPhone,
     first_name: formData.firstName,
@@ -57,7 +79,7 @@ export const handleSubmitAddress = async (formData, cities, districts, navigate,
     if (response.status === 200) {
       console.log("Adres başarıyla kaydedildi.");
       setShowForm(false);
-      fetchAddresses(navigate);
+      fetchAddresses(setAddresses, setUserAddress, setShowForm);
     } else {
       console.error("Adres kaydedilemedi:", response.data);
     }
