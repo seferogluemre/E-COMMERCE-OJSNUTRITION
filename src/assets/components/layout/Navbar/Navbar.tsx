@@ -24,6 +24,7 @@ import {
 } from "../../../../services/api/collections/storage";
 import { useNavigate } from "react-router-dom";
 import MyCart from "./components/MyCart/MyCart";
+import { useCartStore } from "../../../../store/products/Cart";
 
 function NavbarComp() {
   const [query, setQuery] = useState<string>("");
@@ -51,6 +52,8 @@ function NavbarComp() {
 
   const handleShowTwo = () => setShowTwo(true);
   const handleCloseTwo = () => setShowTwo(false);
+
+  const getTotalItems = useCartStore((state) => state.getTotalItems);
 
   return (
     <>
@@ -154,7 +157,7 @@ function NavbarComp() {
 
             <div className="border-0 position-relative" id="nav-dropdown-cart">
               <span className="position-absolute top-0 px-2 start-100 translate-middle rounded-circle bg-danger">
-                0
+                {getTotalItems()}
               </span>
 
               <div className="cart-icon-container">

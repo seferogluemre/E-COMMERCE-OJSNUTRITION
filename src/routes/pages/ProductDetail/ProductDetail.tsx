@@ -14,6 +14,7 @@ import UseLocalStorage from "../../../hooks/UseSessionStorage";
 import LastView from "./components/LastView/LastView";
 import { AiOutlineCheck } from "react-icons/ai";
 import { ProductImage } from "./components/ProductImage";
+import { useCartStore } from "../../../store/products/Cart";
 
 interface NutritionalContent {
   ingredients: { aroma: string; value: string[] }[];
@@ -82,6 +83,7 @@ function ProductDetail() {
   const [totalServices, setTotalServices] = useState<number>(0);
   const [originalPrice, setOriginalPrice] = useState<number>(0);
   const [discountPercentage, setDiscountPercentage] = useState<number>(0);
+  const { addToCart } = useCartStore();
 
   const updatePhotoBasedOnSelection = (
     selectedAromaIndex: number,
@@ -233,6 +235,40 @@ function ProductDetail() {
         variant.size.total_services === totalServices &&
         variant.is_available
     );
+  };
+
+  const handleCountChange = (increment: boolean) => {
+    if (increment) {
+      setCount(count + 1);
+    } else if (count > 0) {
+      setCount(count - 1);
+    }
+  };
+
+  const handleAddToCart = () => {
+    if (
+      count > 0 &&
+      selectedAroma !== undefined &&
+      selectedSize !== undefined
+    ) {
+      const selectedAromaName = Array.from(
+        new Set(product.variants.map((variant) => variant.aroma))
+      )[selectedAroma];
+
+      addToCart({
+        id: product.id,
+        name: product.name,
+        aroma: selectedAromaName,
+        size: {
+          gram: product.variants[0].size.gram,
+          total_services: totalServices,
+        },
+        price: matchingTotalPrice,
+        quantity: count,
+        photo_src: photoSrc,
+      });
+      setCount(0); // Reset count after adding to cart
+    }
   };
 
   return (
@@ -527,21 +563,24 @@ function ProductDetail() {
                 <div className="d-flex pt-2 justify-content-between column-gap-md-3">
                   <div className="count-box">
                     <button
-                      onClick={() => setCount((count) => count + 1)}
+                      onClick={() => handleCountChange(true)}
                       className="product-counter-btn"
                     >
                       <GoPlus />
                     </button>
                     <span className="fs-4 m-2">{count}</span>
                     <button
-                      onClick={() => setCount((count) => count - 1)}
+                      onClick={() => handleCountChange(false)}
                       className="product-counter-btn"
                     >
                       <FaMinus />
                     </button>
                   </div>
                   <div className="cart">
-                    <button className="add-to-cart-btn ">
+                    <button
+                      className="add-to-cart-btn"
+                      onClick={handleAddToCart}
+                    >
                       <MdShoppingCart className="fs-3" />
                       SEPETE EKLE
                     </button>
