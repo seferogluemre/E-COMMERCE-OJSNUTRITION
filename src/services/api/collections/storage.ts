@@ -1,4 +1,4 @@
-import { User } from "../../../assets/components/type/type";
+import { User } from "./auth";
 
 const ACCESS_TOKEN_STORAGE_KEY = "access_token";
 export const USER_STORAGE_KEY = "user";
@@ -42,8 +42,11 @@ export function setAuthUser(user: User) {
 export function getAuthUser() {
   return localStorage.getItem(USER_STORAGE_KEY);
 }
-
+export function removeAuthUser(){
+  localStorage.removeItem(USER_STORAGE_KEY)
+}
 export function removeTokenAndAuthUser() {
   removeAccessToken();
   removeRefreshToken();
+  removeAuthUser();
 }

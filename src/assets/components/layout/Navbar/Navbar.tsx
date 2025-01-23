@@ -29,6 +29,7 @@ function NavbarComp() {
   const [query, setQuery] = useState<string>("");
   const { searchProducts } = useSearchProduct((state) => state);
   const [show, setShow] = useState(false);
+  
   const user = getAuthUser() ? JSON.parse(getAuthUser()!) : null;
   const authenticated = isAuthenticated();
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ function NavbarComp() {
 
   const handleLogout = () => {
     removeTokenAndAuthUser();
-    navigate("/");
+    window.location.reload();
   };
 
   const [showTwo, setShowTwo] = useState(false);

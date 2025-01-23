@@ -33,43 +33,6 @@ export const isAuthenticated = () => {
   return !!getAccessToken();
 };
 
-export const login = async (
-  email: string,
-  password: string,
-  apiKey: string
-) => {
-  try {
-    // API'ye gönderilecek veriler
-    const dataForApi: LoginApiData & { api_key: string } = {
-      username: email,
-      password: password,
-      api_key: apiKey, // Üçüncü parametre olarak apiKey eklendi
-    };
-
-    const response = await fetch(`${BASE_URL}/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(dataForApi),
-    });
-
-    const jsonResponse = await response.json();
-
-    if (response.ok) {
-      setTokenAndAuthUser(
-        jsonResponse.access_token,
-        jsonResponse.refresh_token
-      );
-      return { success: true, data: jsonResponse };
-    } else {
-      return { success: false, error: jsonResponse };
-    }
-  } catch (error) {
-    return { success: false, error };
-  }
-};
-
 export const register = async (formData: {
   firstName: string;
   lastName: string;
@@ -123,6 +86,46 @@ export const getUserData = async () => {
   } finally {
   }
 };
+
+export const login = async (
+  email: string,
+  password: string,
+  apiKey: string
+) => {
+  try {
+    // API'ye gönderilecek veriler
+    const dataForApi: LoginApiData & { api_key: string } = {
+      username: email,
+      password: password,
+      api_key: apiKey, // Üçüncü parametre olarak apiKey eklendi
+    };
+
+    const response = await fetch(`${BASE_URL}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dataForApi),
+    });
+
+    const jsonResponse = await response.json();
+   
+    if (response.ok) {
+      setTokenAndAuthUser(
+        jsonResponse.access_token,
+        jsonResponse.refresh_token
+      );
+      const userResponse = await getUserData();
+      setAuthUser(userResponse)
+      return { success: true, data: jsonResponse };
+    } else {
+      return { success: false, error: jsonResponse };
+    }
+  } catch (error) {
+    return { success: false, error };
+  }
+};
+
 
 export const updateUserData = async (userData: User) => {
   try {
