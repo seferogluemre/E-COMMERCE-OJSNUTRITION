@@ -13,6 +13,7 @@ import BestSeller from "../../../assets/components/layout/BestSeller/BestSeller"
 import UseLocalStorage from "../../../hooks/UseSessionStorage";
 import LastView from "./components/LastView/LastView";
 import { AiOutlineCheck } from "react-icons/ai";
+import { ProductImage } from "./components/ProductImage";
 
 interface NutritionalContent {
   ingredients: { aroma: string; value: string[] }[];
@@ -155,9 +156,11 @@ function ProductDetail() {
             className="row d-flex justify-content-center px-sm-3"
           >
             <div className="col-lg-6 col-sm-12 col-xxl-6 col-md-12 product-detail_column">
-              <img
+              <ProductImage
                 src={PHOTO_URL + product.variants[0].photo_src}
-                alt={product.slug}
+                magnifierHeight={180}
+                magnifierWidth={180}
+                zoomLevel={1.3}
                 className="product-detail_image mb-2"
               />
               <div className="properties pt-1 d-none d-md-block d-xl-none">
