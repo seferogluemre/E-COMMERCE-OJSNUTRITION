@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Card, Button, Row, Col, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { createAxiosInstance } from "../../../../services/api/axios";
+import { fetchAddresses, handleSubmitAddress } from "../../../../services/api/collections/Addresses";
+
 interface UserAddress {
   title: string;
   firstName: string;
@@ -89,41 +91,9 @@ function Addresses() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // Formun sayfa yenilemesini engelle
-
-    // Telefon numarasına +90 ekliyoruz
-    const formattedPhone = `+90${formData.phone.replace(/^\+90/, "")}`;
-
-    // Adresin tam formatını oluşturuyoruz
-    const fullAddress = `${formData.address}, ${formData.district}, ${formData.city}`;
-
-    // API'ye gönderilecek veri (backend'in beklediği formata uygun hale getiriyoruz)
-    const addressData = {
-      title: formData.title,
-      country_id: 226, // Türkiye için sabit ülke id
-      region_id: cities.find(city => city.name === formData.city)?.id, // Seçilen şehir id'si
-      subregion_id: districts.find(district => district.name === formData.district)?.id, // Seçilen ilçe id'si
-      full_address: fullAddress,
-      phone_number: formattedPhone,
-      first_name: formData.firstName, // Backend 'name' alanı 
-      last_name: formData.lastName, // Backend 'last_name' alanı
-    };
-
-    try {
-      const api = createAxiosInstance();
-      const response = await api.post("/users/addresses", addressData); // Veriyi backend'e gönder
-      if (response.status === 200) {
-        console.log("Adres başarıyla kaydedildi.");
-        setShowForm(false); // Formu kapat
-        fetchAddresses(); // Adresleri tekrar getir
-      } else {
-        console.error("Adres kaydedilemedi:", response.data);
-      }
-    } catch (error) {
-      console.error("Adres gönderilirken hata oluştu:", error);
-    }
+    e.preventDefault();
+    await handleSubmitAddress(formData, cities, districts, navigate, setShowForm, fetchAddresses);
   };
-
 
   const handleCityChange = (e) => {
     const selectedCity = e.target.value;
@@ -142,43 +112,9 @@ function Addresses() {
     }));
   };
 
-  // Adresleri getirme
-  const fetchAddresses = async () => {
-    try {
-      const api = createAxiosInstance();
-      const response = await api.get("/users/addresses", {
-        params: {
-          limit: 10,
-          offset: 0,
-        },
-      });
-      setAddreses(response.data.data.results);
-      // Eğer adres varsa, ilk adresi userAddress'e set et ve formu gizle
-      if (response.data.data.results.length > 0) {
-        const firstAddress = response.data.data.results[0];
-        setUserAddress({
-          title: firstAddress.title,
-          firstName: firstAddress.first_name,
-          lastName: firstAddress.last_name,
-          address: firstAddress.full_address,
-          city: firstAddress.region?.name || "",
-          district: firstAddress.subregion?.name || "",
-          phone: firstAddress.phone_number
-        });
-        setShowForm(false);
-      } else {
-        setShowForm(true);
-      }
-    } catch (error) {
-      console.error("Error fetching addresses:", error);
-      setShowForm(true);
-    }
-  };
-
   useEffect(() => {
-    fetchAddresses();
+    fetchAddresses(navigate, setAddreses, setUserAddress, setShowForm);
   }, [navigate]);
-
 
   return (
     <div className="content-area">

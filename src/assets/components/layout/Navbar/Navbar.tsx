@@ -44,6 +44,7 @@ function NavbarComp() {
   const handleLogout = () => {
     removeTokenAndAuthUser();
     window.location.reload();
+    navigate("/");
   };
 
   const [showTwo, setShowTwo] = useState(false);

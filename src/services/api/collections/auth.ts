@@ -6,6 +6,8 @@ import {
   getAccessToken,
   removeTokenAndAuthUser,
 } from "./storage";
+import { useNavigate } from "react-router-dom";
+
 
 interface LoginApiData {
   username: string;
@@ -153,5 +155,6 @@ export const updateUserData = async (userData: User) => {
 export const logout = () => {
   removeTokenAndAuthUser();
   localStorage.removeItem("user");
+  window.location.href="/"
 };
 
