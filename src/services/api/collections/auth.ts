@@ -1,3 +1,4 @@
+import { createAxiosInstance } from "../axios";
 import { BASE_URL } from "../types";
 import {
   setTokenAndAuthUser,
@@ -18,6 +19,14 @@ interface RegisterApiData {
   password: string;
   password2: string;
   api_key: string;
+}
+
+
+export interface User {
+  first_name: string;
+  last_name: string;
+  phone_number: string | null;
+  email: string;
 }
 
 export const isAuthenticated = () => {
@@ -103,7 +112,44 @@ export const register = async (formData: {
   }
 };
 
+export const getUserData = async () => {
+  try {
+    const api = createAxiosInstance();
+    const response = await api.get("/users/my-account");
+    const data = response.data.data;
+    return data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+  } finally {
+  }
+};
+
+
 export const logout = () => {
   removeTokenAndAuthUser();
   localStorage.removeItem("user");
+};
+
+export const updateUserData = async (userData: User) => {
+  try {
+    const api = createAxiosInstance();
+
+    // Telefon numarasına +90 ekliyoruz
+    const updatedPhoneNumber = `+90${userData.phone_number?.replace(/^\+90/, "")}`;
+
+    const response = await api.put("/users/my-account", {
+      first_name: userData.first_name,
+      last_name: userData.last_name,
+      phone_number: updatedPhoneNumber,
+    }, {
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+
+    return response.data; // Başarılıysa dönen yanıtı döndük
+  } catch (error) {
+    console.error("KULLANICI GÜNNCELLENİRKEN HATA OLUŞTU", error);
+    throw error;
+  }
 };

@@ -101,7 +101,6 @@ function ProductDetail() {
       if (existingProductIndex !== -1) {
         updatedValue.splice(existingProductIndex, 1);
       }
-
       updatedValue.unshift({
         id: product.id,
         name: product.name,
@@ -129,6 +128,7 @@ function ProductDetail() {
 
     setSelectedAroma(0);
     setSelectedSize(0);
+
   }, [product]);
 
 
