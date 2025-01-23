@@ -42,12 +42,31 @@ $transition-speed: 0.3s;
     background-color: #e4e2e2;
     border: 3px solid #bebebe;
     width: auto !important;
+    position: relative;
     padding: 3px 8px;
     text-align: center;
-    height: 42px;
+    height: 47px;
     border-radius: 5px;
     margin: 5px;
     font-size: 16px !important;
+
+    .selected {
+      border: 1px solid rgb(73, 145, 253) !important;
+    }
+
+    .tick-icon {
+      background-color: #4ca6c7 !important;
+      position: absolute;
+      top: -15px;
+      right: -10px;
+      width: 20px;
+      display: flex;
+      justify-content: center;
+      border-radius: 25px;
+      padding: 1px;
+      height: 20px;
+      background-color: #4ca6c7;
+    }
   }
 
   .product-size-box {
@@ -56,6 +75,27 @@ $transition-speed: 0.3s;
     height: 85px;
     padding: 15px;
     position: relative;
+
+
+    .selected {
+      border: 1px solid rgb(73, 145, 253) !important;
+    }
+
+    .tick-icon {
+      background-color: #4ca6c7 !important;
+      position: absolute;
+      top: -15px;
+      right: -10px;
+      width: 20px;
+      display: flex;
+      justify-content: center;
+      border-radius: 25px;
+      padding: 1px;
+      height: 20px;
+      background-color: #4ca6c7;
+    }
+
+
     .discounted-percentage-box {
       position: absolute;
       top: -15px;
@@ -66,6 +106,9 @@ $transition-speed: 0.3s;
       justify-content: center;
       width: 110px;
       color: aliceblue;
+
+
+
       p,
       span {
         font-size: 15px !important;
@@ -73,6 +116,7 @@ $transition-speed: 0.3s;
       }
     }
   }
+
   .count-box {
     width: 100px;
     display: flex;
@@ -80,6 +124,7 @@ $transition-speed: 0.3s;
     align-items: center;
     border: 1px solid #919191 !important;
     border-radius: 5px;
+
     .product-counter-btn {
       border: 1px solid #bebebe;
       width: 32px;
@@ -87,6 +132,7 @@ $transition-speed: 0.3s;
       height: 100%;
     }
   }
+
   .add-to-cart-btn {
     width: 350px;
     font-size: 20px;
@@ -114,9 +160,11 @@ $transition-speed: 0.3s;
       align-items: flex-start;
     }
   }
+
   .pagination {
     display: flex;
     justify-content: center;
+
     .page-number {
       width: 50px;
       box-shadow: 0 2px 4px gray;

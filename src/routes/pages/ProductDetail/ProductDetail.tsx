@@ -12,6 +12,7 @@ import ProductTrust from "./components/ProductTrust/ProductTrust";
 import BestSeller from "../../../assets/components/layout/BestSeller/BestSeller";
 import UseLocalStorage from "../../../hooks/UseSessionStorage";
 import LastView from "./components/LastView/LastView";
+import { AiOutlineCheck } from "react-icons/ai";
 
 interface NutritionalContent {
   ingredients: { aroma: string; value: string[] }[];
@@ -73,6 +74,8 @@ function ProductDetail() {
   const { product, bestSeller } = useLoaderData();
   const [count, setCount] = useState<number>(0);
   const [storedValue, setStoredValue] = UseLocalStorage(LOCAL_KEY, "");
+  const [selectedSize, setSelectedSize] = useState<number>();
+  const [selectedAroma, setSelectedAroma] = useState<number>();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -270,23 +273,32 @@ function ProductDetail() {
                 <div className="d-flex flex-wrap column-gap-2">
                   {Array.from(
                     new Set(product.variants.map((variant) => variant.aroma))
-                  ).map((item, index) => (
-                    <div
-                      key={index}
-                      className="product-detail-variant-item flex-wrap d-flex column-gap-3 justify-content-center align-items-center"
-                    >
-                      {item}
-                      <img
-                        src={aromaColors[item.trim()] || "transparent"}
-                        style={{
-                          display: "inline-block",
-                          width: "35px",
-                          padding: "5px",
-                          height: "100%",
-                        }}
-                      ></img>
-                    </div>
-                  ))}
+                  ).map((item, index) => {
+                    const isSelected = selectedAroma == index;
+                    return (
+                      <div
+                        key={index}
+                        className={`product-detail-variant-item flex-wrap d-flex column-gap-3 justify-content-center align-items-center ${isSelected ? "border-primary" : ""}`}
+                        onClick={() => setSelectedAroma(index)}
+                      >
+                        {item}
+                        <img
+                          src={aromaColors[item.trim()] || "transparent"}
+                          style={{
+                            display: "inline-block",
+                            width: "35px",
+                            padding: "5px",
+                            height: "100%",
+                          }}
+                        ></img>
+                        {isSelected && (
+                          <div className="tick-icon">
+                            <AiOutlineCheck className="text-light text-primary" size={20} color="white" />
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
               <hr />
@@ -309,10 +321,13 @@ function ProductDetail() {
                   ).map((item, index) => {
                     const { gram, totalServices, discountPercentage } =
                       JSON.parse(item);
+                    const isSelected = selectedSize == index;
+
                     return (
                       <div
-                        className="product-size-box d-flex align-items-center flex-column"
+                        className={`product-size-box d-flex align-items-center flex-column ${isSelected ? "border-primary" : ""}`}
                         key={index}
+                        onClick={() => setSelectedSize(index)}
                       >
                         <span>{gram}G</span>
                         <span>{totalServices} Servis</span>
@@ -320,6 +335,12 @@ function ProductDetail() {
                           <div className="discounted-percentage-box">
                             <p>{discountPercentage}%</p>
                             <span>İNDİRİM</span>
+                          </div>
+                        )
+                        }
+                        {isSelected && (
+                          <div className="tick-icon">
+                            <AiOutlineCheck className="text-light text-primary" size={20} color="white" />
                           </div>
                         )}
                       </div>
