@@ -245,7 +245,7 @@ function ProductDetail() {
               </div>
             </div>
             <div className="col-lg-6 col-sm-12 col-xxl-6 col-md-12 product-detail_column">
-              <h1 className="fs-2 m-0">{product.name}</h1>
+              <h1 className="fs-2 m-0 pt-md-3">{product.name}</h1>
               <p className="m-1">{product.slug}</p>
               <div className="d-flex column-gap-2 ">
                 <span>
@@ -291,26 +291,37 @@ function ProductDetail() {
               </div>
               <hr />
               <div className="product-size-container mt-2">
-                <div className="text-start pb-lg-2">
+                <div className="text-start pb-lg-2 pb-md-3">
                   <h3 className="fs-4">Boyut:</h3>
                 </div>
                 <div className="d-flex column-gap-3 ">
                   {Array.from(
                     new Set(
-                      product.variants.map(
-                        (item) =>
-                          `${item.size.gram}-${item.size.total_services}`
-                      ) // Sadece size.gram değerlerini alıyoruz
+                      product.variants.map((item) =>
+                        JSON.stringify({
+                          gram: item.size.gram,
+                          totalServices: item.size.total_services,
+                          discountPercentage:
+                            item.price.discount_percentage || null, // Discount kontrolü
+                        })
+                      )
                     )
-                  ).map((size, index) => {
-                    const [gram, total_services] = size.split("-");
+                  ).map((item, index) => {
+                    const { gram, totalServices, discountPercentage } =
+                      JSON.parse(item);
                     return (
                       <div
                         className="product-size-box d-flex align-items-center flex-column"
                         key={index}
                       >
                         <span>{gram}G</span>
-                        <span>{total_services} Servis</span>
+                        <span>{totalServices} Servis</span>
+                        {discountPercentage && (
+                          <div className="discounted-percentage-box">
+                            <p>{discountPercentage}%</p>
+                            <span>İNDİRİM</span>
+                          </div>
+                        )}
                       </div>
                     );
                   })}

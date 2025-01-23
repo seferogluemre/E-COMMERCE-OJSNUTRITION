@@ -51,10 +51,27 @@ $transition-speed: 0.3s;
   }
 
   .product-size-box {
-    width: 150px;
+    width: 160px;
     border: 3px solid #bebebe;
-    height: 65px;
-    padding: 5px;
+    height: 85px;
+    padding: 15px;
+    position: relative;
+    .discounted-percentage-box {
+      position: absolute;
+      top: -15px;
+      background-color: red;
+      display: flex;
+      height: 30px;
+      padding: 2px;
+      justify-content: center;
+      width: 110px;
+      color: aliceblue;
+      p,
+      span {
+        font-size: 15px !important;
+        font-weight: 400 !important;
+      }
+    }
   }
   .count-box {
     width: 100px;
@@ -207,9 +224,9 @@ $transition-speed: 0.3s;
         .verified-buyer {
           display: inline-block;
           color: #2e7d32;
-          background-color: #BBDCC7;
+          background-color: #bbdcc7;
           font-size: 13px !important;
-          padding: 4px 8px; 
+          padding: 4px 8px;
           border-radius: 20px;
           margin-top: 10px;
         }
