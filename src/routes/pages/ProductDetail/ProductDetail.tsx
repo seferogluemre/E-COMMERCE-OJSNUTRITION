@@ -78,6 +78,55 @@ function ProductDetail() {
   const [selectedSize, setSelectedSize] = useState<number>();
   const [selectedAroma, setSelectedAroma] = useState<number>();
   const [photoSrc, setPhotoSrc] = useState<string>("");
+  const [matchingTotalPrice, setMatchingTotalPrice] = useState<number>(0);
+  const [totalServices, setTotalServices] = useState<number>(0);
+  const [originalPrice, setOriginalPrice] = useState<number>(0);
+  const [discountPercentage, setDiscountPercentage] = useState<number>(0);
+
+  const updatePhotoBasedOnSelection = (
+    selectedAromaIndex: number,
+    selectedSizeIndex: number
+  ) => {
+    if (selectedAromaIndex === undefined || selectedSizeIndex === undefined)
+      return;
+
+    const selectedAromaName = Array.from(
+      new Set(product.variants.map((variant) => variant.aroma))
+    )[selectedAromaIndex];
+
+    const selectedSizeInfo = [
+      ...new Map(
+        product.variants.map((item) => [
+          `${item.size.gram}-${item.size.total_services}`,
+          {
+            gram: item.size.gram,
+            totalServices: item.size.total_services,
+          },
+        ])
+      ).values(),
+    ][selectedSizeIndex];
+
+    const matchingVariant = product.variants.find(
+      (variant) =>
+        variant.aroma === selectedAromaName &&
+        variant.size.gram === selectedSizeInfo.gram &&
+        variant.size.total_services === selectedSizeInfo.totalServices
+    );
+
+    if (matchingVariant) {
+      setPhotoSrc(matchingVariant.photo_src);
+      setTotalServices(matchingVariant.size.total_services);
+      setOriginalPrice(matchingVariant.price.total_price);
+      setDiscountPercentage(matchingVariant.price.discount_percentage || 0);
+
+      const discountedPrice = matchingVariant.price.discount_percentage
+        ? matchingVariant.price.total_price *
+          (1 - matchingVariant.price.discount_percentage / 100)
+        : matchingVariant.price.total_price;
+
+      setMatchingTotalPrice(Math.round(discountedPrice));
+    }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -116,7 +165,7 @@ function ProductDetail() {
         commentCount: productData.commentCount,
         photo_src: productData.photo,
       });
-      // Ürün aromaları varsa state'i 
+      // Ürün aromaları varsa state'i
       if (product.variants && product.variants.length > 0) {
         setPhotoSrc(product.variants[0].photo_src);
       }
@@ -127,9 +176,8 @@ function ProductDetail() {
 
     setSelectedAroma(0);
     setSelectedSize(0);
-
+    updatePhotoBasedOnSelection(selectedAroma, selectedSize);
   }, [product]);
-
 
   const [productState, setProductState] = useState<Product[]>(
     Array.isArray(product) ? product : [product]
@@ -157,37 +205,18 @@ function ProductDetail() {
 
   console.log(productState[0]);
 
-  const updatePhotoBasedOnSelection = (selectedAromaIndex: number, selectedSizeIndex: number) => {
-    if (selectedAromaIndex === undefined || selectedSizeIndex === undefined) return;
-
-    const selectedAromaName = Array.from(
-      new Set(product.variants.map((variant) => variant.aroma))
-    )[selectedAromaIndex];
-
-    const selectedSizeInfo = [...new Map(
-      product.variants.map((item) => [
-        `${item.size.gram}-${item.size.total_services}`,
-        {
-          gram: item.size.gram,
-          totalServices: item.size.total_services,
-        },
-      ])
-    ).values()][selectedSizeIndex];
-
-
-    // Find variant that matches both selected aroma and size
-    const matchingVariant = product.variants.find(
+  const isVariantAvailable = (
+    aroma: string,
+    gram: number,
+    totalServices: number
+  ) => {
+    return product.variants.some(
       (variant) =>
-        variant.aroma === selectedAromaName &&
-        variant.size.gram === selectedSizeInfo.gram &&
-        variant.size.total_services === selectedSizeInfo.totalServices
+        variant.aroma === aroma &&
+        variant.size.gram === gram &&
+        variant.size.total_services === totalServices &&
+        variant.is_available
     );
-
-    console.log(matchingVariant.photo_src);
-
-    if (matchingVariant) {
-      setPhotoSrc(matchingVariant.photo_src);
-    }
   };
 
   return (
@@ -328,8 +357,9 @@ function ProductDetail() {
                     return (
                       <div
                         key={index}
-                        className={`product-detail-variant-item flex-wrap d-flex column-gap-3 justify-content-center align-items-center ${isSelected ? "border-primary" : ""
-                          }`}
+                        className={`product-detail-variant-item flex-wrap d-flex column-gap-3 justify-content-center align-items-center ${
+                          isSelected ? "border-primary" : ""
+                        }`}
                         onClick={() => {
                           setSelectedAroma(index);
                           updatePhotoBasedOnSelection(index, selectedSize);
@@ -368,38 +398,84 @@ function ProductDetail() {
                   {[
                     ...new Map(
                       product.variants.map((item) => [
-                        `${item.size.gram}-${item.size.total_services}`, // Benzersiz bir anahtar oluştur
+                        `${item.size.gram}-${item.size.total_services}`,
                         {
                           gram: item.size.gram,
                           totalServices: item.size.total_services,
-                          discountPercentage: item.price.discount_percentage || null,
+                          discountPercentage:
+                            item.price.discount_percentage || null,
                           photo_src: item.photo_src,
                         },
                       ])
                     ).values(),
                   ].map((item, index) => {
-                    const { gram, totalServices, discountPercentage, photo_src } = item;
+                    const {
+                      gram,
+                      totalServices,
+                      discountPercentage,
+                      photo_src,
+                    } = item;
                     const isSelected = selectedSize === index;
+                    const isAvailable =
+                      selectedAroma !== undefined &&
+                      isVariantAvailable(
+                        Array.from(
+                          new Set(
+                            product.variants.map((variant) => variant.aroma)
+                          )
+                        )[selectedAroma],
+                        gram,
+                        totalServices
+                      );
 
                     return (
                       <div
-                        className={`product-size-box d-flex align-items-center flex-column ${isSelected ? "border-primary" : ""
-                          }`}
+                        className={`product-size-box d-flex align-items-center flex-column position-relative
+                          ${isSelected ? "border-primary" : ""}
+                          ${!isAvailable ? "opacity-50" : ""}`}
                         key={index}
                         onClick={() => {
-                          setSelectedSize(index);
-                          updatePhotoBasedOnSelection(selectedAroma, index);
+                          if (isAvailable) {
+                            setSelectedSize(index);
+                            updatePhotoBasedOnSelection(selectedAroma, index);
+                          }
+                        }}
+                        style={{
+                          cursor: isAvailable ? "pointer" : "not-allowed",
                         }}
                       >
                         <span>{gram}G</span>
                         <span>{totalServices} Servis</span>
-                        {discountPercentage && (
+                        {!isAvailable && (
+                          <div
+                            className="position-absolute w-100 h-100 d-flex flex-column justify-content-center align-items-center"
+                            style={{
+                              background: "rgba(255,255,255,0.8)",
+                              top: 0,
+                              left: 0,
+                            }}
+                          >
+                            <div
+                              className="text-danger"
+                              style={{ fontSize: "24px" }}
+                            >
+                              ✕
+                            </div>
+                            <div
+                              className="text-danger"
+                              style={{ fontSize: "12px" }}
+                            >
+                              Stokta Yok
+                            </div>
+                          </div>
+                        )}
+                        {discountPercentage && isAvailable && (
                           <div className="discounted-percentage-box">
                             <p>{discountPercentage}%</p>
                             <span>İNDİRİM</span>
                           </div>
                         )}
-                        {isSelected && (
+                        {isSelected && isAvailable && (
                           <div className="tick-icon">
                             <AiOutlineCheck
                               className="text-light text-primary"
@@ -415,15 +491,22 @@ function ProductDetail() {
               </div>
               <hr />
               <div className="cart-container py-2">
-                <div className="  align-items-center justify-content-between">
-                  {
-                    <div className="d-flex justify-content-between">
-                      <h1 className="fs-2">
-                        {product.variants[1]?.price?.total_price}TL
+                <div className="align-items-center justify-content-between">
+                  <div className="d-flex justify-content-between">
+                    {discountPercentage > 0 ? (
+                      <div className="d-flex flex-column">
+                        <span className="text-decoration-line-through text-danger ">
+                          {originalPrice}TL
+                        </span>
+                        <h1 className="fs-2">{matchingTotalPrice}TL</h1>
+                      </div>
+                    ) : (
+                      <h1 className="fs-2 text-danger">
+                        {matchingTotalPrice}TL
                       </h1>
-                      <p>{product.variants[0]?.size?.total_services}Servis</p>
-                    </div>
-                  }
+                    )}
+                    <p>{totalServices} Servis</p>
+                  </div>
                 </div>
                 <div className="d-flex pt-2 justify-content-between column-gap-md-3">
                   <div className="count-box">

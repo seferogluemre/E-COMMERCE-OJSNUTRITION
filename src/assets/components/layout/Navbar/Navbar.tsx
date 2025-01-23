@@ -29,7 +29,7 @@ function NavbarComp() {
   const [query, setQuery] = useState<string>("");
   const { searchProducts } = useSearchProduct((state) => state);
   const [show, setShow] = useState(false);
-  
+
   const user = getAuthUser() ? JSON.parse(getAuthUser()!) : null;
   const authenticated = isAuthenticated();
   const navigate = useNavigate();
@@ -170,7 +170,10 @@ function NavbarComp() {
               </div>
             </div>
             <NavbarBrand>
-              <div className="position-relative cart-icon-container" onClick={() => handleShowTwo()}>
+              <div
+                className="position-relative cart-icon-container"
+                onClick={() => handleShowTwo()}
+              >
                 <AiOutlineShoppingCart className=" text-primary cart-icon" />
                 <span className=" position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger">
                   0
