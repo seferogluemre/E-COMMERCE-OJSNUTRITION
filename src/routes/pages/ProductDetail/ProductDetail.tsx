@@ -121,6 +121,9 @@ function ProductDetail() {
 
       return updatedValue;
     });
+
+    setSelectedAroma(null);
+    setSelectedSize(-1);
   }, [product]);
 
   const [productState, setProductState] = useState<Product[]>(

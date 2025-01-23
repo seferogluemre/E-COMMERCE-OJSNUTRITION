@@ -48,6 +48,7 @@ $transition-speed: 0.3s;
     height: 47px;
     border-radius: 5px;
     margin: 5px;
+    cursor: pointer;
     font-size: 16px !important;
 
     .selected {
@@ -74,8 +75,8 @@ $transition-speed: 0.3s;
     border: 3px solid #bebebe;
     height: 85px;
     padding: 15px;
+    cursor: pointer;
     position: relative;
-
 
     .selected {
       border: 1px solid rgb(73, 145, 253) !important;
@@ -95,7 +96,6 @@ $transition-speed: 0.3s;
       background-color: #4ca6c7;
     }
 
-
     .discounted-percentage-box {
       position: absolute;
       top: -15px;
@@ -106,8 +106,6 @@ $transition-speed: 0.3s;
       justify-content: center;
       width: 110px;
       color: aliceblue;
-
-
 
       p,
       span {

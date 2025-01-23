@@ -16,7 +16,7 @@ function Products() {
   const navigate = useNavigate();
   const [page, setPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
-  const [products, setProducts] = useState(allProducts.data.results);
+  const [products, setProducts] = useState<ProductListProp[]>(allProducts);
 
   useEffect(() => {
     const MoreProduct = async () => {
@@ -28,7 +28,7 @@ function Products() {
           );
 
           if (response.data && Array.isArray(response.data.data.results)) {
-            setProducts((prevProducts: any) => [
+            setProducts((prevProducts: ProductListProp[]) => [
               ...prevProducts,
               ...response.data.data.results,
             ]);
@@ -39,7 +39,10 @@ function Products() {
             );
           }
         } catch (error) {
-          console.error("API isteği sırasında bir hata oluştu:", error);
+          console.error(
+            "API isteği sırasında bir hata oluştu:",
+            (error as Error).message
+          );
         } finally {
           setLoading(false);
         }
@@ -64,6 +67,7 @@ function Products() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   return (
     <>
       <Container className="my-5">
