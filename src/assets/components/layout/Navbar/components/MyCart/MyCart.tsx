@@ -3,6 +3,7 @@ import { CgShoppingCart } from "react-icons/cg";
 import { PHOTO_URL } from "../../../../../../routes/pages/Products/components/types";
 import { useCartStore } from "../../../../../../store/products/Cart";
 import { useNavigate } from "react-router-dom";
+import { MdDelete } from "react-icons/md";
 
 interface CartProps {
   show: boolean;
@@ -62,18 +63,15 @@ function MyCart({ show, handleCloseTwo }: CartProps) {
                         {item.price * item.quantity} TL
                       </span>
                     </div>
-                    <div className="d-flex justify-content-between align-items-center mt-2">
-                      <button
-                        className="btn btn-sm btn-outline-danger"
-                        onClick={() => removeFromCart(item.id)}
-                      >
-                        Kaldır
-                      </button>
-                      <div
-                        className="btn-group"
-                        role="group"
-                        aria-label="Quantity"
-                      >
+                    <div className="d-flex justify-content-end align-items-center mt-2">
+                      {item.quantity === 1 ? (
+                        <button
+                          className="btn btn-sm btn-danger"
+                          onClick={() => removeFromCart(item.id)}
+                        >
+                          <MdDelete />
+                        </button>
+                      ) : (
                         <button
                           type="button"
                           className="btn btn-outline-secondary btn-sm"
@@ -83,23 +81,23 @@ function MyCart({ show, handleCloseTwo }: CartProps) {
                         >
                           -
                         </button>
-                        <button
-                          type="button"
-                          className="btn btn-outline-secondary btn-sm"
-                          disabled
-                        >
-                          {item.quantity}
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-outline-secondary btn-sm"
-                          onClick={() =>
-                            updateQuantity(item.id, item.quantity + 1)
-                          }
-                        >
-                          +
-                        </button>
-                      </div>
+                      )}
+                      <button
+                        type="button"
+                        className="btn btn-outline-secondary btn-sm"
+                        disabled
+                      >
+                        {item.quantity}
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-outline-secondary btn-sm"
+                        onClick={() =>
+                          updateQuantity(item.id, item.quantity + 1)
+                        }
+                      >
+                        +
+                      </button>
                     </div>
                   </div>
                 </div>
