@@ -132,6 +132,26 @@ function ProductDetail() {
     window.scrollTo(0, 0);
     setProductState(Array.isArray(product) ? product : [product]);
 
+    // İlk variant'ın değerlerini set et
+    if (product.variants && product.variants.length > 0) {
+      const initialVariant = product.variants[0];
+      setPhotoSrc(initialVariant.photo_src);
+      setTotalServices(initialVariant.size.total_services);
+      setOriginalPrice(initialVariant.price.total_price);
+      setDiscountPercentage(initialVariant.price.discount_percentage || 0);
+
+      // İndirimli fiyatı hesapla
+      const discountedPrice = initialVariant.price.discount_percentage
+        ? initialVariant.price.total_price *
+          (1 - initialVariant.price.discount_percentage / 100)
+        : initialVariant.price.total_price;
+
+      setMatchingTotalPrice(Math.round(discountedPrice));
+    }
+
+    setSelectedAroma(0);
+    setSelectedSize(0);
+
     const productData = {
       price: product.variants[0].price.total_price,
       commentCount: product.comment_count,
@@ -173,10 +193,6 @@ function ProductDetail() {
 
       return updatedValue;
     });
-
-    setSelectedAroma(0);
-    setSelectedSize(0);
-    updatePhotoBasedOnSelection(selectedAroma, selectedSize);
   }, [product]);
 
   const [productState, setProductState] = useState<Product[]>(
