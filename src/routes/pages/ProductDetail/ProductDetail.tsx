@@ -131,6 +131,7 @@ function ProductDetail() {
     setSelectedSize(0);
   }, [product]);
 
+
   const [productState, setProductState] = useState<Product[]>(
     Array.isArray(product) ? product : [product]
   );
@@ -288,12 +289,10 @@ function ProductDetail() {
                     new Set(product.variants.map((variant) => variant.aroma))
                   ).map((item, index) => {
                     const isSelected = selectedAroma === index;
-
                     // Seçilen aroma ile ilişkili photo_src değerini bul.
                     const selectedVariant = product.variants.find(
                       (variant) => variant.aroma === item
                     );
-
                     return (
                       <div
                         key={index}
@@ -301,8 +300,7 @@ function ProductDetail() {
                           }`}
                         onClick={() => {
                           setSelectedAroma(index); // Seçili aromayı güncelle.
-                          setPhotoSrc(selectedVariant ? selectedVariant.photo_src : product.variants[0].photo_src); // photo_src güncelle.
-                          console.log("Selected Photo Src:", selectedVariant ? selectedVariant.photo_src : product.variants[0].photo_src); // Konsola yazdır.
+                          setPhotoSrc(selectedVariant ? selectedVariant.photo_src : product.variants[0].photo_src); //o anki bulunan aroma indexe eşitse onun fotograf kaynagını aldık ve state'i güncelleyerek fotografı degiştirdik
                         }}
                       >
                         {item}
@@ -328,37 +326,38 @@ function ProductDetail() {
                     );
                   })}
                 </div>
-
-
               </div>
               <hr />
               <div className="product-size-container mt-2">
                 <div className="text-start pb-lg-2 pb-md-3">
                   <h3 className="fs-4">Boyut:</h3>
                 </div>
-                <div className="d-flex column-gap-3 ">
-                  {Array.from(
-                    new Set(
-                      product.variants.map((item) =>
-                        JSON.stringify({
+                <div className="d-flex column-gap-3">
+                  {[
+                    ...new Map(
+                      product.variants.map((item) => [
+                        `${item.size.gram}-${item.size.total_services}`, // Benzersiz bir anahtar oluştur
+                        {
                           gram: item.size.gram,
                           totalServices: item.size.total_services,
-                          discountPercentage:
-                            item.price.discount_percentage || null, // Discount kontrolü
-                        })
-                      )
-                    )
-                  ).map((item, index) => {
-                    const { gram, totalServices, discountPercentage } =
-                      JSON.parse(item);
-                    const isSelected = selectedSize == index;
+                          discountPercentage: item.price.discount_percentage || null,
+                          photo_src: item.photo_src,
+                        },
+                      ])
+                    ).values(),
+                  ].map((item, index) => {
+                    const { gram, totalServices, discountPercentage, photo_src } = item;
+                    const isSelected = selectedSize === index;
 
                     return (
                       <div
                         className={`product-size-box d-flex align-items-center flex-column ${isSelected ? "border-primary" : ""
                           }`}
                         key={index}
-                        onClick={() => setSelectedSize(index)}
+                        onClick={() => {
+                          setSelectedSize(index);
+                          setPhotoSrc(photo_src);
+                        }}
                       >
                         <span>{gram}G</span>
                         <span>{totalServices} Servis</span>
