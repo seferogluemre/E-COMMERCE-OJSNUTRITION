@@ -81,6 +81,7 @@ function ProductDetail() {
   useEffect(() => {
     window.scrollTo(0, 0);
     setProductState(Array.isArray(product) ? product : [product]);
+
     const productData = {
       price: product.variants[0].price.total_price,
       commentCount: product.comment_count,
@@ -281,7 +282,9 @@ function ProductDetail() {
                     return (
                       <div
                         key={index}
-                        className={`product-detail-variant-item flex-wrap d-flex column-gap-3 justify-content-center align-items-center ${isSelected ? "border-primary" : ""}`}
+                        className={`product-detail-variant-item flex-wrap d-flex column-gap-3 justify-content-center align-items-center ${
+                          isSelected ? "border-primary" : ""
+                        }`}
                         onClick={() => setSelectedAroma(index)}
                       >
                         {item}
@@ -296,11 +299,15 @@ function ProductDetail() {
                         ></img>
                         {isSelected && (
                           <div className="tick-icon">
-                            <AiOutlineCheck className="text-light text-primary" size={20} color="white" />
+                            <AiOutlineCheck
+                              className="text-light text-primary"
+                              size={20}
+                              color="white"
+                            />
                           </div>
                         )}
                       </div>
-                    )
+                    );
                   })}
                 </div>
               </div>
@@ -328,7 +335,9 @@ function ProductDetail() {
 
                     return (
                       <div
-                        className={`product-size-box d-flex align-items-center flex-column ${isSelected ? "border-primary" : ""}`}
+                        className={`product-size-box d-flex align-items-center flex-column ${
+                          isSelected ? "border-primary" : ""
+                        }`}
                         key={index}
                         onClick={() => setSelectedSize(index)}
                       >
@@ -339,11 +348,14 @@ function ProductDetail() {
                             <p>{discountPercentage}%</p>
                             <span>İNDİRİM</span>
                           </div>
-                        )
-                        }
+                        )}
                         {isSelected && (
                           <div className="tick-icon">
-                            <AiOutlineCheck className="text-light text-primary" size={20} color="white" />
+                            <AiOutlineCheck
+                              className="text-light text-primary"
+                              size={20}
+                              color="white"
+                            />
                           </div>
                         )}
                       </div>

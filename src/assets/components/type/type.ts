@@ -13,6 +13,7 @@ export interface BestSellerPropsCS {
   photo_src: string;
   comment_count?: number;
   average_star: number;
+  discounted_percentage: number | null;
   slug?: string;
 }
 
@@ -22,6 +23,7 @@ export interface BestSellerProps {
   slug?: string;
   price_info: PriceInfo;
   photo_src: string;
+  discounted_percentage: number | null;
   comment_count?: number;
   average_star: number;
 }

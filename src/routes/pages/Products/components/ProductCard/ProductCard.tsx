@@ -7,7 +7,7 @@ function ProductCard({
   photo_src,
   comment_count,
   slug,
-  price_info: { total_price },
+  price_info: { total_price, discount_percentage },
 }: ProductListProp) {
   return (
     <>
@@ -28,6 +28,15 @@ function ProductCard({
           <CardText className="m-0">{comment_count} Yorum</CardText>
           <CardText className="product_list-card-price">
             {total_price}₺
+          </CardText>
+          <CardText>
+            {discount_percentage && (
+              <p className="discounted-percentage">
+                %{discount_percentage}
+                <br />
+                İNDİRİM
+              </p>
+            )}
           </CardText>
         </CardBody>
       </Card>

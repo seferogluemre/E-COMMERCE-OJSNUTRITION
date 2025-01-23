@@ -37,6 +37,7 @@ function BestSeller({ best_seller }) {
               <BestSellerCard
                 slug={data.slug}
                 key={index}
+                discounted_percentage={data.price_info?.discount_percentage}
                 name={data.name}
                 photo_src={PHOTO_URL + data.photo_src}
                 short_explanation={data.short_explanation.toUpperCase()}

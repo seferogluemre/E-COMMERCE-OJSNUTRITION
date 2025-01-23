@@ -28,11 +28,26 @@
       border: 0px !important;
       padding: 12px;
     }
+    .discounted-percentage {
+      position: absolute !important;
+      top: -10px !important;
+      right: -20px;
+      background-color: red !important;
+      width: 65px !important;
+      height: 45px;
+      color: aliceblue !important;
+      font-size: 15px;
+      display: flex;
+      z-index: 3050 !important;
+      justify-content: center;
+      font-weight: 400 !important;
+    }
 
     .best-seller-product-price {
       color: red;
       font-size: 20px !important;
       font-weight: 600 !important;
+      position: relative !important;
     }
 
     .best_seller-card_name {

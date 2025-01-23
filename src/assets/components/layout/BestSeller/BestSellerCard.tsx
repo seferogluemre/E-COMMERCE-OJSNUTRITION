@@ -8,6 +8,7 @@ function BestSellerCard({
   comment_count,
   slug,
   price_info,
+  discounted_percentage,
 }: BestSellerProps) {
   return (
     <>
@@ -36,8 +37,15 @@ function BestSellerCard({
               </span>
             )}
             <span className="current-price m-1 text-danger">
-              {price_info.discounted_price || price_info.total_price} TL
+              {price_info.total_price} TL
             </span>
+            {discounted_percentage && (
+              <p className="discounted-percentage">
+                %{discounted_percentage}
+                <br />
+                İNDİRİM
+              </p>
+            )}
           </div>
         </CardBody>
       </Card>
