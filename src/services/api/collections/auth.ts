@@ -4,6 +4,7 @@ import {
   setTokenAndAuthUser,
   setAuthUser,
   getAccessToken,
+  getRefreshToken,
   removeTokenAndAuthUser,
 } from "./storage";
 import { useToastStore } from "../../../store/toast/ToastStore";
@@ -60,10 +61,11 @@ export const register = async (formData: {
     const jsonResponse = await response.json();
 
     if (response.ok) {
-      const userData = {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
+      const userData: User = {
+        first_name: formData.firstName,
+        last_name: formData.lastName,
         email: formData.email,
+        phone_number: null,
       };
       setAuthUser(userData);
       useToastStore.getState().showToast("Kayıt işlemi başarıyla tamamlandı");
@@ -88,7 +90,6 @@ export const getUserData = async () => {
     return data;
   } catch (error) {
     console.error("Error fetching user data:", error);
-  } finally {
   }
 };
 
@@ -102,7 +103,7 @@ export const login = async (
     const dataForApi: LoginApiData & { api_key: string } = {
       username: email,
       password: password,
-      api_key: apiKey, // Üçüncü parametre olarak apiKey eklendi
+      api_key: apiKey,
     };
 
     const response = await fetch(`${BASE_URL}/auth/login`, {
@@ -176,3 +177,52 @@ export const logout = () => {
   useToastStore.getState().showToast("Başarıyla çıkış yapıldı");
   window.location.href = "/";
 };
+
+// Token yenileme fonksiyonu
+export const refreshAccessToken = async () => {
+  try {
+    const refreshToken = getRefreshToken();
+    if (!refreshToken) {
+      throw new Error("Refresh token bulunamadı");
+    }
+
+    const response = await fetch(`${BASE_URL}/auth/token/refresh`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        refresh_token: refreshToken,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Token yenilenemedi");
+    }
+
+    const data = await response.json();
+
+    // Yeni token'ları kaydet
+    setTokenAndAuthUser(data.access_token, data.refresh_token);
+
+    return data.access_token;
+  } catch (error) {
+    console.error("Token yenileme hatası:", error);
+    // Token yenileme başarısız olursa kullanıcıyı çıkış yaptır
+    removeTokenAndAuthUser();
+    window.location.href = "/login";
+    throw error;
+  }
+};
+
+// Token kontrolü için utility fonksiyon
+export const isTokenExpired = (token: string): boolean => {
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    const expirationTime = payload.exp * 1000; // Unix timestamp'i milisaniyeye çevir
+    return Date.now() >= expirationTime;
+  } catch {
+    return true;
+  }
+};
+export { getAccessToken } from "./storage";

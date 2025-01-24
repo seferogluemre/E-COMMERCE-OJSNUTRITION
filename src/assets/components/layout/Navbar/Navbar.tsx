@@ -13,11 +13,16 @@ import { IoSearchOutline } from "react-icons/io5";
 import { AiOutlineUser } from "react-icons/ai";
 import { GrCart } from "react-icons/gr";
 import { useSearchProduct } from "../../../../store/products/useSearchProduct";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Search from "./components/Search";
 import { NavLink } from "react-router-dom";
 import MobileSidebar from "./components/MobileSidebar";
-import { isAuthenticated } from "../../../../services/api/collections/auth";
+import {
+  isAuthenticated,
+  getAccessToken,
+  isTokenExpired,
+  refreshAccessToken,
+} from "../../../../services/api/collections/auth";
 import {
   getAuthUser,
   removeTokenAndAuthUser,
@@ -45,6 +50,7 @@ function NavbarComp() {
   const handleLogout = () => {
     removeTokenAndAuthUser();
     navigate("/");
+    window.location.reload();
   };
 
   const [showTwo, setShowTwo] = useState(false);
@@ -53,6 +59,23 @@ function NavbarComp() {
   const handleCloseTwo = () => setShowTwo(false);
 
   const getTotalItems = useCartStore((state) => state.getTotalItems);
+
+  // Token kontrolü için effect
+  useEffect(() => {
+    const checkToken = async () => {
+      const token = getAccessToken();
+      if (token && isTokenExpired(token)) {
+        try {
+          await refreshAccessToken();
+        } catch (error) {
+          console.error("Token yenileme hatası:", error);
+          handleLogout();
+        }
+      }
+    };
+
+    checkToken();
+  }, []);
 
   return (
     <>

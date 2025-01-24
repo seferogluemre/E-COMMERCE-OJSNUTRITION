@@ -54,7 +54,6 @@ export const clearUserCart = () => {
 };
 
 export const useCartStore = create<CartStore>((set, get) => {
-  // Store initialize olduğunda kullanıcının sepetini çek
   const fetchUserCart = async () => {
     const accessToken = getAccessToken();
 
@@ -78,9 +77,8 @@ export const useCartStore = create<CartStore>((set, get) => {
       }
 
       const cartData = await response.json();
-
-      // Backend'den gelen veriyi CartItem formatına dönüştür
-      if (cartData.status === "success" && cartData.data.items) {
+      console.log("cartData", cartData);
+      if (cart.status === "success" && cartData.data.items) {
         const formattedItems: CartItem[] = cartData.data.items.map(
           (item: any) => ({
             id: item.product_id,
@@ -110,17 +108,14 @@ export const useCartStore = create<CartStore>((set, get) => {
     }
   };
 
-  // Store initialize olduğunda fetchUserCart'ı çağır
   fetchUserCart();
 
   return {
-    items: loadFromLocalStorage(), // Initial state için
-
+    items: loadFromLocalStorage(),
     addToCart: async (item) => {
       try {
         const accessToken = getAccessToken();
 
-        // Eğer kullanıcı giriş yapmışsa backend'e istek at
         if (accessToken) {
           const response = await fetch(`${BASE_URL}/users/cart`, {
             method: "POST",
@@ -140,7 +135,6 @@ export const useCartStore = create<CartStore>((set, get) => {
           }
         }
 
-        // Local state güncelleme işlemleri (giriş yapılmış veya misafir için aynı)
         set((state) => {
           const existingItem = state.items.find(
             (i) =>
@@ -167,7 +161,6 @@ export const useCartStore = create<CartStore>((set, get) => {
           // Local storage güncelleme
           saveToLocalStorage(newItems);
 
-          // Toast bildirimi göster
           useToastStore.getState().showToast("Ürün sepetinize eklendi");
 
           return { items: newItems };
@@ -187,10 +180,9 @@ export const useCartStore = create<CartStore>((set, get) => {
         const itemToRemove = state.items.find((item) => item.id === itemId);
 
         if (!itemToRemove) {
-          throw new Error("Ürün bulunamadı");
+          throw new Error("Ürün bulunmadı");
         }
 
-        // Eğer kullanıcı giriş yapmışsa backend'e silme isteği gönder
         if (accessToken) {
           const response = await fetch(`${BASE_URL}/users/cart`, {
             method: "DELETE",
@@ -210,13 +202,10 @@ export const useCartStore = create<CartStore>((set, get) => {
           }
         }
 
-        // Local state güncelleme
         set((state) => {
           const newItems = state.items.filter((item) => item.id !== itemId);
-          // Local storage güncelle
           saveToLocalStorage(newItems);
 
-          // Toast bildirimi göster
           useToastStore.getState().showToast("Ürün sepetinizden kaldırıldı");
 
           return { items: newItems };
@@ -233,16 +222,13 @@ export const useCartStore = create<CartStore>((set, get) => {
         const targetItem = state.items.find((item) => item.id === itemId);
         if (!targetItem) return;
 
-        // Yeni miktar hesapla
         const newPieces = targetItem.pieces + quantity;
 
-        // Eğer yeni miktar 0 veya daha az ise ürünü sepetten kaldır
         if (newPieces <= 0) {
           get().removeFromCart(itemId);
           return;
         }
 
-        // Kullanıcı giriş yapmışsa backend'e güncelleme gönder
         const accessToken = getAccessToken();
         if (accessToken) {
           const response = await fetch(`${BASE_URL}/users/cart`, {
@@ -254,16 +240,15 @@ export const useCartStore = create<CartStore>((set, get) => {
             body: JSON.stringify({
               product_id: targetItem.id,
               product_variant_id: targetItem.product_variant_id,
-              pieces: newPieces, // Yeni toplam miktar
+              pieces: newPieces,
             }),
           });
-
+          console.log("Yeni miktar:", newPieces);
           if (!response.ok) {
             throw new Error("Ürün miktarı güncellenemedi");
           }
         }
 
-        // Local state güncelleme
         set((state) => {
           const newItems = state.items.map((item) =>
             item.id === itemId &&
@@ -273,12 +258,8 @@ export const useCartStore = create<CartStore>((set, get) => {
               : item
           );
 
-          // Local storage güncelle
           saveToLocalStorage(newItems);
-
-          // Toast bildirimi göster
           useToastStore.getState().showToast("Ürün miktarı güncellendi");
-
           return { items: newItems };
         });
       } catch (error) {
@@ -301,7 +282,6 @@ export const useCartStore = create<CartStore>((set, get) => {
   };
 });
 
-// Store'u export etmeden önce initialize et
 useCartStore.getState();
 
 console.log(localStorage.getItem("BasketItems"));
