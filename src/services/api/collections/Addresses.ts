@@ -1,4 +1,7 @@
+import { useToastStore } from "../../../store/toast/ToastStore";
 import { createAxiosInstance } from "../axios";
+import { getAccessToken } from "./storage";
+import { BASE_URL } from "../../../routes/pages/Products/components/types";
 
 export interface UserAddress {
   title: string;
@@ -7,7 +10,16 @@ export interface UserAddress {
   full_address: string;
   city: string;
   district: string;
+  id: string;
   phone_number: string;
+  region: {
+    name: string;
+    id: number;
+  };
+  subregion: {
+    name: string;
+    id: number;
+  };
 }
 
 export interface City {
@@ -44,6 +56,7 @@ export const fetchAddresses = async (
         city: firstAddress.region?.name || "",
         district: firstAddress.subregion?.name || "",
         phone: firstAddress.phone_number,
+        id: firstAddress.id,
       });
       setShowForm(false);
     } else {
@@ -94,5 +107,69 @@ export const handleSubmitAddress = async (
     }
   } catch (error) {
     console.error("Adres gönderilirken hata oluştu:", error);
+  }
+};
+
+export const deleteAddress = async (addressId: string) => {
+  try {
+    const accessToken = getAccessToken();
+
+    if (accessToken) {
+      const response = await fetch(`${BASE_URL}/users/addresses/${addressId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Adres bilginiz silinemedi");
+      }
+
+      useToastStore.getState().showToast("Adres bilginiz silindi");
+      alert("Adres bilginiz silindi");
+    }
+  } catch (error) {
+    console.error("Ürün silme hatası:", error);
+    useToastStore.getState().showToast("Adres silinirken bir hata oluştu");
+  }
+};
+
+// Adres güncelleme
+export const updateUserAddress = async (addressData: UserAddress) => {
+  try {
+    const api = createAxiosInstance();
+
+    const newAddressData = {
+      title: addressData.title,
+      country_id: 226,
+      region_id: addressData.region.id,
+      subregion_id: addressData.subregion.id,
+      full_address: addressData.full_address,
+      phone_number: addressData.phone_number,
+    };
+
+    const response = await api.put(
+      `/users/addresses/${addressData.id}`,
+      newAddressData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      }
+    );
+    useToastStore
+      .getState()
+      .showToast("Adres bilgileriniz başarıyla güncellendi");
+    alert("Adres bilgileriniz başarıyla güncellendi");
+    return response.data; // Başarılıysa dönen yanıtı döndük
+  } catch (error) {
+    useToastStore
+      .getState()
+      .showToast("Adres Bilgileriniz güncellenirken bir hata oluştu");
+    console.error("Adres bilgileriniz GÜNNCELLENİRKEN HATA OLUŞTU", error);
+    throw error;
   }
 };

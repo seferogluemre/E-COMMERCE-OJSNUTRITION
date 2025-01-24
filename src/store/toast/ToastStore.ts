@@ -14,7 +14,7 @@ export const useToastStore = create<ToastState>((set) => ({
     set({ message, show: true });
     setTimeout(() => {
       set({ show: false });
-    }, 3000);
+    }, 4000);
   },
   hideToast: () => set({ show: false }),
 }));
