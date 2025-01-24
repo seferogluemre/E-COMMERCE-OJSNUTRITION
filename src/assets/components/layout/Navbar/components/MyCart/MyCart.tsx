@@ -24,7 +24,7 @@ function MyCart({ show, handleCloseTwo }: CartProps) {
         </Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body className="d-flex flex-column">
-        {items.length === 0 ? (
+        {!items || !Array.isArray(items) || items.length === 0 ? (
           <div className="d-flex flex-column align-items-center justify-content-center h-100">
             <img
               src="/assets/bosSepetImage.png"
@@ -39,7 +39,7 @@ function MyCart({ show, handleCloseTwo }: CartProps) {
             <div className="flex-grow-1">
               {items.map((item) => (
                 <div
-                  key={item.id}
+                  key={`${item.id}-${item.aroma}-${item.size.gram}-${item.product_variant_id}`}
                   className="d-flex align-items-start border-bottom pb-3 mb-3"
                 >
                   <div
@@ -60,11 +60,11 @@ function MyCart({ show, handleCloseTwo }: CartProps) {
                         <h6>{item.size.gram}G</h6>
                       </div>
                       <span className="fw-bold">
-                        {item.price * item.quantity} TL
+                        {item.price * item.pieces} TL
                       </span>
                     </div>
                     <div className="d-flex justify-content-end align-items-center mt-2">
-                      {item.quantity === 1 ? (
+                      {item.pieces === 1 ? (
                         <button
                           className="btn btn-sm btn-danger"
                           onClick={() => removeFromCart(item.id)}
@@ -75,20 +75,16 @@ function MyCart({ show, handleCloseTwo }: CartProps) {
                         <button
                           type="button"
                           className="btn btn-outline-secondary btn-sm"
-                          onClick={() =>
-                            updateQuantity(item.id, item.quantity - 1)
-                          }
+                          onClick={() => updateQuantity(item.id, -1)}
                         >
                           -
                         </button>
                       )}
-                      <span className="mx-2">{item.quantity}</span>
+                      <span className="mx-2">{item.pieces}</span>
                       <button
                         type="button"
                         className="btn btn-outline-secondary btn-sm"
-                        onClick={() =>
-                          updateQuantity(item.id, item.quantity + 1)
-                        }
+                        onClick={() => updateQuantity(item.id, 1)}
                       >
                         +
                       </button>
@@ -101,7 +97,7 @@ function MyCart({ show, handleCloseTwo }: CartProps) {
             <div className="mt-auto pt-3 border-top">
               <div className="d-flex justify-content-between mb-3">
                 <strong>TOPLAM</strong>
-                <strong>{getTotalPrice()} TL</strong>
+                <strong>{getTotalPrice().toFixed(2)} TL</strong>
               </div>
               <Button
                 variant="dark"

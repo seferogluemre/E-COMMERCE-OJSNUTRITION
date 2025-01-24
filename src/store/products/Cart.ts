@@ -1,16 +1,19 @@
 import { create } from "zustand";
 import { useToastStore } from "../toast/ToastStore";
+import { BASE_URL } from "../../routes/pages/Products/components/types";
+import { getAccessToken } from "../../services/api/collections/storage";
 
 export interface CartItem {
   id: string;
   name: string;
+  product_variant_id: string;
   aroma: string;
   size: {
     gram: number;
     total_services: number;
   };
   price: number;
-  quantity: number;
+  pieces: number;
   photo_src: string;
 }
 
@@ -23,102 +26,282 @@ export interface CartStore {
   getTotalItems: () => number;
 }
 
-// Helper function to load items from localStorage
+// Helper function to load items from localStorage based on user status
 const loadFromLocalStorage = (): CartItem[] => {
-  const storedItems = localStorage.getItem("BasketItems");
+  const accessToken = getAccessToken();
+  const storageKey = accessToken ? "BasketItems" : "GuessBasketItems";
+  const storedItems = localStorage.getItem(storageKey);
   return storedItems ? JSON.parse(storedItems) : [];
 };
 
-// Helper function to save items to localStorage
+// Helper function to save items to localStorage based on user status
 const saveToLocalStorage = (items: CartItem[]) => {
-  localStorage.setItem("BasketItems", JSON.stringify(items));
+  const accessToken = getAccessToken();
+  const storageKey = accessToken ? "BasketItems" : "GuessBasketItems";
+  localStorage.setItem(storageKey, JSON.stringify(items));
 };
 
-export const useCartStore = create<CartStore>((set, get) => ({
-  // Initialize items from localStorage
-  items: loadFromLocalStorage(),
+// Sepet temizleme ve geçiş fonksiyonu
+export const clearUserCart = () => {
+  // Mevcut misafir sepetini koru
+  const guestItems = localStorage.getItem("GuessBasketItems") || "[]";
 
-  addToCart: (item) => {
-    set((state) => {
-      const existingItem = state.items.find(
-        (i) =>
-          i.id === item.id &&
-          i.aroma === item.aroma &&
-          i.size.gram === item.size.gram &&
-          i.size.total_services === item.size.total_services
-      );
+  // Kullanıcı sepetini temizle
+  localStorage.removeItem("BasketItems");
 
-      let newItems;
-      if (existingItem) {
-        newItems = state.items.map((i) =>
-          i.id === item.id &&
-          i.aroma === item.aroma &&
-          i.size.gram === item.size.gram &&
-          i.size.total_services === item.size.total_services
-            ? { ...i, quantity: i.quantity + item.quantity }
-            : i
-        );
-      } else {
-        newItems = [...state.items, item];
+  // Store'u güncelle - misafir sepetine geç
+  useCartStore.setState({ items: JSON.parse(guestItems) });
+};
+
+export const useCartStore = create<CartStore>((set, get) => {
+  // Store initialize olduğunda kullanıcının sepetini çek
+  const fetchUserCart = async () => {
+    const accessToken = getAccessToken();
+
+    if (!accessToken) {
+      const items = loadFromLocalStorage();
+      set({ items });
+      return;
+    }
+
+    try {
+      const response = await fetch(`${BASE_URL}/users/cart`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Sepet bilgileri alınamadı");
       }
 
-      // Save to localStorage
-      saveToLocalStorage(newItems);
+      const cartData = await response.json();
 
-      // Show toast notification
-      useToastStore.getState().showToast("Ürün sepetinize eklendi");
+      // Backend'den gelen veriyi CartItem formatına dönüştür
+      if (cartData.status === "success" && cartData.data.items) {
+        const formattedItems: CartItem[] = cartData.data.items.map(
+          (item: any) => ({
+            id: item.product_id,
+            name: item.product,
+            product_variant_id: item.product_variant_id,
+            aroma: item.product_variant_detail.aroma,
+            size: {
+              gram: item.product_variant_detail.size.gram,
+              total_services: item.product_variant_detail.size.total_services,
+            },
+            price: item.unit_price,
+            pieces: item.pieces,
+            photo_src: item.product_variant_detail.photo_src,
+          })
+        );
 
-      return { items: newItems };
-    });
-  },
+        set({ items: formattedItems });
+        saveToLocalStorage(formattedItems);
+      } else {
+        set({ items: [] });
+        saveToLocalStorage([]);
+      }
+    } catch (error) {
+      console.error("Sepet bilgileri alınırken hata:", error);
+      const items = loadFromLocalStorage();
+      set({ items: items });
+    }
+  };
 
-  removeFromCart: (itemId) => {
-    set((state) => {
-      const newItems = state.items.filter((item) => item.id !== itemId);
-      // Save to localStorage
-      saveToLocalStorage(newItems);
+  // Store initialize olduğunda fetchUserCart'ı çağır
+  fetchUserCart();
 
-      // Show toast notification
-      useToastStore.getState().showToast("Ürün sepetinizden kaldırıldı");
+  return {
+    items: loadFromLocalStorage(), // Initial state için
 
-      return { items: newItems };
-    });
-  },
+    addToCart: async (item) => {
+      try {
+        const accessToken = getAccessToken();
 
-  updateQuantity: (itemId, quantity) => {
-    if (quantity < 1) return; // Prevent negative quantities
+        // Eğer kullanıcı giriş yapmışsa backend'e istek at
+        if (accessToken) {
+          const response = await fetch(`${BASE_URL}/users/cart`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify({
+              product_id: item.id,
+              product_variant_id: item.product_variant_id,
+              pieces: item.pieces,
+            }),
+          });
 
-    set((state) => {
-      const targetItem = state.items.find((item) => item.id === itemId);
-      if (!targetItem) return state;
+          if (!response.ok) {
+            throw new Error("Sepet güncellenemedi");
+          }
+        }
 
-      const newItems = state.items.map((item) =>
-        item.id === itemId &&
-        item.aroma === targetItem.aroma &&
-        item.size.gram === targetItem.size.gram
-          ? { ...item, quantity }
-          : item
-      );
+        // Local state güncelleme işlemleri (giriş yapılmış veya misafir için aynı)
+        set((state) => {
+          const existingItem = state.items.find(
+            (i) =>
+              i.id === item.id &&
+              i.aroma === item.aroma &&
+              i.size.gram === item.size.gram &&
+              i.size.total_services === item.size.total_services
+          );
 
-      // Save to localStorage
-      saveToLocalStorage(newItems);
+          let newItems;
+          if (existingItem) {
+            newItems = state.items.map((i) =>
+              i.id === item.id &&
+              i.aroma === item.aroma &&
+              i.size.gram === item.size.gram &&
+              i.size.total_services === item.size.total_services
+                ? { ...i, pieces: i.pieces + item.pieces }
+                : i
+            );
+          } else {
+            newItems = [...state.items, item];
+          }
 
-      // Show toast notification
-      useToastStore.getState().showToast("Ürün miktarı güncellendi");
+          // Local storage güncelleme
+          saveToLocalStorage(newItems);
 
-      return { items: newItems };
-    });
-  },
+          // Toast bildirimi göster
+          useToastStore.getState().showToast("Ürün sepetinize eklendi");
 
-  getTotalPrice: () => {
-    const { items } = get();
-    return items.reduce((total, item) => total + item.price * item.quantity, 0);
-  },
+          return { items: newItems };
+        });
+      } catch (error) {
+        useToastStore
+          .getState()
+          .showToast("Sepet güncellenirken bir hata oluştu");
+        console.error("Sepet güncelleme hatası:", error);
+      }
+    },
 
-  getTotalItems: () => {
-    const { items } = get();
-    return items.length;
-  },
-}));
+    removeFromCart: async (itemId: string) => {
+      try {
+        const accessToken = getAccessToken();
+        const state = get();
+        const itemToRemove = state.items.find((item) => item.id === itemId);
+
+        if (!itemToRemove) {
+          throw new Error("Ürün bulunamadı");
+        }
+
+        // Eğer kullanıcı giriş yapmışsa backend'e silme isteği gönder
+        if (accessToken) {
+          const response = await fetch(`${BASE_URL}/users/cart`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify({
+              product_id: itemToRemove.id,
+              product_variant_id: itemToRemove.product_variant_id,
+              pieces: itemToRemove.pieces,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error("Ürün sepetten silinemedi");
+          }
+        }
+
+        // Local state güncelleme
+        set((state) => {
+          const newItems = state.items.filter((item) => item.id !== itemId);
+          // Local storage güncelle
+          saveToLocalStorage(newItems);
+
+          // Toast bildirimi göster
+          useToastStore.getState().showToast("Ürün sepetinizden kaldırıldı");
+
+          return { items: newItems };
+        });
+      } catch (error) {
+        console.error("Ürün silme hatası:", error);
+        useToastStore.getState().showToast("Ürün silinirken bir hata oluştu");
+      }
+    },
+
+    updateQuantity: async (itemId: string, quantity: number) => {
+      try {
+        const state = get();
+        const targetItem = state.items.find((item) => item.id === itemId);
+        if (!targetItem) return;
+
+        // Yeni miktar hesapla
+        const newPieces = targetItem.pieces + quantity;
+
+        // Eğer yeni miktar 0 veya daha az ise ürünü sepetten kaldır
+        if (newPieces <= 0) {
+          get().removeFromCart(itemId);
+          return;
+        }
+
+        // Kullanıcı giriş yapmışsa backend'e güncelleme gönder
+        const accessToken = getAccessToken();
+        if (accessToken) {
+          const response = await fetch(`${BASE_URL}/users/cart`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify({
+              product_id: targetItem.id,
+              product_variant_id: targetItem.product_variant_id,
+              pieces: newPieces, // Yeni toplam miktar
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error("Ürün miktarı güncellenemedi");
+          }
+        }
+
+        // Local state güncelleme
+        set((state) => {
+          const newItems = state.items.map((item) =>
+            item.id === itemId &&
+            item.aroma === targetItem.aroma &&
+            item.size.gram === targetItem.size.gram
+              ? { ...item, pieces: newPieces }
+              : item
+          );
+
+          // Local storage güncelle
+          saveToLocalStorage(newItems);
+
+          // Toast bildirimi göster
+          useToastStore.getState().showToast("Ürün miktarı güncellendi");
+
+          return { items: newItems };
+        });
+      } catch (error) {
+        console.error("Miktar güncelleme hatası:", error);
+        useToastStore
+          .getState()
+          .showToast("Miktar güncellenirken bir hata oluştu");
+      }
+    },
+
+    getTotalPrice: () => {
+      const { items } = get();
+      return items.reduce((total, item) => total + item.price * item.pieces, 0);
+    },
+
+    getTotalItems: () => {
+      const { items } = get();
+      return items.length;
+    },
+  };
+});
+
+// Store'u export etmeden önce initialize et
+useCartStore.getState();
 
 console.log(localStorage.getItem("BasketItems"));

@@ -297,16 +297,17 @@ function ProductDetail() {
       const cartItem: CartItem = {
         id: product.id,
         name: product.name,
+        product_variant_id: selectedVariant.id,
         aroma: selectedAromaName,
         size: {
           gram: selectedSizeInfo.gram,
           total_services: selectedSizeInfo.totalServices,
         },
         price: matchingTotalPrice,
-        quantity: count,
+        pieces: count,
         photo_src: selectedVariant.photo_src,
       };
-
+      console.log("Seçilen varyant numarası:", selectedVariant.id);
       addToCart(cartItem);
       setCount(0);
       toast.showToast("Ürün sepete eklendi");
