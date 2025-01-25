@@ -16,6 +16,15 @@ function MyCart({ show, handleCloseTwo }: CartProps) {
 
   const navigate = useNavigate();
 
+  // Sepete eklenen ürünün fiyatını türk lirasına formatladık
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat("tr-TR", {
+      style: "decimal",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(price);
+  };
+
   return (
     <Offcanvas show={show} onHide={handleCloseTwo} placement="end">
       <Offcanvas.Header closeButton>
@@ -61,7 +70,7 @@ function MyCart({ show, handleCloseTwo }: CartProps) {
                         <h6>{item.size.gram}G</h6>
                       </div>
                       <span className="fw-bold">
-                        {item.price * item.pieces} TL
+                        {formatPrice(item.price * item.pieces)} TL
                       </span>
                     </div>
                     <div className="d-flex justify-content-end align-items-center mt-2">

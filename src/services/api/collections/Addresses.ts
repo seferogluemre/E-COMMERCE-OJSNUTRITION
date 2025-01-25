@@ -148,6 +148,8 @@ export const updateUserAddress = async (addressData: UserAddress) => {
       subregion_id: addressData.subregion.id,
       full_address: addressData.full_address,
       phone_number: addressData.phone_number,
+      first_name: addressData.first_name,
+      last_name: addressData.last_name,
     };
 
     const response = await api.put(

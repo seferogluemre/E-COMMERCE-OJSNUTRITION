@@ -229,7 +229,6 @@ export const useCartStore = create<CartStore>((set, get) => {
             throw new Error("Ürün miktarı güncellenemedi");
           }
 
-          // Backend'den güncel sepet bilgisini al
           const cartResponse = await createAxiosInstance().get("/users/cart");
           const cartData = cartResponse.data;
 
