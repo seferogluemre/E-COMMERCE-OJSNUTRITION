@@ -113,7 +113,6 @@ export const handleSubmitAddress = async (
 export const deleteAddress = async (addressId: string) => {
   try {
     const accessToken = getAccessToken();
-
     if (accessToken) {
       const response = await fetch(`${BASE_URL}/users/addresses/${addressId}`, {
         method: "DELETE",
@@ -127,12 +126,13 @@ export const deleteAddress = async (addressId: string) => {
         throw new Error("Adres bilginiz silinemedi");
       }
 
-      useToastStore.getState().showToast("Adres bilginiz silindi");
-      alert("Adres bilginiz silindi");
+      useToastStore.getState().showToast("Adres bilginiz silindi", "success");
     }
   } catch (error) {
     console.error("Ürün silme hatası:", error);
-    useToastStore.getState().showToast("Adres silinirken bir hata oluştu");
+    useToastStore
+      .getState()
+      .showToast("Adres silinirken bir hata oluştu", "error");
   }
 };
 
@@ -164,14 +164,13 @@ export const updateUserAddress = async (addressData: UserAddress) => {
     );
     useToastStore
       .getState()
-      .showToast("Adres bilgileriniz başarıyla güncellendi");
-    alert("Adres bilgileriniz başarıyla güncellendi");
-    return response.data; // Başarılıysa dönen yanıtı döndük
+      .showToast("Adres bilgileriniz başarıyla güncellendi", "success");
+    return response.data;
   } catch (error) {
     useToastStore
       .getState()
-      .showToast("Adres Bilgileriniz güncellenirken bir hata oluştu");
-    console.error("Adres bilgileriniz GÜNNCELLENİRKEN HATA OLUŞTU", error);
+      .showToast("Adres Bilgileriniz güncellenirken bir hata oluştu", "error");
+    console.error("Adres bilgileriniz güncellenirken hata oluştu", error);
     throw error;
   }
 };

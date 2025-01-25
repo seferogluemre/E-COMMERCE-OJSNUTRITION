@@ -1,6 +1,11 @@
 import { Form, Button } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import { getUserData, updateUserData, User } from "../../../../services/api/collections/auth";
+import {
+  getUserData,
+  updateUserData,
+  User,
+} from "../../../../services/api/collections/auth";
+import { useToastStore } from "../../../../store/toast/ToastStore";
 
 function AccountInfo() {
   const [userData, setUserData] = useState<User>({
@@ -29,6 +34,9 @@ function AccountInfo() {
     event.preventDefault();
     try {
       const updatedData = await updateUserData(userData);
+      useToastStore
+        .getState()
+        .showToast("Hesap bilgileriniz başarıyla güncellendi", "success");
       console.log("Updated user data:", updatedData);
     } catch (error) {
       console.error("Error updating user data:", error);
@@ -45,7 +53,9 @@ function AccountInfo() {
             type="text"
             name="first_name"
             value={userData.first_name}
-            onChange={(e) => setUserData({ ...userData, first_name: e.target.value })}
+            onChange={(e) =>
+              setUserData({ ...userData, first_name: e.target.value })
+            }
           />
         </Form.Group>
 
@@ -55,7 +65,9 @@ function AccountInfo() {
             type="text"
             name="last_name"
             value={userData.last_name}
-            onChange={(e) => setUserData({ ...userData, last_name: e.target.value })}
+            onChange={(e) =>
+              setUserData({ ...userData, last_name: e.target.value })
+            }
           />
         </Form.Group>
 
@@ -70,7 +82,9 @@ function AccountInfo() {
               type="tel"
               name="phone_number"
               value={userData.phone_number || ""}
-              onChange={(e) => setUserData({ ...userData, phone_number: e.target.value })}
+              onChange={(e) =>
+                setUserData({ ...userData, phone_number: e.target.value })
+              }
             />
           </div>
         </Form.Group>
@@ -102,7 +116,12 @@ function AccountInfo() {
           />
         </Form.Group>
 
-        <Button variant="primary" onClick={handleSubmit} size="lg" type="submit">
+        <Button
+          variant="primary"
+          onClick={handleSubmit}
+          size="lg"
+          type="submit"
+        >
           Kaydet
         </Button>
       </Form>

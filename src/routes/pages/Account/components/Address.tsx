@@ -168,12 +168,11 @@ function Addresses() {
       });
       setShowEditModal(false);
       fetchAddresses(setAddreses, setUserAddress, setShowForm);
+      window.location.reload();
     } catch (error) {
       console.error("Error updating address:", error);
     }
   };
-
-  console.log(addresses);
 
   return (
     <div className="content-area">

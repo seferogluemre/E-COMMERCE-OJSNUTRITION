@@ -11,6 +11,7 @@ import * as yup from "yup";
 import { register as registerUser } from "../../../../services/api/collections/auth";
 import { useState } from "react";
 import ToastNotification from "../../../../assets/components/layout/ToastNotification/ToastNotification";
+import Notification from "../../../../assets/components/layout/ToastNotification/Notification";
 
 // Form verileri için interface tanımı
 interface IFormInputs {
@@ -55,6 +56,22 @@ function Signup() {
     resolver: yupResolver(schema),
   });
 
+  const [notification, setNotification] = useState({
+    type: "success" as const,
+    message: "Başarıyla giriş yapıldı",
+    isVisible: false,
+  });
+
+  const showNotification = (
+    type: "success" | "error" | "info",
+    message: string
+  ) => {
+    setNotification({ type, message, isVisible: true });
+    setTimeout(() => {
+      setNotification((prev) => ({ ...prev, isVisible: false }));
+    }, 3000);
+  };
+
   const [alert, setAlert] = useState<{
     type: "success" | "danger";
     message: string;
@@ -87,14 +104,6 @@ function Signup() {
 
   return (
     <>
-      {alert && (
-        <ToastNotification
-          message={alert.message}
-          onClose={() => setAlert(null)}
-          show={alert.show}
-          delay={3000}
-        />
-      )}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="row g-3 mb-3">
           <div className="col-6">
@@ -153,6 +162,15 @@ function Signup() {
           ÜYE OL
         </Button>
       </form>
+
+      <Notification
+        type={notification.type}
+        message={notification.message}
+        isVisible={notification.isVisible}
+        onClose={() =>
+          setNotification((prev) => ({ ...prev, isVisible: false }))
+        }
+      />
     </>
   );
 }

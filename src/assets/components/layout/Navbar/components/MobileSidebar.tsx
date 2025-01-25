@@ -6,10 +6,19 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import "./MobileSidebar.scss";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import ProductsDrawer from "./ProductsDrawer";
-import { CategoriesResponseProps, CategoryProp, CategoryProps, ChildProps, MobileSidebarProps } from "./SidebarType";
+import {
+  CategoriesResponseProps,
+  CategoryProp,
+  CategoryProps,
+  ChildProps,
+  MobileSidebarProps,
+} from "./SidebarType";
 import { isAuthenticated } from "../../../../../services/api/collections/auth";
-import { getAuthUser, removeTokenAndAuthUser } from "../../../../../services/api/collections/storage";
-
+import {
+  getAuthUser,
+  removeTokenAndAuthUser,
+} from "../../../../../services/api/collections/storage";
+import { useToastStore } from "../../../../../store/toast/ToastStore";
 
 function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
   const user = getAuthUser() ? JSON.parse(getAuthUser()!) : null;
@@ -17,13 +26,17 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
   const navigate = useNavigate();
   //State
   const [categories, setCategories] = useState<CategoryProps[]>([]);
-  const [selectedSubChildren, setSelectedSubChildren] = useState<CategoriesResponseProps["subChildren"]>([]);
+  const [selectedSubChildren, setSelectedSubChildren] = useState<
+    CategoriesResponseProps["subChildren"]
+  >([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<CategoryProp>();
   const [selectedProducts, setSelectedProducts] = useState<CategoryProps[]>([]);
   const [productTitle, setProductTitle] = useState("");
   const [showProducts, setShowProducts] = useState<boolean>(false);
-  const [subCategoryProducts, setSubCategoryProducts] = useState<ChildProps[]>([]);
+  const [subCategoryProducts, setSubCategoryProducts] = useState<ChildProps[]>(
+    []
+  );
   const [showSubProducts, setShowSubProducts] = useState<boolean>(false);
   const [subProductTitle, setSubProductTitle] = useState("");
   const location = useLocation();
@@ -38,10 +51,12 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
         categoriesResponse.data.data;
 
       // Çocuk verilerini işleyin
-      const updatedCategories = categoriesData.data?.map((item: CategoryProps) => ({
-        ...item,
-        subChildren: item.children?.[0]?.sub_children || [],
-      }));
+      const updatedCategories = categoriesData.data?.map(
+        (item: CategoryProps) => ({
+          ...item,
+          subChildren: item.children?.[0]?.sub_children || [],
+        })
+      );
       setCategories(updatedCategories);
     } catch (error) {
       console.error("Error fetching categories:", error);
@@ -114,6 +129,7 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
 
   const handleLogout = () => {
     removeTokenAndAuthUser();
+    useToastStore.getState().showToast("Çıkış yapıldı", "success");
     navigate("/");
   };
 
@@ -136,7 +152,7 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
                     onClick={() => handleCategoryClick(item)}
                   >
                     {item.name}
-                    <span >
+                    <span>
                       <FaArrowRight />
                     </span>
                   </li>

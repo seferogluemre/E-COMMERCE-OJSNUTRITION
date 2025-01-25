@@ -100,7 +100,6 @@ export const useCartStore = create<CartStore>((set, get) => {
     addToCart: async (item) => {
       try {
         const accessToken = getAccessToken();
-
         if (accessToken) {
           const response = await fetch(`${BASE_URL}/users/cart`, {
             method: "POST",
@@ -143,14 +142,12 @@ export const useCartStore = create<CartStore>((set, get) => {
             newItems = [...state.items, item];
           }
 
-          useToastStore.getState().showToast("Ürün sepetinize eklendi");
+          useToastStore.getState().showToast("Ürün sepetinize eklendi", "success");
 
           return { items: newItems };
         });
       } catch (error) {
-        useToastStore
-          .getState()
-          .showToast("Sepet güncellenirken bir hata oluştu");
+        useToastStore.getState().showToast("Sepet güncellenirken bir hata oluştu", "error");
         console.error("Sepet güncelleme hatası:", error);
       }
     },
@@ -187,13 +184,13 @@ export const useCartStore = create<CartStore>((set, get) => {
         set((state) => {
           const newItems = state.items.filter((item) => item.id !== itemId);
 
-          useToastStore.getState().showToast("Ürün sepetinizden kaldırıldı");
+          useToastStore.getState().showToast("Ürün sepetinizden kaldırıldı", "success");
 
           return { items: newItems };
         });
       } catch (error) {
+        useToastStore.getState().showToast("Ürün silinirken bir hata oluştu", "error");
         console.error("Ürün silme hatası:", error);
-        useToastStore.getState().showToast("Ürün silinirken bir hata oluştu");
       }
     },
 
@@ -268,9 +265,7 @@ export const useCartStore = create<CartStore>((set, get) => {
         useToastStore.getState().showToast("Ürün miktarı güncellendi");
       } catch (error) {
         console.error("Miktar güncelleme hatası:", error);
-        useToastStore
-          .getState()
-          .showToast("Miktar güncellenirken bir hata oluştu");
+        useToastStore.getState().showToast("Miktar güncellenirken bir hata oluştu");
       }
     },
 

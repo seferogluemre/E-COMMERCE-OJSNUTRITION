@@ -5,6 +5,7 @@ import * as yup from "yup";
 import { login } from "../../../../services/api/collections/auth";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import Notification from "../../../../assets/components/layout/ToastNotification/Notification";
 
 // Form verileri için interface tanımı
 interface ILoginFormInputs {
@@ -29,18 +30,39 @@ function MemberLogin() {
   } = useForm<ILoginFormInputs>({
     resolver: yupResolver(schema),
   });
+  const [notification, setNotification] = useState({
+    type: "success" as const,
+    message: "Başarıyla giriş yapıldı",
+    isVisible: false,
+  });
+
+  const showNotification = (
+    type: "success" | "error" | "info",
+    message: string
+  ) => {
+    setNotification({ type, message, isVisible: true });
+    setTimeout(() => {
+      setNotification((prev) => ({ ...prev, isVisible: false }));
+    }, 3000);
+  };
+
   const navigate = useNavigate();
   const [loginError, setLoginError] = useState<string | null>(null);
 
   const onSubmit = async (formData: ILoginFormInputs) => {
     try {
-      setLoginError(null); // Her denemede hata mesajını sıfırla
-      // API key
+      setLoginError(null);
       const apiKey = "370718";
-      // API çağrısı
       const result = await login(formData.email, formData.password, apiKey);
       if (result.success) {
-        console.log("Giriş başarılı:", result.data);
+        localStorage.setItem(
+          "NotificationMessage",
+          JSON.stringify({
+            type: "success",
+            message: "Girişiniz yapıldı hoşgeldiniz",
+            timestamp: new Date().getTime(),
+          })
+        );
         navigate("/");
       } else {
         setLoginError(
@@ -97,6 +119,15 @@ function MemberLogin() {
           GİRİŞ YAP
         </Button>
       </form>
+
+      <Notification
+        type={notification.type}
+        message={notification.message}
+        isVisible={notification.isVisible}
+        onClose={() =>
+          setNotification((prev) => ({ ...prev, isVisible: false }))
+        }
+      />
     </>
   );
 }

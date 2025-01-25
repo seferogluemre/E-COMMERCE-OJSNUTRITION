@@ -30,6 +30,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import MyCart from "./components/MyCart/MyCart";
 import { useCartStore } from "../../../../store/products/Cart";
+import { useToastStore } from "../../../../store/toast/ToastStore";
 
 function NavbarComp() {
   const [query, setQuery] = useState<string>("");
@@ -49,8 +50,8 @@ function NavbarComp() {
 
   const handleLogout = () => {
     removeTokenAndAuthUser();
+    useToastStore.getState().showToast("Çıkış yapıldı", "success");
     navigate("/");
-    window.location.reload();
   };
 
   const [showTwo, setShowTwo] = useState(false);

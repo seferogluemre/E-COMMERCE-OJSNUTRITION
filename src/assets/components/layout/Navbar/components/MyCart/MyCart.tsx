@@ -1,4 +1,4 @@
-import { Button, Offcanvas } from "react-bootstrap";
+import { Button, CardFooter, Offcanvas } from "react-bootstrap";
 import { CgShoppingCart } from "react-icons/cg";
 import { PHOTO_URL } from "../../../../../../routes/pages/Products/components/types";
 import { useCartStore } from "../../../../../../store/products/Cart";
@@ -43,6 +43,16 @@ function MyCart({ show, handleCloseTwo }: CartProps) {
               style={{ maxWidth: "200px" }}
             />
             <h5 className="text-muted">Sepetiniz boş</h5>
+            <CardFooter className="position-absolute bottom-0 w-100">
+              <div className="d-flex justify-content-end px-1">Toplam 0</div>
+              <Button
+                variant="dark"
+                onClick={() => navigate("/products")}
+                className="w-100 rounded-0"
+              >
+                Alışverişe başla
+              </Button>
+            </CardFooter>
           </div>
         ) : (
           <>

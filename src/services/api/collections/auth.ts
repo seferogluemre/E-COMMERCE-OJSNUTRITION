@@ -199,7 +199,6 @@ export const refreshAccessToken = async () => {
     if (!response.ok) {
       throw new Error("Token yenilenemedi");
     }
-
     const data = await response.json();
 
     // Yeni token'ları kaydet
@@ -208,7 +207,9 @@ export const refreshAccessToken = async () => {
     return data.access_token;
   } catch (error) {
     console.error("Token yenileme hatası:", error);
-    // Token yenileme başarısız olursa kullanıcıyı çıkış yaptır
+    useToastStore
+      .getState()
+      .showToast("Oturumunuz süresi doldu tekrar giriş yapınız", "error");
     removeTokenAndAuthUser();
     window.location.href = "/login";
     throw error;
