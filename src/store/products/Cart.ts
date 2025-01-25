@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { useToastStore } from "../toast/ToastStore";
 import { BASE_URL } from "../../routes/pages/Products/components/types";
 import { getAccessToken } from "../../services/api/collections/storage";
+import { createAxiosInstance } from "../../services/api/axios";
 
 export interface CartItem {
   id: string;
@@ -26,30 +27,17 @@ export interface CartStore {
   getTotalItems: () => number;
 }
 
-// Helper function to load items from localStorage based on user status
 const loadFromLocalStorage = (): CartItem[] => {
   const accessToken = getAccessToken();
-  const storageKey = accessToken ? "BasketItems" : "GuessBasketItems";
+  const storageKey = !accessToken ? "GuessBasketItems" : "GuessBasketItems";
   const storedItems = localStorage.getItem(storageKey);
   return storedItems ? JSON.parse(storedItems) : [];
 };
 
-// Helper function to save items to localStorage based on user status
-const saveToLocalStorage = (items: CartItem[]) => {
-  const accessToken = getAccessToken();
-  const storageKey = accessToken ? "BasketItems" : "GuessBasketItems";
-  localStorage.setItem(storageKey, JSON.stringify(items));
-};
-
 // Sepet temizleme ve geçiş fonksiyonu
 export const clearUserCart = () => {
-  // Mevcut misafir sepetini koru
   const guestItems = localStorage.getItem("GuessBasketItems") || "[]";
 
-  // Kullanıcı sepetini temizle
-  localStorage.removeItem("BasketItems");
-
-  // Store'u güncelle - misafir sepetine geç
   useCartStore.setState({ items: JSON.parse(guestItems) });
 };
 
@@ -78,28 +66,24 @@ export const useCartStore = create<CartStore>((set, get) => {
 
       const cartData = await response.json();
       console.log("cartData", cartData);
-      if (cart.status === "success" && cartData.data.items) {
-        const formattedItems: CartItem[] = cartData.data.items.map(
-          (item: any) => ({
-            id: item.product_id,
-            name: item.product,
-            product_variant_id: item.product_variant_id,
-            aroma: item.product_variant_detail.aroma,
-            size: {
-              gram: item.product_variant_detail.size.gram,
-              total_services: item.product_variant_detail.size.total_services,
-            },
-            price: item.unit_price,
-            pieces: item.pieces,
-            photo_src: item.product_variant_detail.photo_src,
-          })
-        );
+      if (cartData.status === "success" && cartData.data.items) {
+        const formattedItems: CartItem[] = cartData.data.items.map((item) => ({
+          id: item.product_id,
+          name: item.product,
+          product_variant_id: item.product_variant_id,
+          aroma: item.product_variant_detail.aroma,
+          size: {
+            gram: item.product_variant_detail.size.gram,
+            total_services: item.product_variant_detail.size.total_services,
+          },
+          price: item.unit_price,
+          pieces: item.pieces,
+          photo_src: item.product_variant_detail.photo_src,
+        }));
 
         set({ items: formattedItems });
-        saveToLocalStorage(formattedItems);
       } else {
         set({ items: [] });
-        saveToLocalStorage([]);
       }
     } catch (error) {
       console.error("Sepet bilgileri alınırken hata:", error);
@@ -108,10 +92,11 @@ export const useCartStore = create<CartStore>((set, get) => {
     }
   };
 
-  fetchUserCart();
+  // Initialize store
+  fetchUserCart(); // Call it but don't assign the Promise
 
   return {
-    items: loadFromLocalStorage(),
+    items: [], // Start with empty array instead of Promise
     addToCart: async (item) => {
       try {
         const accessToken = getAccessToken();
@@ -158,9 +143,6 @@ export const useCartStore = create<CartStore>((set, get) => {
             newItems = [...state.items, item];
           }
 
-          // Local storage güncelleme
-          saveToLocalStorage(newItems);
-
           useToastStore.getState().showToast("Ürün sepetinize eklendi");
 
           return { items: newItems };
@@ -204,7 +186,6 @@ export const useCartStore = create<CartStore>((set, get) => {
 
         set((state) => {
           const newItems = state.items.filter((item) => item.id !== itemId);
-          saveToLocalStorage(newItems);
 
           useToastStore.getState().showToast("Ürün sepetinizden kaldırıldı");
 
@@ -222,46 +203,70 @@ export const useCartStore = create<CartStore>((set, get) => {
         const targetItem = state.items.find((item) => item.id === itemId);
         if (!targetItem) return;
 
-        const newPieces = targetItem.pieces + quantity;
-
-        if (newPieces <= 0) {
-          get().removeFromCart(itemId);
-          return;
-        }
+        console.log("Mevcut adet:", targetItem.pieces);
+        console.log("Gönderilecek yeni adet:", quantity);
 
         const accessToken = getAccessToken();
+
         if (accessToken) {
-          const response = await fetch(`${BASE_URL}/users/cart`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
-            },
-            body: JSON.stringify({
+          // Önce mevcut ürünü sepetten sil
+          await createAxiosInstance().delete("/users/cart", {
+            data: {
               product_id: targetItem.id,
               product_variant_id: targetItem.product_variant_id,
-              pieces: newPieces,
-            }),
+              pieces: targetItem.pieces,
+            },
           });
-          console.log("Yeni miktar:", newPieces);
-          if (!response.ok) {
+
+          // Sonra yeni adet ile ekle
+          const response = await createAxiosInstance().post("/users/cart", {
+            product_id: targetItem.id,
+            product_variant_id: targetItem.product_variant_id,
+            pieces: quantity,
+          });
+
+          if (response.status !== 201) {
             throw new Error("Ürün miktarı güncellenemedi");
           }
+
+          // Backend'den güncel sepet bilgisini al
+          const cartResponse = await createAxiosInstance().get("/users/cart");
+          const cartData = cartResponse.data;
+
+          console.log("Backend'den gelen güncel sepet verisi:", cartData);
+
+          if (cartData.status === "success" && cartData.data.items) {
+            const formattedItems: CartItem[] = cartData.data.items.map(
+              (item: any) => ({
+                id: item.product_id,
+                name: item.product,
+                product_variant_id: item.product_variant_id,
+                aroma: item.product_variant_detail.aroma,
+                size: {
+                  gram: item.product_variant_detail.size.gram,
+                  total_services:
+                    item.product_variant_detail.size.total_services,
+                },
+                price: item.unit_price,
+                pieces: item.pieces,
+                photo_src: item.product_variant_detail.photo_src,
+              })
+            );
+
+            console.log("Güncellenecek yeni items:", formattedItems);
+            set({ items: formattedItems });
+          }
+        } else {
+          // Local storage için güncelleme
+          set((state) => {
+            const newItems = state.items.map((item) =>
+              item.id === itemId ? { ...item, pieces: quantity } : item
+            );
+            return { items: newItems };
+          });
         }
 
-        set((state) => {
-          const newItems = state.items.map((item) =>
-            item.id === itemId &&
-            item.aroma === targetItem.aroma &&
-            item.size.gram === targetItem.size.gram
-              ? { ...item, pieces: newPieces }
-              : item
-          );
-
-          saveToLocalStorage(newItems);
-          useToastStore.getState().showToast("Ürün miktarı güncellendi");
-          return { items: newItems };
-        });
+        useToastStore.getState().showToast("Ürün miktarı güncellendi");
       } catch (error) {
         console.error("Miktar güncelleme hatası:", error);
         useToastStore
@@ -283,5 +288,3 @@ export const useCartStore = create<CartStore>((set, get) => {
 });
 
 useCartStore.getState();
-
-console.log(localStorage.getItem("BasketItems"));

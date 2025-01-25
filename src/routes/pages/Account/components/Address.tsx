@@ -8,6 +8,7 @@ import {
   District,
   fetchAddresses,
   handleSubmitAddress,
+  updateUserAddress,
 } from "../../../../services/api/collections/Addresses";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { User } from "../../../../services/api/collections/auth";

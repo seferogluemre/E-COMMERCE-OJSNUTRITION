@@ -13,6 +13,7 @@ interface CartProps {
 function MyCart({ show, handleCloseTwo }: CartProps) {
   const { items, removeFromCart, updateQuantity, getTotalPrice } =
     useCartStore();
+
   const navigate = useNavigate();
 
   return (
@@ -39,7 +40,7 @@ function MyCart({ show, handleCloseTwo }: CartProps) {
             <div className="flex-grow-1">
               {items.map((item) => (
                 <div
-                  key={`${item.id}-${item.aroma}-${item.size.gram}-${item.product_variant_id}`}
+                  key={`${item.id}`}
                   className="d-flex align-items-start border-bottom pb-3 mb-3"
                 >
                   <div
@@ -75,7 +76,9 @@ function MyCart({ show, handleCloseTwo }: CartProps) {
                         <button
                           type="button"
                           className="btn btn-outline-secondary btn-sm"
-                          onClick={() => updateQuantity(item.id, -1)}
+                          onClick={() =>
+                            updateQuantity(item.id, item.pieces - 1)
+                          }
                         >
                           -
                         </button>
@@ -84,7 +87,7 @@ function MyCart({ show, handleCloseTwo }: CartProps) {
                       <button
                         type="button"
                         className="btn btn-outline-secondary btn-sm"
-                        onClick={() => updateQuantity(item.id, 1)}
+                        onClick={() => updateQuantity(item.id, item.pieces + 1)}
                       >
                         +
                       </button>
