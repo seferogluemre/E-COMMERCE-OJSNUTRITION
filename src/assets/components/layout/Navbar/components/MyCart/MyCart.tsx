@@ -47,7 +47,10 @@ function MyCart({ show, handleCloseTwo }: CartProps) {
               <div className="d-flex justify-content-end px-1">Toplam 0</div>
               <Button
                 variant="dark"
-                onClick={() => navigate("/products")}
+                onClick={() => {
+                  handleCloseTwo();
+                  navigate("/products");
+                }}
                 className="w-100 rounded-0"
               >
                 Alışverişe başla
@@ -124,7 +127,10 @@ function MyCart({ show, handleCloseTwo }: CartProps) {
               <Button
                 variant="dark"
                 className="w-100"
-                onClick={() => navigate(items.length > 0 ? "/payment" : "/")}
+                onClick={() => {
+                  handleCloseTwo();
+                  navigate(items.length > 0 ? "/payment" : "/");
+                }}
               >
                 DEVAM ET
               </Button>
