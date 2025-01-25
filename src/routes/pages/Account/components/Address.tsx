@@ -27,6 +27,7 @@ function Addresses() {
   const navigate = useNavigate();
   const [userAddress, setUserAddress] = useState<UserAddress | null>(null);
   const [showForm, setShowForm] = useState<boolean>(false);
+  const [showAlert, setShowAlert] = useState<boolean>(true);
   const [formData, setFormData] = useState<UserAddress>({
     title: "",
     first_name: "",
@@ -178,10 +179,12 @@ function Addresses() {
       <h3 className="mb-4">Adreslerim</h3>
       {showForm ? (
         <Form onSubmit={handleSubmit}>
-          <Alert variant="success">
-            <Alert.Heading>Adres Bulunamadı</Alert.Heading>
-            <p>Kayıtlı adresiniz bulunamadı. Lütfen yeni adres ekleyiniz.</p>
-          </Alert>
+          {
+            showAlert ? <Alert variant="success">
+              <Alert.Heading>Adres Bulunamadı</Alert.Heading>
+              <p>Kayıtlı adresiniz bulunamadı. Lütfen yeni adres ekleyiniz.</p>
+            </Alert> : ""
+          }
           <Form.Group controlId="formTitle">
             <Form.Label>*Adres Başlığı</Form.Label>
             <Form.Control
@@ -318,7 +321,10 @@ function Addresses() {
               variant="outline-primary"
               className="w-100 h-100 d-flex flex-column align-items-center justify-content-center"
               style={{ minHeight: "200px" }}
-              onClick={() => setShowForm(true)}
+              onClick={() => {
+                setShowAlert(false)
+                setShowForm(true)
+              }}
             >
               <span>Yeni Adres Ekle</span>
             </Button>

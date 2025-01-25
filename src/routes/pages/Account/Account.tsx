@@ -29,27 +29,31 @@ function Account() {
         <Row>
           <Col md={3} className="sidebar">
             <h2 className="mb-4 fs-2">Hesabım</h2>
-            <Nav className="flex-column tabs-link">
+            <Nav className="tabs-link" id="tabs_link">
               <Nav.Link
                 className={activeTab === "account" ? "active" : ""}
                 onClick={() => setActiveTab("account")}
               >
                 <CiUser className="fs-4 m-1" />
-                Hesap Bilgilerim
+                <span>Hesap Bilgilerim</span>
               </Nav.Link>
               <Nav.Link
                 className={activeTab === "orders" ? "active" : ""}
                 onClick={() => setActiveTab("orders")}
               >
                 <LuPackageOpen className="fs-4 m-1" />
-                Siparişlerim
+                <span>
+                  Siparişlerim
+                </span>
               </Nav.Link>
               <Nav.Link
                 className={activeTab === "addresses" ? "active" : ""}
                 onClick={() => setActiveTab("addresses")}
               >
                 <CiLocationOn className="fs-5 m-1" />
-                Adreslerim
+                <span>
+                  Adreslerim
+                </span>
               </Nav.Link>
             </Nav>
           </Col>

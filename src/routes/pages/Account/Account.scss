@@ -1,7 +1,5 @@
-@media (max-width: 576px) {
-  .tabs-link {
-    flex-direction: row !important;
-  }
+.tabs-link {
+  flex-direction: column;
 }
 
 // Adres formu stilleri
@@ -16,8 +14,8 @@
     gap: 15px;
     margin-bottom: 30px;
 
-    input, 
-    select, 
+    input,
+    select,
     textarea {
       width: 100%;
       padding: 8px;
@@ -80,9 +78,27 @@
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
   }
-}
 
-@media (max-width: 480px) {
+  #tabs_link {
+    flex-direction: row !important;
+
+    .active {
+      box-shadow: 0 1px 5px rgb(226, 226, 226);
+      border-radius: 10px;
+    }
+
+    .nav-link {
+      width: auto !important;
+      margin: 0px !important;
+      padding: 5px;
+      margin-bottom: 25px !important;
+    }
+
+    span {
+      font-size: 14px !important;
+    }
+  }
+
   .address-container {
     form {
       gap: 10px;
