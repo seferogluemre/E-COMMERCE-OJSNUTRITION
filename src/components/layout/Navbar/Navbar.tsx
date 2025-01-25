@@ -12,25 +12,25 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoSearchOutline } from "react-icons/io5";
 import { AiOutlineUser } from "react-icons/ai";
 import { GrCart } from "react-icons/gr";
-import { useSearchProduct } from "../../../../store/products/useSearchProduct";
+import { useSearchProduct } from "../../../store/products/useSearchProduct";
 import { useState, useEffect } from "react";
 import Search from "./components/Search";
 import { NavLink } from "react-router-dom";
-import MobileSidebar from "./components/MobileSidebar";
+import MobileSidebar from "./components/MobileSidebar/MobileSidebar";
 import {
   isAuthenticated,
   getAccessToken,
   isTokenExpired,
   refreshAccessToken,
-} from "../../../../services/api/collections/auth";
+} from "../../../services/api/collections/auth";
 import {
   getAuthUser,
   removeTokenAndAuthUser,
-} from "../../../../services/api/collections/storage";
+} from "../../../services/api/collections/storage";
 import { useNavigate } from "react-router-dom";
 import MyCart from "./components/MyCart/MyCart";
-import { useCartStore } from "../../../../store/products/Cart";
-import { useToastStore } from "../../../../store/toast/ToastStore";
+import { useCartStore } from "../../../store/products/Cart";
+import { useToastStore } from "../../../store/toast/ToastStore";
 
 function NavbarComp() {
   const [query, setQuery] = useState<string>("");

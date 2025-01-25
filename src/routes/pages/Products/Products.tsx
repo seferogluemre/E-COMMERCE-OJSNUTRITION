@@ -1,6 +1,6 @@
 import { Container, Row } from "react-bootstrap";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { ProductListProp } from "../../../assets/components/type/type";
+import { ProductListProp } from "../../../components/type/type";
 import {
   BASE_URL,
   getAllProducts,

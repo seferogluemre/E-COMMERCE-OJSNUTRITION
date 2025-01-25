@@ -1,7 +1,6 @@
 import { FaArrowRight } from "react-icons/fa";
 import { CategoriesResponseProps } from "./SidebarType";
 
-
 function DrawerList({
   subChildren,
   top_sellers,

@@ -2,7 +2,7 @@ import { Container } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./NavDropdown.scss";
-import { PHOTO_URL } from "../../../../routes/pages/Products/components/types";
+import { PHOTO_URL } from "../../../routes/pages/Products/components/types";
 import { NavLink } from "react-router-dom";
 
 interface SubChild {
@@ -35,11 +35,17 @@ interface Category {
   top_sellers: TopSeller[];
 }
 
+interface LinksProps {
+  Link: string,
+  to: string,
+  category: string;
+}
+
 function NavDropdown() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
-  const Links = [
+  const Links: LinksProps[] = [
     { Link: "Protein", to: "/products", category: "protein" },
     { Link: "Spor Gıdaları", to: "/products", category: "spor-gidalari" },
     { Link: "Tüm ürünler", to: "/products", category: "products" },
@@ -64,14 +70,13 @@ function NavDropdown() {
   }
 
   const getCategoryBySlug = (slug: string) => {
+    console.log(categories.find((cat) => cat.slug === slug))
     return categories.find((cat) => cat.slug === slug);
   };
 
   useEffect(() => {
     const handleScroll = () => {
-      //Eger scroll kaydırılmaya başlarsa setHoverLink null yapılıyor ve modal kapatılıyor
       if (window.scrollY > 0) {
-        // Sayfa kaydırılmaya başlandıysa
         setHoveredLink(null);
       }
     };
@@ -131,6 +136,7 @@ function NavDropdown() {
                       <NavLink
                         to={`/products/${seller.slug}`}
                         className="text-decoration-none"
+                        key={idx}
                       >
                         <div key={idx} className="top-seller-item">
                           <img

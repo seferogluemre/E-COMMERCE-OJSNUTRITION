@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { BiCreditCard } from "react-icons/bi";
 import { BsTruck } from "react-icons/bs";
 import { IoMap } from "react-icons/io5";
@@ -65,7 +64,7 @@ function Payment() {
       await fetchAddresses(
         setUserAddresses,
         (address) => setSelectedAddress(address),
-        () => {}
+        () => { }
       );
     } catch (error) {
       console.error("Error fetching user addresses:", error);
@@ -178,9 +177,8 @@ function Payment() {
         <div className="col-md-4">
           <div className="d-flex flex-column gap-3 mb-4">
             <div
-              className={`step p-3 rounded ${
-                currentStep >= 1 ? "bg-dark text-white" : "bg-light"
-              }`}
+              className={`step p-3 rounded ${currentStep >= 1 ? "bg-dark text-white" : "bg-light"
+                }`}
               style={{ cursor: "pointer" }}
               onClick={() => currentStep > 1 && setCurrentStep(1)}
             >
@@ -188,9 +186,8 @@ function Payment() {
               <div>Adres</div>
             </div>
             <div
-              className={`step p-3 rounded ${
-                currentStep >= 2 ? "bg-dark text-white" : "bg-light"
-              }`}
+              className={`step p-3 rounded ${currentStep >= 2 ? "bg-dark text-white" : "bg-light"
+                }`}
               style={{ cursor: "pointer" }}
               onClick={() => currentStep > 2 && setCurrentStep(2)}
             >
@@ -198,9 +195,8 @@ function Payment() {
               <div>Kargo</div>
             </div>
             <div
-              className={`step p-3 rounded ${
-                currentStep >= 3 ? "bg-dark text-white" : "bg-light"
-              }`}
+              className={`step p-3 rounded ${currentStep >= 3 ? "bg-dark text-white" : "bg-light"
+                }`}
               style={{ cursor: "pointer" }}
               onClick={() => currentStep > 3 && setCurrentStep(3)}
             >
@@ -222,11 +218,10 @@ function Payment() {
                         {userAddresses.map((address) => (
                           <div
                             key={address.id}
-                            className={`saved-address p-3 border rounded mb-3 ${
-                              selectedAddress?.id === address.id
+                            className={`saved-address p-3 border rounded mb-3 ${selectedAddress?.id === address.id
                                 ? "border-primary"
                                 : ""
-                            }`}
+                              }`}
                             onClick={() => handleAddressSelect(address)}
                             style={{ cursor: "pointer" }}
                           >

@@ -1,4 +1,4 @@
-import FiveStar from "../../../assets/components/layout/FiveStars/FiveStar";
+import FiveStar from "../../../components/layout/FiveStars/FiveStar";
 import ProductComment from "../ProductDetail/components/ProductComment/ProductComment";
 
 function About() {

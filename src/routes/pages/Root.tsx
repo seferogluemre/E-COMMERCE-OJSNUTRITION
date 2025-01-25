@@ -1,9 +1,9 @@
 import { Outlet } from "react-router-dom";
-import NavbarComp from "../../assets/components/layout/Navbar/Navbar";
-import Footer from "../../assets/components/layout/Footer/Footer";
-import NavDropdown from "../../assets/components/layout/SecondNavbar/NavDropdown";
-import Nav from "../../assets/components/layout/SecondNavbar/Nav";
-import Notification from "../../assets/components/layout/ToastNotification/Notification";
+import NavbarComp from "../../components/layout/Navbar/Navbar";
+import Footer from "../../components/layout/Footer/Footer";
+import NavDropdown from "../../components/layout/SecondNavbar/NavDropdown";
+import Nav from "../../components/layout/SecondNavbar/Nav";
+import Notification from "../../components/layout/ToastNotification/Notification";
 import { useToastStore } from "../../store/toast/ToastStore";
 
 function RootLayout() {

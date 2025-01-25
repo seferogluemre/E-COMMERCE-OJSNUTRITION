@@ -5,7 +5,7 @@ import * as yup from "yup";
 import { login } from "../../../../services/api/collections/auth";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Notification from "../../../../assets/components/layout/ToastNotification/Notification";
+import Notification from "../../../../components/layout/ToastNotification/Notification";
 
 // Form verileri için interface tanımı
 interface ILoginFormInputs {

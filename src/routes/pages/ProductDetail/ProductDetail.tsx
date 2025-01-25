@@ -3,13 +3,13 @@ import { Accordion, Container, Row } from "react-bootstrap";
 import { useLoaderData } from "react-router-dom";
 import { PHOTO_URL } from "../Products/components/types";
 import "./_ProductDetail.scss";
-import FiveStar from "../../../assets/components/layout/FiveStars/FiveStar";
+import FiveStar from "../../../components/layout/FiveStars/FiveStar";
 import ProductComment from "./components/ProductComment/ProductComment";
 import { FaMinus } from "react-icons/fa";
 import { GoPlus } from "react-icons/go";
 import { MdShoppingCart } from "react-icons/md";
 import ProductTrust from "./components/ProductTrust/ProductTrust";
-import BestSeller from "../../../assets/components/layout/BestSeller/BestSeller";
+import BestSeller from "../../../components/layout/BestSeller/BestSeller";
 import UseLocalStorage from "../../../hooks/UseSessionStorage";
 import LastView from "./components/LastView/LastView";
 import { AiOutlineCheck } from "react-icons/ai";
@@ -133,7 +133,7 @@ function ProductDetail() {
 
       const discountedPrice = matchingVariant.price.discount_percentage
         ? matchingVariant.price.total_price *
-          (1 - matchingVariant.price.discount_percentage / 100)
+        (1 - matchingVariant.price.discount_percentage / 100)
         : matchingVariant.price.total_price;
 
       setMatchingTotalPrice(Math.round(discountedPrice));
@@ -155,7 +155,7 @@ function ProductDetail() {
       // İndirimli fiyatı hesapla
       const discountedPrice = initialVariant.price.discount_percentage
         ? initialVariant.price.total_price *
-          (1 - initialVariant.price.discount_percentage / 100)
+        (1 - initialVariant.price.discount_percentage / 100)
         : initialVariant.price.total_price;
 
       setMatchingTotalPrice(Math.round(discountedPrice));
@@ -452,9 +452,8 @@ function ProductDetail() {
                     return (
                       <div
                         key={index}
-                        className={`product-detail-variant-item flex-wrap d-flex column-gap-3 justify-content-center align-items-center ${
-                          isSelected ? "border-primary" : ""
-                        }`}
+                        className={`product-detail-variant-item flex-wrap d-flex column-gap-3 justify-content-center align-items-center ${isSelected ? "border-primary" : ""
+                          }`}
                         onClick={() => {
                           setSelectedAroma(index);
                           updatePhotoBasedOnSelection(index, selectedSize);

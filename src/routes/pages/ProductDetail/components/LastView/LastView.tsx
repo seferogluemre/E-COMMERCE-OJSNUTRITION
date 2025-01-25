@@ -8,7 +8,7 @@ import {
   CardText,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import FiveStar from "../../../../../assets/components/layout/FiveStars/FiveStar";
+import FiveStar from "../../../../../components/layout/FiveStars/FiveStar";
 import { LOCAL_KEY } from "../../ProductDetail";
 import "./LastView.scss";
 

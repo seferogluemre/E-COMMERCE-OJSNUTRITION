@@ -1,7 +1,7 @@
 import { Button, CardFooter, Offcanvas } from "react-bootstrap";
 import { CgShoppingCart } from "react-icons/cg";
-import { PHOTO_URL } from "../../../../../../routes/pages/Products/components/types";
-import { useCartStore } from "../../../../../../store/products/Cart";
+import { PHOTO_URL } from "../../../../../routes/pages/Products/components/types";
+import { useCartStore } from "../../../../../store/products/Cart";
 import { useNavigate } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
 
@@ -118,7 +118,6 @@ function MyCart({ show, handleCloseTwo }: CartProps) {
                 </div>
               ))}
             </div>
-
             <div className="mt-auto pt-3 border-top">
               <div className="d-flex justify-content-between mb-3">
                 <strong>TOPLAM</strong>

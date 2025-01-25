@@ -132,9 +132,9 @@ export const useCartStore = create<CartStore>((set, get) => {
           if (existingItem) {
             newItems = state.items.map((i) =>
               i.id === item.id &&
-              i.aroma === item.aroma &&
-              i.size.gram === item.size.gram &&
-              i.size.total_services === item.size.total_services
+                i.aroma === item.aroma &&
+                i.size.gram === item.size.gram &&
+                i.size.total_services === item.size.total_services
                 ? { ...i, pieces: i.pieces + item.pieces }
                 : i
             );
@@ -142,12 +142,16 @@ export const useCartStore = create<CartStore>((set, get) => {
             newItems = [...state.items, item];
           }
 
-          useToastStore.getState().showToast("Ürün sepetinize eklendi", "success");
+          useToastStore
+            .getState()
+            .showToast("Ürün sepetinize eklendi", "success");
 
           return { items: newItems };
         });
       } catch (error) {
-        useToastStore.getState().showToast("Sepet güncellenirken bir hata oluştu", "error");
+        useToastStore
+          .getState()
+          .showToast("Sepet güncellenirken bir hata oluştu", "error");
         console.error("Sepet güncelleme hatası:", error);
       }
     },
@@ -184,12 +188,16 @@ export const useCartStore = create<CartStore>((set, get) => {
         set((state) => {
           const newItems = state.items.filter((item) => item.id !== itemId);
 
-          useToastStore.getState().showToast("Ürün sepetinizden kaldırıldı", "success");
+          useToastStore
+            .getState()
+            .showToast("Ürün sepetinizden kaldırıldı", "success");
 
           return { items: newItems };
         });
       } catch (error) {
-        useToastStore.getState().showToast("Ürün silinirken bir hata oluştu", "error");
+        useToastStore
+          .getState()
+          .showToast("Ürün silinirken bir hata oluştu", "error");
         console.error("Ürün silme hatası:", error);
       }
     },
@@ -200,8 +208,6 @@ export const useCartStore = create<CartStore>((set, get) => {
         const targetItem = state.items.find((item) => item.id === itemId);
         if (!targetItem) return;
 
-        console.log("Mevcut adet:", targetItem.pieces);
-        console.log("Gönderilecek yeni adet:", quantity);
 
         const accessToken = getAccessToken();
 
@@ -229,7 +235,6 @@ export const useCartStore = create<CartStore>((set, get) => {
           const cartResponse = await createAxiosInstance().get("/users/cart");
           const cartData = cartResponse.data;
 
-          console.log("Backend'den gelen güncel sepet verisi:", cartData);
 
           if (cartData.status === "success" && cartData.data.items) {
             const formattedItems: CartItem[] = cartData.data.items.map(
@@ -249,7 +254,6 @@ export const useCartStore = create<CartStore>((set, get) => {
               })
             );
 
-            console.log("Güncellenecek yeni items:", formattedItems);
             set({ items: formattedItems });
           }
         } else {
@@ -262,10 +266,11 @@ export const useCartStore = create<CartStore>((set, get) => {
           });
         }
 
-        useToastStore.getState().showToast("Ürün miktarı güncellendi");
       } catch (error) {
         console.error("Miktar güncelleme hatası:", error);
-        useToastStore.getState().showToast("Miktar güncellenirken bir hata oluştu");
+        useToastStore
+          .getState()
+          .showToast("Miktar güncellenirken bir hata oluştu");
       }
     },
 

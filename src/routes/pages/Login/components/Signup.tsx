@@ -3,15 +3,13 @@ import {
   FormControl,
   FormGroup,
   FormLabel,
-  Alert,
 } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { register as registerUser } from "../../../../services/api/collections/auth";
 import { useState } from "react";
-import ToastNotification from "../../../../assets/components/layout/ToastNotification/ToastNotification";
-import Notification from "../../../../assets/components/layout/ToastNotification/Notification";
+import Notification from "../../../../components/layout/ToastNotification/Notification";
 
 // Form verileri için interface tanımı
 interface IFormInputs {
@@ -21,17 +19,7 @@ interface IFormInputs {
   password: string;
 }
 
-// API'ye gönderilecek veriler için interface tanımı
-interface User {
-  id: number;
-  first_name: string;
-  last_name: string;
-  email: string;
-  username: string;
-  password: string;
-  password2: string;
-  api_key: string;
-}
+
 
 // Form validation şeması
 const schema = yup.object().shape({
@@ -62,15 +50,7 @@ function Signup() {
     isVisible: false,
   });
 
-  const showNotification = (
-    type: "success" | "error" | "info",
-    message: string
-  ) => {
-    setNotification({ type, message, isVisible: true });
-    setTimeout(() => {
-      setNotification((prev) => ({ ...prev, isVisible: false }));
-    }, 3000);
-  };
+
 
   const [alert, setAlert] = useState<{
     type: "success" | "danger";
