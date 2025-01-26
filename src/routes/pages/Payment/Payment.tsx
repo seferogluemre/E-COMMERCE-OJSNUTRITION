@@ -10,7 +10,7 @@ import {
 } from "../../../services/api/collections/Addresses";
 import { createAxiosInstance } from "../../../services/api/axios";
 import { PHOTO_URL } from "../Products/components/types";
-import { CartItem } from "../../../store/products/Cart";
+import { CartItem, useCartStore } from "../../../store/products/Cart";
 
 function Payment() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -31,7 +31,7 @@ function Payment() {
     district: "",
     phone_number: "",
   });
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const cartItems = useCartStore((state) => state.items);
 
   useEffect(() => {
     // Check if user is logged in
@@ -41,12 +41,6 @@ function Payment() {
     // Fetch user addresses if logged in
     if (token) {
       fetchUserAddresses();
-    }
-
-    // Get cart items
-    const basketItems = localStorage.getItem("BasketItems");
-    if (basketItems) {
-      setCartItems(JSON.parse(basketItems));
     }
 
     // Check saved guest address
@@ -64,7 +58,7 @@ function Payment() {
       await fetchAddresses(
         setUserAddresses,
         (address) => setSelectedAddress(address),
-        () => { }
+        () => {}
       );
     } catch (error) {
       console.error("Error fetching user addresses:", error);
@@ -177,8 +171,9 @@ function Payment() {
         <div className="col-md-4">
           <div className="d-flex flex-column gap-3 mb-4">
             <div
-              className={`step p-3 rounded ${currentStep >= 1 ? "bg-dark text-white" : "bg-light"
-                }`}
+              className={`step p-3 rounded ${
+                currentStep >= 1 ? "bg-dark text-white" : "bg-light"
+              }`}
               style={{ cursor: "pointer" }}
               onClick={() => currentStep > 1 && setCurrentStep(1)}
             >
@@ -186,8 +181,9 @@ function Payment() {
               <div>Adres</div>
             </div>
             <div
-              className={`step p-3 rounded ${currentStep >= 2 ? "bg-dark text-white" : "bg-light"
-                }`}
+              className={`step p-3 rounded ${
+                currentStep >= 2 ? "bg-dark text-white" : "bg-light"
+              }`}
               style={{ cursor: "pointer" }}
               onClick={() => currentStep > 2 && setCurrentStep(2)}
             >
@@ -195,8 +191,9 @@ function Payment() {
               <div>Kargo</div>
             </div>
             <div
-              className={`step p-3 rounded ${currentStep >= 3 ? "bg-dark text-white" : "bg-light"
-                }`}
+              className={`step p-3 rounded ${
+                currentStep >= 3 ? "bg-dark text-white" : "bg-light"
+              }`}
               style={{ cursor: "pointer" }}
               onClick={() => currentStep > 3 && setCurrentStep(3)}
             >
@@ -218,10 +215,11 @@ function Payment() {
                         {userAddresses.map((address) => (
                           <div
                             key={address.id}
-                            className={`saved-address p-3 border rounded mb-3 ${selectedAddress?.id === address.id
+                            className={`saved-address p-3 border rounded mb-3 ${
+                              selectedAddress?.id === address.id
                                 ? "border-primary"
                                 : ""
-                              }`}
+                            }`}
                             onClick={() => handleAddressSelect(address)}
                             style={{ cursor: "pointer" }}
                           >

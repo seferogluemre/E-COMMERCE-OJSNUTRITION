@@ -132,9 +132,9 @@ export const useCartStore = create<CartStore>((set, get) => {
           if (existingItem) {
             newItems = state.items.map((i) =>
               i.id === item.id &&
-                i.aroma === item.aroma &&
-                i.size.gram === item.size.gram &&
-                i.size.total_services === item.size.total_services
+              i.aroma === item.aroma &&
+              i.size.gram === item.size.gram &&
+              i.size.total_services === item.size.total_services
                 ? { ...i, pieces: i.pieces + item.pieces }
                 : i
             );
@@ -208,7 +208,6 @@ export const useCartStore = create<CartStore>((set, get) => {
         const targetItem = state.items.find((item) => item.id === itemId);
         if (!targetItem) return;
 
-
         const accessToken = getAccessToken();
 
         if (accessToken) {
@@ -234,7 +233,6 @@ export const useCartStore = create<CartStore>((set, get) => {
 
           const cartResponse = await createAxiosInstance().get("/users/cart");
           const cartData = cartResponse.data;
-
 
           if (cartData.status === "success" && cartData.data.items) {
             const formattedItems: CartItem[] = cartData.data.items.map(
@@ -265,7 +263,6 @@ export const useCartStore = create<CartStore>((set, get) => {
             return { items: newItems };
           });
         }
-
       } catch (error) {
         console.error("Miktar güncelleme hatası:", error);
         useToastStore
