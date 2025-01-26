@@ -50,6 +50,16 @@
             color: #f8f9fa;
             background-color: rgba(255, 255, 255, 0.1);
           }
+
+          .arrow-down {
+            transition: transform 0.2s ease-in-out;
+          }
+
+          &:hover {
+            .arrow-down {
+              transform: rotate(180deg);
+            }
+          }
         }
       }
     }
@@ -57,7 +67,34 @@
 }
 
 #NavDropdown {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  &:hover {
+    &::after {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
   .dropdown {
+    position: relative;
+    z-index: 1000;
+
     .dropdown-item-container {
       position: relative;
 
@@ -70,6 +107,16 @@
         &:hover {
           color: #f8f9fa;
           background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .arrow-down {
+          transition: transform 0.3s ease;
+        }
+
+        &:hover {
+          .arrow-down {
+            transform: rotate(180deg);
+          }
         }
       }
     }

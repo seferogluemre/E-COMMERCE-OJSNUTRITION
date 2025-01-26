@@ -4,7 +4,7 @@ import axios from "axios";
 import "./NavDropdown.scss";
 import { PHOTO_URL } from "../../../routes/pages/Products/components/types";
 import { NavLink } from "react-router-dom";
-
+import { FaLongArrowAltDown } from "react-icons/fa";
 interface SubChild {
   name: string;
   slug: string;
@@ -36,8 +36,8 @@ interface Category {
 }
 
 interface LinksProps {
-  Link: string,
-  to: string,
+  Link: string;
+  to: string;
   category: string;
 }
 
@@ -70,7 +70,7 @@ function NavDropdown() {
   }
 
   const getCategoryBySlug = (slug: string) => {
-    console.log(categories.find((cat) => cat.slug === slug))
+    console.log(categories.find((cat) => cat.slug === slug));
     return categories.find((cat) => cat.slug === slug);
   };
 
@@ -103,19 +103,20 @@ function NavDropdown() {
             >
               <a href={link.to} className="dropdown-item">
                 {link.Link}
+                <FaLongArrowAltDown className="arrow-down" />
               </a>
               {hoveredLink === link.Link && (
                 <div className="category-modal">
                   <div className="categories-section">
                     {getCategoryBySlug(
                       link.category.toLowerCase()
-                    )?.children.map((child) => (
+                    )?.children.map((child: Child) => (
                       <div key={child.id} className="category-item">
                         <h4>{child.name}</h4>
                         <div className="sub-items">
                           {child.sub_children
                             ?.slice(0, 7)
-                            .map((subChild, idx) => (
+                            .map((subChild: SubChild, idx: number) => (
                               <NavLink
                                 key={idx}
                                 to={`/products/${subChild.slug}`}
