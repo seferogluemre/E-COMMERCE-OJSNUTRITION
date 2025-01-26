@@ -1,9 +1,11 @@
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Modal } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import {
   getUserData,
   updateUserData,
   User,
+  changePassword,
+  ChangePasswordData,
 } from "../../../../services/api/collections/auth";
 import { useToastStore } from "../../../../store/toast/ToastStore";
 
@@ -13,6 +15,12 @@ function AccountInfo() {
     last_name: "",
     phone_number: "",
     email: "",
+  });
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [passwordForm, setPasswordForm] = useState<ChangePasswordData>({
+    old_password: "",
+    password: "",
+    password2: "",
   });
 
   useEffect(() => {
@@ -40,6 +48,21 @@ function AccountInfo() {
       console.log("Updated user data:", updatedData);
     } catch (error) {
       console.error("Error updating user data:", error);
+    }
+  };
+
+  const handlePasswordChange = async (event: React.FormEvent) => {
+    event.preventDefault();
+    try {
+      await changePassword(passwordForm);
+      setShowPasswordModal(false);
+      setPasswordForm({
+        old_password: "",
+        password: "",
+        password2: "",
+      });
+    } catch (error) {
+      console.error("Error changing password:", error);
     }
   };
 
@@ -115,16 +138,87 @@ function AccountInfo() {
             }
           />
         </Form.Group>
-
-        <Button
-          variant="primary"
-          onClick={handleSubmit}
-          size="lg"
-          type="submit"
-        >
-          Kaydet
-        </Button>
+        <div className="d-flex justify-content-between">
+          <div className="">
+            <Button
+              variant="outline-primary"
+              onClick={() => setShowPasswordModal(true)}
+            >
+              <span>Şifre Değiştir</span>
+            </Button>
+          </div>
+          <Button variant="primary" onClick={handleSubmit} type="submit">
+            Kaydet
+          </Button>
+        </div>
       </Form>
+
+      {/* Add Password Change Modal */}
+      <Modal
+        show={showPasswordModal}
+        onHide={() => setShowPasswordModal(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Şifre Değiştir</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handlePasswordChange}>
+            <Form.Group className="mb-3">
+              <Form.Label>Mevcut Şifre</Form.Label>
+              <Form.Control
+                type="password"
+                value={passwordForm.old_password}
+                onChange={(e) =>
+                  setPasswordForm({
+                    ...passwordForm,
+                    old_password: e.target.value,
+                  })
+                }
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Yeni Şifre</Form.Label>
+              <Form.Control
+                type="password"
+                value={passwordForm.password}
+                onChange={(e) =>
+                  setPasswordForm({ ...passwordForm, password: e.target.value })
+                }
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Yeni Şifre Tekrar</Form.Label>
+              <Form.Control
+                type="password"
+                value={passwordForm.password2}
+                onChange={(e) =>
+                  setPasswordForm({
+                    ...passwordForm,
+                    password2: e.target.value,
+                  })
+                }
+                required
+              />
+            </Form.Group>
+
+            <div className="d-flex justify-content-end gap-2">
+              <Button
+                variant="secondary"
+                onClick={() => setShowPasswordModal(false)}
+              >
+                İptal
+              </Button>
+              <Button variant="primary" type="submit">
+                Şifre Değiştir
+              </Button>
+            </div>
+          </Form>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }

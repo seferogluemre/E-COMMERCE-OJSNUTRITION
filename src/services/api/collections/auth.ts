@@ -30,6 +30,12 @@ export interface User {
   email: string;
 }
 
+export interface ChangePasswordData {
+  old_password: string;
+  password: string;
+  password2: string;
+}
+
 export const isAuthenticated = () => {
   return !!getAccessToken();
 };
@@ -227,3 +233,19 @@ export const isTokenExpired = (token: string): boolean => {
   }
 };
 export { getAccessToken } from "./storage";
+
+export const changePassword = async (passwordData: ChangePasswordData) => {
+  try {
+    const api = createAxiosInstance();
+    const response = await api.post("/users/change-password", passwordData);
+    useToastStore
+      .getState()
+      .showToast("Şifreniz başarıyla güncellendi", "success");
+    return response.data;
+  } catch (error) {
+    useToastStore
+      .getState()
+      .showToast("Şifre değiştirme işlemi başarısız oldu", "error");
+    throw error;
+  }
+};
