@@ -23,6 +23,10 @@ const LazyProductPage = React.lazy(
   () => import("./routes/pages/Products/Products")
 );
 
+const LazyProductDetailPage = React.lazy(
+  () => import("./routes/pages/ProductDetail/ProductDetail")
+);
+
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -49,7 +53,11 @@ const routes = createBrowserRouter([
       },
       {
         path: "/products/:productSlug",
-        element: <ProductDetailPage />,
+        element: (
+          <React.Suspense>
+            <LazyProductDetailPage />
+          </React.Suspense>
+        ),
         loader: ProductDetailLoader,
       },
       {

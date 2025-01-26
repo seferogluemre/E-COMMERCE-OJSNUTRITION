@@ -1,11 +1,7 @@
 import { Container, Row } from "react-bootstrap";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { ProductListProp } from "../../../components/type/type";
-import {
-  BASE_URL,
-  getAllProducts,
-  PHOTO_URL,
-} from "./components/types";
+import { BASE_URL, getAllProducts, PHOTO_URL } from "./components/types";
 import ProductCard from "./components/ProductCard/ProductCard";
 import "./components/ProductCard/_ProductCard.scss";
 import { useEffect, useState } from "react";
