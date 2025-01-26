@@ -1,12 +1,13 @@
-import { FaStar } from "react-icons/fa";
+import FaStar from "/assets/icons/image.png";
+
 function FiveStar() {
   return (
     <>
-      <FaStar className="fs-5 text-warning" />
-      <FaStar className="fs-5 text-warning" />
-      <FaStar className="fs-5 text-warning" />
-      <FaStar className="fs-5 text-warning" />
-      <FaStar className="fs-5 text-warning" />
+      <img src={FaStar} className="star" alt="" />
+      <img src={FaStar} className="star" alt="" />
+      <img src={FaStar} className="star" alt="" />
+      <img src={FaStar} className="star" alt="" />
+      <img src={FaStar} className="star" alt="" />
     </>
   );
 }

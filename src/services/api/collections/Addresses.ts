@@ -79,8 +79,8 @@ export const handleSubmitAddress = async (
     setShowForm: (show: boolean) => void
   ) => Promise<void>
 ) => {
-  const formattedPhone = `+90${formData.phone.replace(/^\+90/, "")}`;
-  const fullAddress = `${formData.address}, ${formData.district}, ${formData.city}`;
+  const formattedPhone = `+90${formData.phone_number.replace(/^\+90/, "")}`;
+  const fullAddress = formData.full_address;
 
   const addressData = {
     title: formData.title,
@@ -91,9 +91,10 @@ export const handleSubmitAddress = async (
     )?.id,
     full_address: fullAddress,
     phone_number: formattedPhone,
-    first_name: formData.firstName,
-    last_name: formData.lastName,
+    first_name: formData.first_name,
+    last_name: formData.last_name,
   };
+  console.log("Gönderilen adres bilgisi");
 
   try {
     const api = createAxiosInstance();
@@ -104,9 +105,13 @@ export const handleSubmitAddress = async (
       fetchAddresses(setAddresses, setUserAddress, setShowForm);
     } else {
       console.error("Adres kaydedilemedi:", response.data);
+      useToastStore.getState().showToast("Hesabınıza adres eklendi", "success");
     }
   } catch (error) {
     console.error("Adres gönderilirken hata oluştu:", error);
+    useToastStore
+      .getState()
+      .showToast("Adres oluşturulamadı Alanları kontrol ediniz", "error");
   }
 };
 

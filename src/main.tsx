@@ -19,7 +19,6 @@ import { allProductLoader } from "./routes/pages/Products/loader";
 import { ProductDetailLoader } from "./routes/pages/ProductDetail/ProductDetailLoader";
 import React from "react";
 
-
 const LazyProductPage = React.lazy(
   () => import("./routes/pages/Products/Products")
 );

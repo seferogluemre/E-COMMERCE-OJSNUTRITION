@@ -139,17 +139,18 @@ function Addresses() {
 
   const handleEditClick = (address: UserAddress) => {
     setEditingAddress(address);
-    setSelectedCity(address.region.name);
+    setSelectedCity(address.city);
     setFormData({
       title: address.title,
       first_name: address.first_name,
       last_name: address.last_name,
       full_address: address.full_address,
-      city: address.region.name,
-      district: address.subregion.name,
+      city: address.city,
+      district: address.district,
       phone_number: address.phone_number,
       id: address.id,
     });
+    console.log(address);
     setShowEditModal(true);
   };
 
@@ -179,12 +180,14 @@ function Addresses() {
       <h3 className="mb-4">Adreslerim</h3>
       {showForm ? (
         <Form onSubmit={handleSubmit}>
-          {
-            showAlert ? <Alert variant="success">
+          {showAlert ? (
+            <Alert variant="success">
               <Alert.Heading>Adres Bulunamadı</Alert.Heading>
               <p>Kayıtlı adresiniz bulunamadı. Lütfen yeni adres ekleyiniz.</p>
-            </Alert> : ""
-          }
+            </Alert>
+          ) : (
+            ""
+          )}
           <Form.Group controlId="formTitle">
             <Form.Label>*Adres Başlığı</Form.Label>
             <Form.Control
@@ -198,7 +201,7 @@ function Addresses() {
             <Form.Label>*Ad</Form.Label>
             <Form.Control
               type="text"
-              name="firstName"
+              name="first_name"
               onChange={handleInputChange}
               required
             />
@@ -207,7 +210,7 @@ function Addresses() {
             <Form.Label>*Soyad</Form.Label>
             <Form.Control
               type="text"
-              name="lastName"
+              name="last_name"
               onChange={handleInputChange}
               required
             />
@@ -217,7 +220,7 @@ function Addresses() {
             <Form.Label>*Adres</Form.Label>
             <Form.Control
               type="text"
-              name="address"
+              name="full_address"
               onChange={handleInputChange}
               required
             />
@@ -259,7 +262,7 @@ function Addresses() {
             <Form.Label>*Telefon</Form.Label>
             <Form.Control
               type="tel"
-              name="phone"
+              name="phone_number"
               pattern="[0-9]{10,11}"
               placeholder="05XXXXXXXXX"
               onChange={handleInputChange}
@@ -322,8 +325,8 @@ function Addresses() {
               className="w-100 h-100 d-flex flex-column align-items-center justify-content-center"
               style={{ minHeight: "200px" }}
               onClick={() => {
-                setShowAlert(false)
-                setShowForm(true)
+                setShowAlert(false);
+                setShowForm(true);
               }}
             >
               <span>Yeni Adres Ekle</span>

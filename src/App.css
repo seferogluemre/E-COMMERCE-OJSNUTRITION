@@ -1,6 +1,6 @@
 * {
   font-family: "Inter", serif !important;
-  font-size: 16 .5px !important;
+  font-size: 16 0.5px !important;
   font-weight: 520 !important;
   font-optical-sizing: auto !important;
 }
@@ -9,4 +9,9 @@
   margin: 0px;
   padding: 0px;
   overflow-x: hidden !important;
+}
+
+.star {
+  width: 25px;
+  height: 25px;
 }
