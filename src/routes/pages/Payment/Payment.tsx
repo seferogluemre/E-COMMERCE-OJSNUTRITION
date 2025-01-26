@@ -10,7 +10,7 @@ import {
 } from "../../../services/api/collections/Addresses";
 import { createAxiosInstance } from "../../../services/api/axios";
 import { PHOTO_URL } from "../Products/components/types";
-import { CartItem, useCartStore } from "../../../store/products/Cart";
+import { useCartStore } from "../../../store/products/Cart";
 
 function Payment() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -18,7 +18,7 @@ function Payment() {
     null
   );
   const [userAddresses, setUserAddresses] = useState<UserAddress[]>([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [cities, setCities] = useState<City[]>([]);
   const [districts, setDistricts] = useState<District[]>([]);
   const [selectedCity, setSelectedCity] = useState<string>("");
@@ -110,7 +110,7 @@ function Payment() {
   }, [selectedCity]);
 
   const totalAmount = cartItems.reduce(
-    (sum, item) => sum + item.price * (item.quantity || 1),
+    (sum, item) => sum + item.price * (item.pieces || 1),
     0
   );
 
@@ -475,7 +475,7 @@ function Payment() {
                         <div>
                           <div>{item.name}</div>
                           <small className="text-muted">
-                            {item.quantity} adet x {item.price} TL
+                            {item.pieces} adet x {item.price} TL
                           </small>
                         </div>
                       </div>

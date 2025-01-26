@@ -1,4 +1,4 @@
-import { Form, Button, Modal } from "react-bootstrap";
+import { Form, Button, Modal, Dropdown } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import {
   getUserData,
@@ -8,6 +8,22 @@ import {
   ChangePasswordData,
 } from "../../../../services/api/collections/auth";
 import { useToastStore } from "../../../../store/toast/ToastStore";
+import { BASE_URL } from "../../../../routes/pages/Products/components/types";
+
+interface Country {
+  id: number;
+  name: string;
+}
+
+interface CountriesResponse {
+  status: string;
+  data: {
+    count: number;
+    next: string | null;
+    previous: string | null;
+    results: Country[];
+  };
+}
 
 function AccountInfo() {
   const [userData, setUserData] = useState<User>({
@@ -21,6 +37,11 @@ function AccountInfo() {
     old_password: "",
     password: "",
     password2: "",
+  });
+  const [countries, setCountries] = useState<Country[]>([]);
+  const [selectedCountry, setSelectedCountry] = useState<Country>({
+    id: 223,
+    name: "Turkey",
   });
 
   useEffect(() => {
@@ -36,6 +57,24 @@ function AccountInfo() {
       }
     };
     fetchUserData();
+
+    const fetchCountries = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}/world/countries?limit=260`);
+        const data: CountriesResponse = await response.json();
+        if (data.status === "success" && Array.isArray(data.data.results)) {
+          setCountries(data.data.results);
+        } else {
+          console.error("Invalid countries data format:", data);
+          setCountries([]);
+        }
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+        setCountries([]);
+      }
+    };
+
+    fetchCountries();
   }, []);
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -64,6 +103,25 @@ function AccountInfo() {
     } catch (error) {
       console.error("Error changing password:", error);
     }
+  };
+
+  const handleCountrySelect = (country: Country) => {
+    setSelectedCountry(country);
+  };
+
+  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Remove any non-digit characters from input
+    let phoneNumber = e.target.value.replace(/\D/g, "");
+
+    // Remove country code if user accidentally types it
+    if (phoneNumber.startsWith("90")) {
+      phoneNumber = phoneNumber.slice(2);
+    }
+
+    // Limit the length to 10 digits (standard phone number length without country code)
+    phoneNumber = phoneNumber.slice(0, 10);
+
+    setUserData({ ...userData, phone_number: phoneNumber });
   };
 
   return (
@@ -97,17 +155,37 @@ function AccountInfo() {
         <Form.Group className="mb-3">
           <Form.Label>Telefon</Form.Label>
           <div className="input-group">
-            <span className="input-group-text">
-              <img src="https://flagcdn.com/w20/tr.png" alt="TR" width="20" />
-              +90
-            </span>
+            <Dropdown>
+              <Dropdown.Toggle
+                variant="light"
+                id="country-dropdown"
+                className="d-flex align-items-center"
+              >
+                +90 {selectedCountry.name}
+              </Dropdown.Toggle>
+              <Dropdown.Menu style={{ maxHeight: "200px", overflow: "auto" }}>
+                {Array.isArray(countries) && countries.length > 0 ? (
+                  countries.map((country) => (
+                    <Dropdown.Item
+                      key={country.id}
+                      onClick={() => handleCountrySelect(country)}
+                      className="d-flex align-items-center"
+                    >
+                      {country.name}
+                    </Dropdown.Item>
+                  ))
+                ) : (
+                  <Dropdown.Item disabled>Yükleniyor...</Dropdown.Item>
+                )}
+              </Dropdown.Menu>
+            </Dropdown>
             <Form.Control
               type="tel"
               name="phone_number"
               value={userData.phone_number || ""}
-              onChange={(e) =>
-                setUserData({ ...userData, phone_number: e.target.value })
-              }
+              onChange={handlePhoneNumberChange}
+              placeholder="5XX XXX XX XX"
+              maxLength={10}
             />
           </div>
         </Form.Group>
