@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from "react";
-
 import {
   fetchAddresses,
   UserAddress,
   City,
   District,
+  updateUserAddress,
+  handleSubmitAddress,
 } from "../../../services/api/collections/Addresses";
 import { createAxiosInstance } from "../../../services/api/axios";
 import { PHOTO_URL } from "../Products/components/types";
 import { useCartStore } from "../../../store/products/Cart";
 import { getAuthUser } from "../../../services/api/collections/storage";
-import { Card, Container, Row, Col, Form, Button, Image } from 'react-bootstrap';
-import { BiCheckCircle, BiMapPin, BiPlus } from "react-icons/bi";
+import { Card, Container, Row, Col, Form, Button, Image, InputGroup } from 'react-bootstrap';
+import { BiCheckCircle, BiMapPin, BiPlus, BiCheck } from "react-icons/bi";
 import { BsTruck } from "react-icons/bs";
+import "./Payment.scss";
 
 function Payment() {
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState<number>(1);
   const [selectedAddress, setSelectedAddress] = useState<UserAddress | null>(
     null
   );
@@ -34,6 +36,10 @@ function Payment() {
     phone_number: "",
   });
   const cartItems = useCartStore((state) => state.items);
+  const [editingAddress, setEditingAddress] = useState<UserAddress | null>(null);
+  const [showNewAddressForm, setShowNewAddressForm] = useState<boolean>(false);
+  const [newlyAddedAddressId, setNewlyAddedAddressId] = useState<string | null>(null);
+  const [paymentMethod, setPaymentMethod] = useState<string>("");
 
   useEffect(() => {
     // Check if user is logged in
@@ -150,21 +156,98 @@ function Payment() {
     }));
   };
 
+  const handleEditAddress = (address: UserAddress) => {
+    setEditingAddress(address);
+    setFormData({
+      title: address.title,
+      first_name: address.first_name,
+      last_name: address.last_name,
+      address: address.full_address,
+      city: address.city,
+      district: address.district,
+      phone_number: address.phone_number,
+    });
+    setSelectedCity(address.city);
+  };
+
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Adresi localStorage'a kaydet
-    const addressData = {
-      ...formData,
-      full_address: formData.full_address,
-      first_name: formData.first_name,
-      last_name: formData.last_name,
-      phone_number: formData.phone_number,
-    };
+    if (editingAddress) {
+      // Update existing address
+      try {
+        const updatedAddress = {
+          ...editingAddress,
+          title: formData.title,
+          first_name: formData.first_name,
+          last_name: formData.last_name,
+          full_address: formData.address,
+          city: formData.city,
+          district: formData.district,
+          phone_number: formData.phone_number,
+        };
 
-    localStorage.setItem("guestAddress", JSON.stringify(addressData));
-    setSelectedAddress(addressData);
-    setActiveStep(2);
+        await updateUserAddress(updatedAddress);
+        await fetchUserAddresses();
+        setEditingAddress(null);
+      } catch (error) {
+        console.error("Error updating address:", error);
+      }
+    } else {
+      // Adresi localStorage'a kaydet
+      const addressData = {
+        ...formData,
+        full_address: formData.address,
+        first_name: formData.first_name,
+        last_name: formData.last_name,
+        phone_number: formData.phone_number,
+      };
+
+      localStorage.setItem("guestAddress", JSON.stringify(addressData));
+      setSelectedAddress(addressData);
+      setActiveStep(2);
+    }
+  };
+
+  const handleNewAddressClick = () => {
+    setShowNewAddressForm(true);
+    setFormData({
+      title: "",
+      first_name: "",
+      last_name: "",
+      address: "",
+      city: "",
+      district: "",
+      phone_number: "",
+    });
+  };
+
+  const handleNewAddressSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const addressData = {
+        ...formData,
+        full_address: formData.address,
+      };
+
+      await handleSubmitAddress(
+        addressData,
+        cities,
+        districts,
+        setShowNewAddressForm,
+        fetchUserAddresses
+      );
+
+      // Adres listesini yenile ve yeni eklenen adresi işaretle
+      const updatedAddresses = await fetchUserAddresses();
+      if (updatedAddresses && updatedAddresses.length > 0) {
+        setNewlyAddedAddressId(updatedAddresses[0].id);
+        setTimeout(() => setNewlyAddedAddressId(null), 5000);
+      }
+      setShowNewAddressForm(false);
+    } catch (error) {
+      console.error("Error adding new address:", error);
+    }
   };
 
   const user = JSON.parse(getAuthUser() || "{}");
@@ -173,35 +256,268 @@ function Payment() {
     <div>
       {isLoggedIn ? (
         <>
-          {userAddresses.map((address) => (
-            <Card
-              key={address.id}
-              className={`mb-3 cursor-pointer ${
-                selectedAddress?.id === address.id ? 'border-primary bg-light' : ''
-              }`}
-              onClick={() => handleAddressSelect(address)}
-            >
-              <Card.Body>
-                <div className="d-flex justify-content-between align-items-center">
-                  <div className="d-flex align-items-center gap-2">
-                    <BiMapPin className="text-secondary" size={20} />
-                    <span className="text-danger fw-medium">{address.title}</span>
-                  </div>
-                  {selectedAddress?.id === address.id && <BiCheckCircle className="text-primary" size={20} />}
-                </div>
-                <div className="mt-2 text-secondary">
-                  <p className="fw-medium mb-1">{address.first_name} {address.last_name}</p>
-                  <p className="mb-1">{address.full_address}</p>
-                  <p className="mb-1">{address.city} / {address.district}</p>
-                  <p className="text-primary mb-0">{address.phone_number}</p>
-                </div>
-              </Card.Body>
-            </Card>
-          ))}
-          <Button variant="link" className="text-primary p-0 d-flex align-items-center gap-2">
-            <BiPlus size={16} />
-            <span>Yeni Adres Ekle</span>
-          </Button>
+          {!editingAddress && !showNewAddressForm ? (
+            // Show address list
+            <>
+              {userAddresses.map((address) => (
+                <Card
+                  key={address.id}
+                  className={`mb-3 cursor-pointer ${selectedAddress?.id === address.id ? 'border-primary bg-light' : ''
+                    }`}
+                  onClick={() => handleAddressSelect(address)}
+                >
+                  <Card.Body>
+                    <div className="d-flex justify-content-between align-items-center">
+                      <div className="d-flex align-items-center gap-2">
+                        <BiMapPin className="text-secondary" size={20} />
+                        <span className="text-danger fw-medium">{address.title}</span>
+                      </div>
+                      <div className="d-flex align-items-center gap-2">
+                        {newlyAddedAddressId === address.id && (
+                          <div className="d-flex align-items-center text-success">
+                            <BiCheck size={20} />
+                            <small>Yeni Eklendi</small>
+                          </div>
+                        )}
+                        {selectedAddress?.id === address.id && (
+                          <BiCheckCircle className="text-primary" size={20} />
+                        )}
+                        <Button
+                          variant="link"
+                          className="p-0 text-primary"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleEditAddress(address);
+                          }}
+                        >
+                          Adresi Düzenle
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="mt-2 text-secondary">
+                      <p className="fw-medium mb-1">{address.first_name} {address.last_name}</p>
+                      <p className="mb-1">{address.full_address}</p>
+                      <p className="mb-1">{address.city} / {address.district}</p>
+                      <p className="text-primary mb-0">{address.phone_number}</p>
+                    </div>
+                  </Card.Body>
+                </Card>
+              ))}
+              <Button
+                variant="link"
+                className="text-primary p-0 d-flex align-items-center gap-2"
+                onClick={handleNewAddressClick}
+              >
+                <BiPlus size={16} />
+                <span>Yeni Adres Ekle</span>
+              </Button>
+            </>
+          ) : showNewAddressForm ? (
+            // Show new address form
+            <Form onSubmit={handleNewAddressSubmit}>
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <h5 className="mb-0">Yeni Adres Ekle</h5>
+                <Button
+                  variant="link"
+                  className="text-secondary p-0"
+                  onClick={() => setShowNewAddressForm(false)}
+                >
+                  Vazgeç
+                </Button>
+              </div>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Adres Başlığı *</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleInputChange}
+                  required
+                />
+              </Form.Group>
+
+              <Row className="mb-3">
+                <Col md={6}>
+                  <Form.Group>
+                    <Form.Label>Ad *</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="first_name"
+                      value={formData.first_name}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group>
+                    <Form.Label>Soyad *</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="last_name"
+                      value={formData.last_name}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Telefon Numarası</Form.Label>
+                <InputGroup>
+                  <InputGroup.Text>
+                    <Image src="/tr-flag.png" width={20} height={15} alt="TR" />
+                    +90
+                  </InputGroup.Text>
+                  <Form.Control
+                    type="tel"
+                    name="phone_number"
+                    value={formData.phone_number}
+                    onChange={handleInputChange}
+                    placeholder="5XX XXX XX XX"
+                    required
+                  />
+                </InputGroup>
+              </Form.Group>
+
+              <Row className="mb-3">
+                <Col md={6}>
+                  <Form.Group>
+                    <Form.Label>İl *</Form.Label>
+                    <Form.Select
+                      name="city"
+                      value={selectedCity}
+                      onChange={handleCityChange}
+                      required
+                    >
+                      <option value="">İl Seçiniz</option>
+                      {cities.map((city) => (
+                        <option key={city.id} value={city.name}>
+                          {city.name}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group>
+                    <Form.Label>İlçe *</Form.Label>
+                    <Form.Select
+                      name="district"
+                      value={formData.district}
+                      onChange={handleDistrictChange}
+                      required
+                    >
+                      <option value="">İlçe Seçiniz</option>
+                      {districts.map((district) => (
+                        <option key={district.id} value={district.name}>
+                          {district.name}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+              </Row>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Tam Adres *</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  name="address"
+                  value={formData.address}
+                  onChange={handleInputChange}
+                  required
+                />
+              </Form.Group>
+
+              <Button type="submit" variant="primary" className="w-100">
+                Adresi Kaydet
+              </Button>
+            </Form>
+          ) : (
+            // Show edit form when editing
+            <Form onSubmit={handleFormSubmit}>
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <h5 className="mb-0">Adres Düzenle</h5>
+                <Button
+                  variant="link"
+                  className="text-secondary p-0"
+                  onClick={() => setEditingAddress(null)}
+                >
+                  Vazgeç
+                </Button>
+              </div>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Adres Başlığı</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleInputChange}
+                  required
+                />
+              </Form.Group>
+
+              <Row className="mb-3">
+                <Col md={6}>
+                  <Form.Group>
+                    <Form.Label>Ad</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="first_name"
+                      value={formData.first_name}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group>
+                    <Form.Label>Soyad</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="last_name"
+                      value={formData.last_name}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Telefon Numarası</Form.Label>
+                <Form.Control
+                  type="tel"
+                  name="phone_number"
+                  value={formData.phone_number}
+                  placeholder="05XXXXXXXXX"
+                  onChange={handleInputChange}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Tam Adres</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  name="address"
+                  value={formData.address}
+                  onChange={handleInputChange}
+                  required
+                />
+              </Form.Group>
+
+              <Button type="submit" variant="primary" className="w-100">
+                Kaydet
+              </Button>
+            </Form>
+          )}
         </>
       ) : (
         <Form onSubmit={handleFormSubmit}>
@@ -324,52 +640,146 @@ function Payment() {
   };
 
   const renderPaymentStep = () => (
-    <Form className="mt-4">
-      <Form.Group className="mb-3">
-        <Form.Label>Kart Üzerindeki İsim</Form.Label>
-        <Form.Control type="text" required />
-      </Form.Group>
+    <div className="mt-4">
+      {/* Payment Method Selection */}
+      <div className="mb-4">
+        <div className="payment-option mb-2">
+          <Form.Check
+            type="radio"
+            id="credit-card"
+            name="payment-method"
+            label="Kredi Kartı"
+            checked={paymentMethod === 'credit-card'}
+            onChange={() => setPaymentMethod('credit-card')}
+            className="p-3 border rounded"
+          />
+        </div>
+        
+        <div className="payment-option mb-2">
+          <Form.Check
+            type="radio"
+            id="cash-on-delivery"
+            name="payment-method"
+            label={
+              <div className="d-flex justify-content-between w-100">
+                <span>Kapıda Ödeme (Nakit)</span>
+                <span className="text-muted">39 TL işlem bedeli</span>
+              </div>
+            }
+            checked={paymentMethod === 'cash'}
+            onChange={() => setPaymentMethod('cash')}
+            className="p-3 border rounded"
+          />
+        </div>
 
-      <Form.Group className="mb-3">
-        <Form.Label>Kart Numarası</Form.Label>
-        <Form.Control
-          type="text"
-          maxLength={16}
-          placeholder="0000 0000 0000 0000"
-          required
+        <div className="payment-option mb-4">
+          <Form.Check
+            type="radio"
+            id="card-on-delivery"
+            name="payment-method"
+            label={
+              <div className="d-flex justify-content-between w-100">
+                <span>Kapıda Ödeme (KK)</span>
+                <span className="text-muted">45 TL işlem bedeli</span>
+              </div>
+            }
+            checked={paymentMethod === 'card-on-delivery'}
+            onChange={() => setPaymentMethod('card-on-delivery')}
+            className="p-3 border rounded"
+          />
+        </div>
+
+        {/* Credit Card Form */}
+        {paymentMethod === 'credit-card' && (
+          <Form className="mt-4">
+            <Form.Group className="mb-3">
+              <Form.Label>Kart Üzerindeki İsim</Form.Label>
+              <Form.Control type="text" required />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Kart Numarası</Form.Label>
+              <Form.Control
+                type="text"
+                maxLength={16}
+                placeholder="0000 0000 0000 0000"
+                required
+              />
+            </Form.Group>
+
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Son Kullanma Tarihi</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="AA/YY"
+                    maxLength={5}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>CVV</Form.Label>
+                  <Form.Control
+                    type="text"
+                    maxLength={3}
+                    placeholder="000"
+                    required
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+          </Form>
+        )}
+
+        {/* Additional Options */}
+        <Form.Check
+          type="checkbox"
+          id="same-address"
+          label="Fatura adresim teslimat adresimle aynı."
+          className="mb-2"
         />
-      </Form.Group>
 
-      <Row className="mb-3">
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>Son Kullanma Tarihi</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="AA/YY"
-              maxLength={5}
-              required
-            />
-          </Form.Group>
-        </Col>
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>CVV</Form.Label>
-            <Form.Control
-              type="text"
-              maxLength={3}
-              placeholder="000"
-              required
-            />
-          </Form.Group>
-        </Col>
-      </Row>
-    </Form>
+        <Form.Check
+          type="checkbox"
+          id="terms"
+          label={
+            <span>
+              <a href="#" className="text-success">Gizlilik sözleşmemi</a> ve{' '}
+              <a href="#" className="text-success">Satış sözleşmemi</a> okudum, onaylıyorum.
+            </span>
+          }
+          className="mb-4"
+        />
+
+        <Button variant="dark" className="w-100 py-2">
+          Ödeme Yap
+        </Button>
+
+        <div className="text-center mt-3 text-muted">
+          <small>
+            <i className="bi bi-lock-fill me-1"></i>
+            Ödemeler güvenli ve şifrelidir.
+          </small>
+        </div>
+      </div>
+    </div>
   );
 
   return (
     <div className="min-vh-100 bg-light py-4">
       <Container>
+        <div className="row d-flex justify-content-between align-items-center mb-3">
+          <div className="col">
+            <img src="/assets/Logo1.png" width={200} height={200} alt="Logo" className="img-fluid" />
+          </div>
+          <div className="col">
+            <p className="mb-0">{user.first_name} {user.last_name}</p>
+            <p>{user.email}</p>
+          </div>
+        </div>
         <Row className="g-4">
           {/* Sol Kolon - Ödeme Adımları */}
           <Col lg={8}>
@@ -377,13 +787,12 @@ function Payment() {
               <Card.Body>
                 {/* Adres Adımı */}
                 <div className="mb-4">
-                  <div 
+                  <div
                     className="d-flex align-items-center gap-3 cursor-pointer"
                     onClick={() => activeStep > 1 && setActiveStep(1)}
                   >
-                    <div className={`rounded-circle d-flex align-items-center justify-content-center ${
-                      activeStep >= 1 ? 'bg-primary text-white' : 'bg-secondary'
-                    }`} style={{ width: '32px', height: '32px' }}>
+                    <div className={`rounded-circle d-flex align-items-center justify-content-center ${activeStep >= 1 ? 'bg-primary text-white' : 'bg-secondary'
+                      }`} style={{ width: '32px', height: '32px' }}>
                       1
                     </div>
                     <h5 className="mb-0">Adres</h5>
@@ -393,13 +802,12 @@ function Payment() {
 
                 {/* Kargo Adımı */}
                 <div className="mb-4">
-                  <div 
+                  <div
                     className="d-flex align-items-center gap-3 cursor-pointer"
                     onClick={() => activeStep > 2 && setActiveStep(2)}
                   >
-                    <div className={`rounded-circle d-flex align-items-center justify-content-center ${
-                      activeStep >= 2 ? 'bg-primary text-white' : 'bg-secondary'
-                    }`} style={{ width: '32px', height: '32px' }}>
+                    <div className={`rounded-circle d-flex align-items-center justify-content-center ${activeStep >= 2 ? 'bg-primary text-white' : 'bg-secondary'
+                      }`} style={{ width: '32px', height: '32px' }}>
                       2
                     </div>
                     <h5 className="mb-0">Kargo</h5>
@@ -409,13 +817,12 @@ function Payment() {
 
                 {/* Ödeme Adımı */}
                 <div>
-                  <div 
+                  <div
                     className="d-flex align-items-center gap-3 cursor-pointer"
                     onClick={() => activeStep > 3 && setActiveStep(3)}
                   >
-                    <div className={`rounded-circle d-flex align-items-center justify-content-center ${
-                      activeStep === 3 ? 'bg-primary text-white' : 'bg-secondary'
-                    }`} style={{ width: '32px', height: '32px' }}>
+                    <div className={`rounded-circle d-flex align-items-center justify-content-center ${activeStep === 3 ? 'bg-primary text-white' : 'bg-secondary'
+                      }`} style={{ width: '32px', height: '32px' }}>
                       3
                     </div>
                     <h5 className="mb-0">Ödeme</h5>

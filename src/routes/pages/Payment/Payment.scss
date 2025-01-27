@@ -1,0 +1,14 @@
+.payment-option {
+  .form-check {
+    margin: 0;
+
+    &-input {
+      margin-top: 0.5rem;
+    }
+
+    &-label {
+      width: 100%;
+      padding-left: 0.5rem;
+    }
+  }
+}
