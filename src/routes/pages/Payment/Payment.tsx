@@ -317,7 +317,7 @@ function Payment() {
   const renderSuccessScreen = () => (
     <div className="text-center py-5">
       <div className="mb-4">
-        <img src="/assets/success_checkmark.gif" alt="Success" className="mb-3" style={{ width: '64px' }} />
+        <img src="/assets/succes_checkmark.gif" alt="Success" className="mb-3" width={100} height={100} />
         <h4 className="text-success">Ödemeniz başarıyla alındı.</h4>
         <p className="text-muted">websitesimiz.com'a yönlendiriliyorsunuz...</p>
       </div>
