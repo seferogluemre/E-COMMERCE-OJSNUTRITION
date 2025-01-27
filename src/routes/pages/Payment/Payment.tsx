@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BiCreditCard } from "react-icons/bi";
-import { BsTruck } from "react-icons/bs";
-import { IoMap } from "react-icons/io5";
+
 import {
   fetchAddresses,
   UserAddress,
@@ -11,9 +9,13 @@ import {
 import { createAxiosInstance } from "../../../services/api/axios";
 import { PHOTO_URL } from "../Products/components/types";
 import { useCartStore } from "../../../store/products/Cart";
+import { getAuthUser } from "../../../services/api/collections/storage";
+import { Card, Container, Row, Col, Form, Button, Image } from 'react-bootstrap';
+import { BiCheckCircle, BiMapPin, BiPlus } from "react-icons/bi";
+import { BsTruck } from "react-icons/bs";
 
 function Payment() {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(1);
   const [selectedAddress, setSelectedAddress] = useState<UserAddress | null>(
     null
   );
@@ -58,7 +60,7 @@ function Payment() {
       await fetchAddresses(
         setUserAddresses,
         (address) => setSelectedAddress(address),
-        () => {}
+        () => { }
       );
     } catch (error) {
       console.error("Error fetching user addresses:", error);
@@ -120,7 +122,7 @@ function Payment() {
 
   const handleContinue = () => {
     if (selectedAddress) {
-      setCurrentStep(currentStep + 1);
+      setActiveStep(activeStep + 1);
     }
   };
 
@@ -162,336 +164,333 @@ function Payment() {
 
     localStorage.setItem("guestAddress", JSON.stringify(addressData));
     setSelectedAddress(addressData);
-    setCurrentStep(2);
+    setActiveStep(2);
   };
 
+  const user = JSON.parse(getAuthUser() || "{}");
+
+  const renderAddressStep = () => (
+    <div>
+      {isLoggedIn ? (
+        <>
+          {userAddresses.map((address) => (
+            <Card
+              key={address.id}
+              className={`mb-3 cursor-pointer ${
+                selectedAddress?.id === address.id ? 'border-primary bg-light' : ''
+              }`}
+              onClick={() => handleAddressSelect(address)}
+            >
+              <Card.Body>
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="d-flex align-items-center gap-2">
+                    <BiMapPin className="text-secondary" size={20} />
+                    <span className="text-danger fw-medium">{address.title}</span>
+                  </div>
+                  {selectedAddress?.id === address.id && <BiCheckCircle className="text-primary" size={20} />}
+                </div>
+                <div className="mt-2 text-secondary">
+                  <p className="fw-medium mb-1">{address.first_name} {address.last_name}</p>
+                  <p className="mb-1">{address.full_address}</p>
+                  <p className="mb-1">{address.city} / {address.district}</p>
+                  <p className="text-primary mb-0">{address.phone_number}</p>
+                </div>
+              </Card.Body>
+            </Card>
+          ))}
+          <Button variant="link" className="text-primary p-0 d-flex align-items-center gap-2">
+            <BiPlus size={16} />
+            <span>Yeni Adres Ekle</span>
+          </Button>
+        </>
+      ) : (
+        <Form onSubmit={handleFormSubmit}>
+          <Form.Group className="mb-3">
+            <Form.Label>Adres Başlığı</Form.Label>
+            <Form.Control
+              type="text"
+              name="title"
+              onChange={handleInputChange}
+              required
+            />
+          </Form.Group>
+
+          <Row className="mb-3">
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label>Ad</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="first_name"
+                  onChange={handleInputChange}
+                  required
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label>Soyad</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="last_name"
+                  onChange={handleInputChange}
+                  required
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Telefon Numarası</Form.Label>
+            <Form.Control
+              type="tel"
+              name="phone_number"
+              pattern="[0-9]{10,11}"
+              placeholder="05XXXXXXXXX"
+              onChange={handleInputChange}
+              required
+            />
+          </Form.Group>
+
+          <Row className="mb-3">
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label>Şehir</Form.Label>
+                <Form.Select
+                  name="city"
+                  value={formData.city}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Şehir Seçiniz</option>
+                  {/* Add your cities here */}
+                </Form.Select>
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label>İlçe</Form.Label>
+                <Form.Select
+                  name="district"
+                  value={formData.district}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">İlçe Seçiniz</option>
+                  {/* Add your districts here */}
+                </Form.Select>
+              </Form.Group>
+            </Col>
+          </Row>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Tam Adres</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              name="address"
+              onChange={handleInputChange}
+              required
+            />
+          </Form.Group>
+
+          <Button type="submit" variant="primary" className="w-100">
+            Adresi Kaydet ve Devam Et
+          </Button>
+        </Form>
+      )}
+    </div>
+  );
+
+  const renderShippingStep = () => {
+    if (!selectedAddress) return null;
+    return (
+      <Card className="mt-4">
+        <Card.Body>
+          <div className="d-flex align-items-center gap-2 mb-3">
+            <BsTruck className="text-secondary" size={20} />
+            <h5 className="mb-0">Teslimat Adresi</h5>
+          </div>
+          <div>
+            <p className="text-danger fw-medium mb-1">{selectedAddress.title}</p>
+            <p className="mb-1">{selectedAddress.first_name} {selectedAddress.last_name}</p>
+            <p className="text-secondary mb-1">{selectedAddress.full_address}</p>
+            <p className="text-secondary mb-1">{selectedAddress.city} / {selectedAddress.district}</p>
+            <p className="text-primary mb-0">{selectedAddress.phone_number}</p>
+          </div>
+        </Card.Body>
+      </Card>
+    );
+  };
+
+  const renderPaymentStep = () => (
+    <Form className="mt-4">
+      <Form.Group className="mb-3">
+        <Form.Label>Kart Üzerindeki İsim</Form.Label>
+        <Form.Control type="text" required />
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <Form.Label>Kart Numarası</Form.Label>
+        <Form.Control
+          type="text"
+          maxLength={16}
+          placeholder="0000 0000 0000 0000"
+          required
+        />
+      </Form.Group>
+
+      <Row className="mb-3">
+        <Col md={6}>
+          <Form.Group>
+            <Form.Label>Son Kullanma Tarihi</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="AA/YY"
+              maxLength={5}
+              required
+            />
+          </Form.Group>
+        </Col>
+        <Col md={6}>
+          <Form.Group>
+            <Form.Label>CVV</Form.Label>
+            <Form.Control
+              type="text"
+              maxLength={3}
+              placeholder="000"
+              required
+            />
+          </Form.Group>
+        </Col>
+      </Row>
+    </Form>
+  );
+
   return (
-    <div className="container mt-5">
-      <div className="row">
-        <div className="col-md-4">
-          <div className="d-flex flex-column gap-3 mb-4">
-            <div
-              className={`step p-3 rounded ${
-                currentStep >= 1 ? "bg-dark text-white" : "bg-light"
-              }`}
-              style={{ cursor: "pointer" }}
-              onClick={() => currentStep > 1 && setCurrentStep(1)}
-            >
-              <IoMap size={24} className="mb-2" />
-              <div>Adres</div>
-            </div>
-            <div
-              className={`step p-3 rounded ${
-                currentStep >= 2 ? "bg-dark text-white" : "bg-light"
-              }`}
-              style={{ cursor: "pointer" }}
-              onClick={() => currentStep > 2 && setCurrentStep(2)}
-            >
-              <BsTruck size={24} className="mb-2" />
-              <div>Kargo</div>
-            </div>
-            <div
-              className={`step p-3 rounded ${
-                currentStep >= 3 ? "bg-dark text-white" : "bg-light"
-              }`}
-              style={{ cursor: "pointer" }}
-              onClick={() => currentStep > 3 && setCurrentStep(3)}
-            >
-              <BiCreditCard size={24} className="mb-2" />
-              <div>Ödeme</div>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-md-8">
-          <div className="row">
-            <div className="col-md-8">
-              {currentStep === 1 && (
-                <div className="card">
-                  <div className="card-body">
-                    <h5 className="card-title">Teslimat Adresi</h5>
-                    {isLoggedIn ? (
-                      <div className="user-addresses">
-                        {userAddresses.map((address) => (
-                          <div
-                            key={address.id}
-                            className={`saved-address p-3 border rounded mb-3 ${
-                              selectedAddress?.id === address.id
-                                ? "border-primary"
-                                : ""
-                            }`}
-                            onClick={() => handleAddressSelect(address)}
-                            style={{ cursor: "pointer" }}
-                          >
-                            <h5 className="text-danger">{address.title}</h5>
-                            <p className="mb-0">
-                              {address.first_name} {address.last_name}
-                            </p>
-                            <p className="my-2">{address.full_address}</p>
-                            <div className="address-info">
-                              <p className="mb-0">
-                                {address.city} {address.district}
-                              </p>
-                            </div>
-                            <p className="mb-0 text-primary">
-                              {address.phone_number}
-                            </p>
-                          </div>
-                        ))}
-                        {selectedAddress && (
-                          <button
-                            className="btn btn-dark w-100"
-                            onClick={() => setCurrentStep(2)}
-                          >
-                            Kargo ile Devam Et
-                          </button>
-                        )}
-                      </div>
-                    ) : (
-                      <div className="address-form">
-                        <h6>Misafir Kullanıcı - Adres Bilgileri</h6>
-                        <form onSubmit={handleFormSubmit}>
-                          <div className="mb-3">
-                            <label className="form-label">Adres Başlığı</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              name="title"
-                              onChange={handleInputChange}
-                              required
-                            />
-                          </div>
-                          <div className="row mb-3">
-                            <div className="col-6">
-                              <label className="form-label">Ad</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                name="first_name"
-                                onChange={handleInputChange}
-                                required
-                              />
-                            </div>
-                            <div className="col-6">
-                              <label className="form-label">Soyad</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                name="last_name"
-                                onChange={handleInputChange}
-                                required
-                              />
-                            </div>
-                          </div>
-                          <div className="mb-3">
-                            <label className="form-label">
-                              Telefon Numarası
-                            </label>
-                            <input
-                              type="tel"
-                              className="form-control"
-                              name="phone_number"
-                              pattern="[0-9]{10,11}"
-                              placeholder="05XXXXXXXXX"
-                              onChange={handleInputChange}
-                              required
-                            />
-                          </div>
-                          <div className="mb-3">
-                            <label className="form-label">Şehir</label>
-                            <select
-                              className="form-control"
-                              name="city"
-                              value={formData.city}
-                              onChange={handleCityChange}
-                              required
-                            >
-                              <option value="">Şehir Seçiniz</option>
-                              {cities.map((city) => (
-                                <option key={city.id} value={city.name}>
-                                  {city.name}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                          <div className="mb-3">
-                            <label className="form-label">İlçe</label>
-                            <select
-                              className="form-control"
-                              name="district"
-                              value={formData.district}
-                              onChange={handleDistrictChange}
-                              required
-                              disabled={!selectedCity}
-                            >
-                              <option value="">İlçe Seçiniz</option>
-                              {districts.map((district) => (
-                                <option key={district.id} value={district.name}>
-                                  {district.name}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                          <div className="mb-3">
-                            <label className="form-label">Tam Adres</label>
-                            <textarea
-                              className="form-control"
-                              rows={3}
-                              name="address"
-                              onChange={handleInputChange}
-                              required
-                            ></textarea>
-                          </div>
-                          <button type="submit" className="btn btn-dark w-100">
-                            Adresi Kaydet ve Devam Et
-                          </button>
-                        </form>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {currentStep === 2 && (
-                <div className="card">
-                  <div className="card-body">
-                    <h5 className="card-title">Kargo Bilgileri</h5>
-                    <div className="selected-address mb-4">
-                      <h6>Seçilen Adres:</h6>
-                      <p>
-                        <strong className="text-danger">
-                          {selectedAddress?.title}
-                        </strong>
-                      </p>
-                      <p>
-                        {selectedAddress?.first_name}{" "}
-                        {selectedAddress?.last_name}
-                      </p>
-                      <p>{selectedAddress?.full_address}</p>
-                      <p>
-                        {selectedAddress?.city} / {selectedAddress?.district}
-                      </p>
-                      <p className="text-primary">
-                        {selectedAddress?.phone_number}
-                      </p>
+    <div className="min-vh-100 bg-light py-4">
+      <Container>
+        <Row className="g-4">
+          {/* Sol Kolon - Ödeme Adımları */}
+          <Col lg={8}>
+            <Card>
+              <Card.Body>
+                {/* Adres Adımı */}
+                <div className="mb-4">
+                  <div 
+                    className="d-flex align-items-center gap-3 cursor-pointer"
+                    onClick={() => activeStep > 1 && setActiveStep(1)}
+                  >
+                    <div className={`rounded-circle d-flex align-items-center justify-content-center ${
+                      activeStep >= 1 ? 'bg-primary text-white' : 'bg-secondary'
+                    }`} style={{ width: '32px', height: '32px' }}>
+                      1
                     </div>
-                    <button
-                      className="btn btn-dark w-100"
-                      onClick={() => setCurrentStep(3)}
-                    >
-                      Ödemeye Geç
-                    </button>
+                    <h5 className="mb-0">Adres</h5>
                   </div>
+                  {activeStep === 1 && renderAddressStep()}
                 </div>
-              )}
 
-              {currentStep === 3 && (
-                <div className="card">
-                  <div className="card-body">
-                    <h5 className="card-title">Ödeme Bilgileri</h5>
-                    <form>
-                      <div className="mb-3">
-                        <label className="form-label">
-                          Kart Üzerindeki İsim
-                        </label>
-                        <input type="text" className="form-control" />
-                      </div>
-                      <div className="mb-3">
-                        <label className="form-label">Kart Numarası</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          maxLength={16}
-                        />
-                      </div>
-                      <div className="row mb-3">
-                        <div className="col-6">
-                          <label className="form-label">
-                            Son Kullanma Tarihi
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            placeholder="MM/YY"
-                            maxLength={5}
-                          />
-                        </div>
-                        <div className="col-6">
-                          <label className="form-label">CVV</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            maxLength={3}
-                          />
-                        </div>
-                      </div>
-                      <div className="payment-summary mb-4">
-                        <h6>Sipariş Özeti</h6>
-                        {cartItems.map((item) => (
-                          <div
-                            key={item.id}
-                            className="d-flex justify-content-between align-items-center mb-2"
-                          >
-                            <div className="d-flex align-items-center">
-                              <img
-                                src={PHOTO_URL + item.photo_src}
-                                alt={item.name}
-                                className="me-2"
-                                style={{ width: 50, height: 50 }}
-                              />
-                              <span>{item.name}</span>
-                            </div>
-                            <span>{item.price.toFixed(2)} TL</span>
-                          </div>
-                        ))}
-                        <hr />
-                        <div className="d-flex justify-content-between">
-                          <strong>Toplam</strong>
-                          <strong>{totalAmount.toFixed(2)} TL</strong>
-                        </div>
-                      </div>
-                      <button type="submit" className="btn btn-dark w-100">
-                        Ödemeyi Tamamla
-                      </button>
-                    </form>
+                {/* Kargo Adımı */}
+                <div className="mb-4">
+                  <div 
+                    className="d-flex align-items-center gap-3 cursor-pointer"
+                    onClick={() => activeStep > 2 && setActiveStep(2)}
+                  >
+                    <div className={`rounded-circle d-flex align-items-center justify-content-center ${
+                      activeStep >= 2 ? 'bg-primary text-white' : 'bg-secondary'
+                    }`} style={{ width: '32px', height: '32px' }}>
+                      2
+                    </div>
+                    <h5 className="mb-0">Kargo</h5>
                   </div>
+                  {activeStep === 2 && renderShippingStep()}
                 </div>
+
+                {/* Ödeme Adımı */}
+                <div>
+                  <div 
+                    className="d-flex align-items-center gap-3 cursor-pointer"
+                    onClick={() => activeStep > 3 && setActiveStep(3)}
+                  >
+                    <div className={`rounded-circle d-flex align-items-center justify-content-center ${
+                      activeStep === 3 ? 'bg-primary text-white' : 'bg-secondary'
+                    }`} style={{ width: '32px', height: '32px' }}>
+                      3
+                    </div>
+                    <h5 className="mb-0">Ödeme</h5>
+                  </div>
+                  {activeStep === 3 && renderPaymentStep()}
+                </div>
+              </Card.Body>
+            </Card>
+
+            {/* Navigasyon Butonları */}
+            <div className="d-flex justify-content-between mt-3">
+              {activeStep > 1 && (
+                <Button
+                  variant="outline-secondary"
+                  onClick={() => setActiveStep(activeStep - 1)}
+                >
+                  Geri
+                </Button>
+              )}
+              {activeStep < 3 && selectedAddress && (
+                <Button
+                  variant="primary"
+                  className="ms-auto"
+                  onClick={() => setActiveStep(activeStep + 1)}
+                >
+                  Devam Et
+                </Button>
+              )}
+              {activeStep === 3 && (
+                <Button variant="primary" className="ms-auto">
+                  Ödemeyi Tamamla
+                </Button>
               )}
             </div>
+          </Col>
 
-            <div className="col-md-4">
-              <div className="card">
-                <div className="card-body">
-                  <h5 className="card-title">Sepet Özeti</h5>
-                  {cartItems.map((item) => (
-                    <div key={item.id} className="mb-3">
-                      <div className="d-flex align-items-center">
-                        <img
-                          src={PHOTO_URL + item.photo_src}
-                          alt={item.name}
-                          className="me-2"
-                          style={{ width: 90, height: 90, objectFit: "cover" }}
-                        />
-                        <div>
-                          <div>{item.name}</div>
-                          <small className="text-muted">
-                            {item.pieces} adet x {item.price} TL
-                          </small>
-                        </div>
+          {/* Sağ Kolon - Sepet Özeti */}
+          <Col lg={4}>
+            <Card>
+              <Card.Body>
+                <h5 className="mb-4">Sepet Özeti</h5>
+                {cartItems.map((item) => (
+                  <div key={item.id} className="mb-3 pb-3 border-bottom">
+                    <div className="d-flex gap-3">
+                      <Image
+                        src={PHOTO_URL + item.photo_src}
+                        alt={item.name}
+                        style={{ width: '80px', height: '80px', objectFit: 'cover' }}
+                        rounded
+                      />
+                      <div>
+                        <h6 className="mb-1">{item.name}</h6>
+                        <p className="text-secondary small mb-1">{item.details}</p>
+                        <p className="text-secondary small mb-0">
+                          {item.pieces} adet x {item.price} TL
+                        </p>
                       </div>
                     </div>
-                  ))}
-                  <hr />
-                  <div className="d-flex justify-content-between">
-                    <strong>Toplam</strong>
-                    <strong>{totalAmount.toFixed(2)} TL</strong>
+                  </div>
+                ))}
+                <div className="pt-3">
+                  <div className="d-flex justify-content-between text-secondary small">
+                    <span>Ara Toplam</span>
+                    <span>{totalAmount.toFixed(2)} TL</span>
+                  </div>
+                  <div className="d-flex justify-content-between fw-bold mt-2">
+                    <span>Toplam</span>
+                    <span>{totalAmount.toFixed(2)} TL</span>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }

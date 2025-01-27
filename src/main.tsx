@@ -7,7 +7,6 @@ import {
   HomePage,
   LoginPage,
   PaymentPage,
-  ProductDetailPage,
   RootLayout,
   SSSPage,
 } from "./routes/pages/index";
@@ -28,6 +27,10 @@ const LazyProductDetailPage = React.lazy(
 );
 
 const routes = createBrowserRouter([
+  {
+    path: "/payment",
+    element: <PaymentPage />,
+  },
   {
     path: "/",
     element: <RootLayout />,
@@ -63,10 +66,6 @@ const routes = createBrowserRouter([
       {
         path: "/contact",
         element: <ContactPage />,
-      },
-      {
-        path: "/payment",
-        element: <PaymentPage />,
       },
       {
         path: "/login",

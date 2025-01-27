@@ -6,6 +6,7 @@ import { login } from "../../../../services/api/collections/auth";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Notification from "../../../../components/layout/ToastNotification/Notification";
+import { useCartStore } from "../../../../store/products/Cart";
 
 // Form verileri için interface tanımı
 interface ILoginFormInputs {
@@ -63,7 +64,7 @@ function MemberLogin() {
             timestamp: new Date().getTime(),
           })
         );
-        navigate("/");
+          navigate("/");
       } else {
         setLoginError(
           "E-posta veya şifre hatalı. Lütfen bilgilerinizi kontrol ediniz."

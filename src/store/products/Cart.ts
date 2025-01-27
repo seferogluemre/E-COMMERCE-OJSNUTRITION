@@ -80,7 +80,6 @@ export const useCartStore = create<CartStore>((set, get) => {
           pieces: item.pieces,
           photo_src: item.product_variant_detail.photo_src,
         }));
-
         set({ items: formattedItems });
       } else {
         set({ items: [] });
@@ -93,7 +92,7 @@ export const useCartStore = create<CartStore>((set, get) => {
   };
 
   // Initialize store
-  fetchUserCart(); // Call it but don't assign the Promise
+  fetchUserCart();
 
   return {
     items: [], // Start with empty array instead of Promise

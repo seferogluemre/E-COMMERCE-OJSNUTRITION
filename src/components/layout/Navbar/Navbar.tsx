@@ -35,7 +35,7 @@ import { useToastStore } from "../../../store/toast/ToastStore";
 function NavbarComp() {
   const [query, setQuery] = useState<string>("");
   const { searchProducts } = useSearchProduct((state) => state);
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState<boolean>(false);
 
   const user = getAuthUser() ? JSON.parse(getAuthUser()!) : null;
   const authenticated = isAuthenticated();
