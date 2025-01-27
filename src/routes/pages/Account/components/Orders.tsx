@@ -1,8 +1,9 @@
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Modal, Form } from "react-bootstrap";
 import { PHOTO_URL } from "../../Products/components/types";
 import { useEffect, useState } from "react";
 import { getOrderDetail, getOrders, Order, OrderDetail } from "../../../../services/api/collections/Orders";
-
+import { addProductComment } from "../../../../services/api/collections/Products";
+import { useToastStore } from "../../../../store/toast/ToastStore";
 // Interface güncellemeleri
 interface Address {
   title: string;
@@ -67,6 +68,14 @@ function Orders() {
   const [loading, setLoading] = useState(true);
   const [selectedOrder, setSelectedOrder] = useState<string | null>(null);
   const [orderDetail, setOrderDetail] = useState<OrderDetail | null>(null);
+  const [showCommentModal, setShowCommentModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<{slug: string, name: string} | null>(null);
+  const [commentForm, setCommentForm] = useState({
+    stars: 5,
+    title: '',
+    comment: ''
+  });
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -95,6 +104,51 @@ function Orders() {
       console.error("Order detail fetching failed:", error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleOpenCommentModal = (slug: string, name: string) => {
+    setSelectedProduct({ slug, name });
+    setShowCommentModal(true);
+  };
+
+  const handleCommentSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedProduct) return;
+
+    // Form validation
+    if (!commentForm.stars || !commentForm.title.trim() || !commentForm.comment.trim()) {
+      alert('Lütfen tüm alanları doldurun.');
+      return;
+    }
+
+    try {
+      setSubmitting(true);
+      const commentData = {
+        stars: Number(commentForm.stars), // Make sure stars is a number
+        title: commentForm.title.trim(),
+        comment: commentForm.comment.trim()
+      };
+
+      await addProductComment(selectedProduct.slug, commentData);
+      setShowCommentModal(false);
+      // Reset form
+      setCommentForm({ stars: 5, title: '', comment: '' });
+      useToastStore.getState().showToast( "Geri bildiriminiz için teşekkür ederiz","success");
+    } catch (error: any) {
+      console.error('Error submitting comment:', error);
+      if (error.response?.data?.reason) {
+        const errors = error.response.data.reason;
+        let errorMessage = 'Lütfen aşağıdaki hataları düzeltin:\n';
+        if (errors.stars) errorMessage += '- Yıldız seçimi zorunludur\n';
+        if (errors.title) errorMessage += '- Başlık alanı zorunludur\n';
+        if (errors.comment) errorMessage += '- Yorum alanı zorunludur\n';
+        alert(errorMessage);
+      } else {
+        alert('Yorum eklenirken bir hata oluştu.');
+      }
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -130,14 +184,24 @@ function Orders() {
             <div className="border-bottom pb-4 mb-4">
               {orderDetail.shopping_cart.items.map((item) => (
                 <div key={item.product_variant_id} className="d-flex column-gap-4 mb-3">
-                  <div>
+                  <div className="text-center">
                     <img
                       src={PHOTO_URL + item.product_variant_detail.photo_src}
-                      className="img-fluid"
+                      className="img-fluid mb-2"
                       width={100}
                       height={100}
                       alt={item.product}
                     />
+                    <div>
+                      <Button
+                        variant="link"
+                        className="p-0 text-decoration-none"
+                        onClick={() => handleOpenCommentModal(item.product_slug, item.product)}
+                      >
+                        <i className="bi bi-chat-left-text me-1"></i>
+                        Yorum Ekle
+                      </Button>
+                    </div>
                   </div>
                   <div>
                     <h6>{item.product}</h6>
@@ -186,6 +250,63 @@ function Orders() {
             )}
           </Card.Body>
         </Card>
+
+        <Modal show={showCommentModal} onHide={() => setShowCommentModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>{selectedProduct?.name} için Yorum Ekle</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form onSubmit={handleCommentSubmit}>
+              <Form.Group className="mb-3">
+                <Form.Label>Puanınız <span className="text-danger">*</span></Form.Label>
+                <div className="d-flex gap-2 mb-3">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <Button
+                      key={star}
+                      variant={commentForm.stars >= star ? 'warning' : 'outline-warning'}
+                      onClick={() => setCommentForm(prev => ({ ...prev, stars: star }))}
+                      type="button"
+                    >
+                      <i className="bi bi-star-fill"></i>
+                    </Button>
+                  ))}
+                </div>
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Başlık <span className="text-danger">*</span></Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Yorumunuz için başlık girin"
+                  value={commentForm.title}
+                  onChange={(e) => setCommentForm(prev => ({ ...prev, title: e.target.value }))}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Yorum <span className="text-danger">*</span></Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  placeholder="Ürün hakkında düşüncelerinizi yazın"
+                  value={commentForm.comment}
+                  onChange={(e) => setCommentForm(prev => ({ ...prev, comment: e.target.value }))}
+                  required
+                />
+              </Form.Group>
+
+              <div className="d-flex justify-content-end gap-2">
+                <Button variant="secondary" onClick={() => setShowCommentModal(false)}>
+                  İptal
+                </Button>
+                <Button type="submit" variant="primary" disabled={submitting}>
+                  {submitting ? 'Gönderiliyor...' : 'Gönder'}
+                </Button>
+              </div>
+            </Form>
+          </Modal.Body>
+        </Modal>
       </div>
     );
   }

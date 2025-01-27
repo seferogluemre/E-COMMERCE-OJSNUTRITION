@@ -11,21 +11,6 @@ export interface Order {
   photo_src: string;
 }
 
-export const getOrders = async (): Promise<Order[]> => {
-  try {
-    const token = getAccessToken();
-    const response = await axios.get(`${BASE_URL}/orders`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    return response.data.data;
-  } catch (error) {
-    console.error('Error fetching orders:', error);
-    throw error;
-  }
-};
-
 export interface OrderDetail {
   order_no: string;
   order_status: string;
@@ -44,6 +29,22 @@ export interface OrderDetail {
   payment_method?: string;
   tracking_number?: string;
 }
+
+
+export const getOrders = async (): Promise<Order[]> => {
+  try {
+    const token = getAccessToken();
+    const response = await axios.get(`${BASE_URL}/orders`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response.data.data;
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    throw error;
+  }
+};
 
 export const getOrderDetail = async (orderNo: string): Promise<OrderDetail> => {
   try {
