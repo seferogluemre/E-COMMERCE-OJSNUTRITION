@@ -15,6 +15,8 @@ import { Card, Container, Row, Col, Form, Button, Image, InputGroup } from 'reac
 import { BiCheckCircle, BiMapPin, BiPlus, BiCheck } from "react-icons/bi";
 import { BsTruck } from "react-icons/bs";
 import "./Payment.scss";
+import { handlePaymentSubmit, PaymentData } from "../../../services/api/collections/Payment";
+import { useNavigate } from "react-router-dom";
 
 function Payment() {
   const [activeStep, setActiveStep] = useState<number>(1);
@@ -40,6 +42,15 @@ function Payment() {
   const [showNewAddressForm, setShowNewAddressForm] = useState<boolean>(false);
   const [newlyAddedAddressId, setNewlyAddedAddressId] = useState<string | null>(null);
   const [paymentMethod, setPaymentMethod] = useState<string>("");
+  const [cardInfo, setCardInfo] = useState({
+    cardNumber: "",
+    expirationDate: "",
+    cvv: "",
+    cardHolderName: "",
+  });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [paymentSuccess, setPaymentSuccess] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Check if user is logged in
@@ -251,6 +262,67 @@ function Payment() {
   };
 
   const user = JSON.parse(getAuthUser() || "{}");
+
+  const handleCardInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    
+    let formattedValue = value;
+    
+    if (name === 'cardNumber') {
+      // Sadece rakamları al ve 16 karakterle sınırla
+      formattedValue = value.replace(/\D/g, '').slice(0, 16);
+    } else if (name === 'expirationDate') {
+      // Sadece rakamları al ve 4 karakterle sınırla
+      formattedValue = value.replace(/\D/g, '').slice(0, 4);
+    } else if (name === 'cvv') {
+      // Sadece rakamları al ve 3 karakterle sınırla
+      formattedValue = value.replace(/\D/g, '').slice(0, 3);
+    }
+
+    setCardInfo(prev => ({
+      ...prev,
+      [name]: formattedValue
+    }));
+  };
+
+  const handleSubmitPayment = async () => {
+    if (!selectedAddress?.id) return;
+    
+    setIsLoading(true);
+    try {
+      const paymentData: PaymentData = {
+        address_id: selectedAddress.id,
+        payment_type: 'credit_cart',
+        card_digits:"1234567891234567",
+        card_expiration_date: "06-25",
+        card_security_code: "123",
+        card_type: "VISA"
+      };
+
+      console.log("Sending payment data:", paymentData);
+      const response = await handlePaymentSubmit(paymentData);
+      
+      if (response.status === 'success') {
+        setPaymentSuccess(true);
+        setTimeout(() => navigate('/'), 3000);
+      }
+    } catch (error) {
+      console.error('Payment failed:', error);
+      setPaymentSuccess(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const renderSuccessScreen = () => (
+    <div className="text-center py-5">
+      <div className="mb-4">
+        <img src="/assets/success_checkmark.gif" alt="Success" className="mb-3" style={{ width: '64px' }} />
+        <h4 className="text-success">Ödemeniz başarıyla alındı.</h4>
+        <p className="text-muted">websitesimiz.com'a yönlendiriliyorsunuz...</p>
+      </div>
+    </div>
+  );
 
   const renderAddressStep = () => (
     <div>
@@ -641,66 +713,36 @@ function Payment() {
 
   const renderPaymentStep = () => (
     <div className="mt-4">
-      {/* Payment Method Selection */}
-      <div className="mb-4">
-        <div className="payment-option mb-2">
-          <Form.Check
-            type="radio"
-            id="credit-card"
-            name="payment-method"
-            label="Kredi Kartı"
-            checked={paymentMethod === 'credit-card'}
-            onChange={() => setPaymentMethod('credit-card')}
-            className="p-3 border rounded"
-          />
+      {isLoading ? (
+        <div className="text-center py-5">
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+          <p className="mt-3">Ödemeniz işleniyor...</p>
         </div>
-        
-        <div className="payment-option mb-2">
-          <Form.Check
-            type="radio"
-            id="cash-on-delivery"
-            name="payment-method"
-            label={
-              <div className="d-flex justify-content-between w-100">
-                <span>Kapıda Ödeme (Nakit)</span>
-                <span className="text-muted">39 TL işlem bedeli</span>
-              </div>
-            }
-            checked={paymentMethod === 'cash'}
-            onChange={() => setPaymentMethod('cash')}
-            className="p-3 border rounded"
-          />
-        </div>
-
-        <div className="payment-option mb-4">
-          <Form.Check
-            type="radio"
-            id="card-on-delivery"
-            name="payment-method"
-            label={
-              <div className="d-flex justify-content-between w-100">
-                <span>Kapıda Ödeme (KK)</span>
-                <span className="text-muted">45 TL işlem bedeli</span>
-              </div>
-            }
-            checked={paymentMethod === 'card-on-delivery'}
-            onChange={() => setPaymentMethod('card-on-delivery')}
-            className="p-3 border rounded"
-          />
-        </div>
-
-        {/* Credit Card Form */}
-        {paymentMethod === 'credit-card' && (
+      ) : paymentSuccess ? (
+        renderSuccessScreen()
+      ) : (
+        <div className="mb-4">
           <Form className="mt-4">
             <Form.Group className="mb-3">
               <Form.Label>Kart Üzerindeki İsim</Form.Label>
-              <Form.Control type="text" required />
+              <Form.Control
+                type="text"
+                name="cardHolderName"
+                value={cardInfo.cardHolderName}
+                onChange={handleCardInputChange}
+                required
+              />
             </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label>Kart Numarası</Form.Label>
               <Form.Control
                 type="text"
+                name="cardNumber"
+                value={cardInfo.cardNumber}
+                onChange={handleCardInputChange}
                 maxLength={16}
                 placeholder="0000 0000 0000 0000"
                 required
@@ -713,8 +755,11 @@ function Payment() {
                   <Form.Label>Son Kullanma Tarihi</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="AA/YY"
-                    maxLength={5}
+                    name="expirationDate"
+                    value={cardInfo.expirationDate}
+                    onChange={handleCardInputChange}
+                    placeholder="MMYY"
+                    maxLength={4}
                     required
                   />
                 </Form.Group>
@@ -724,6 +769,9 @@ function Payment() {
                   <Form.Label>CVV</Form.Label>
                   <Form.Control
                     type="text"
+                    name="cvv"
+                    value={cardInfo.cvv}
+                    onChange={handleCardInputChange}
                     maxLength={3}
                     placeholder="000"
                     required
@@ -731,40 +779,18 @@ function Payment() {
                 </Form.Group>
               </Col>
             </Row>
+
+            <Button 
+              variant="dark" 
+              className="w-100 py-2"
+              onClick={handleSubmitPayment}
+              disabled={!cardInfo.cardNumber || !cardInfo.expirationDate || !cardInfo.cvv}
+            >
+              Ödeme Yap
+            </Button>
           </Form>
-        )}
-
-        {/* Additional Options */}
-        <Form.Check
-          type="checkbox"
-          id="same-address"
-          label="Fatura adresim teslimat adresimle aynı."
-          className="mb-2"
-        />
-
-        <Form.Check
-          type="checkbox"
-          id="terms"
-          label={
-            <span>
-              <a href="#" className="text-success">Gizlilik sözleşmemi</a> ve{' '}
-              <a href="#" className="text-success">Satış sözleşmemi</a> okudum, onaylıyorum.
-            </span>
-          }
-          className="mb-4"
-        />
-
-        <Button variant="dark" className="w-100 py-2">
-          Ödeme Yap
-        </Button>
-
-        <div className="text-center mt-3 text-muted">
-          <small>
-            <i className="bi bi-lock-fill me-1"></i>
-            Ödemeler güvenli ve şifrelidir.
-          </small>
         </div>
-      </div>
+      )}
     </div>
   );
 
