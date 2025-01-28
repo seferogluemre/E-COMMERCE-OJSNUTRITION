@@ -50,13 +50,15 @@ export const fetchAddresses = async (
       const firstAddress = response.data.data.results[0];
       setUserAddress({
         title: firstAddress.title,
-        firstName: firstAddress.first_name,
-        lastName: firstAddress.last_name,
-        address: firstAddress.full_address,
+        first_name: firstAddress.first_name,
+        last_name: firstAddress.last_name,
+        full_address: firstAddress.full_address,
         city: firstAddress.region?.name || "",
         district: firstAddress.subregion?.name || "",
-        phone: firstAddress.phone_number,
+        phone_number: firstAddress.phone_number,
         id: firstAddress.id,
+        region: firstAddress.region || { name: "", id: 0 },
+        subregion: firstAddress.subregion || { name: "", id: 0 }
       });
       setShowForm(false);
     } else {
@@ -73,6 +75,8 @@ export const handleSubmitAddress = async (
   cities: City[],
   districts: District[],
   setShowForm: (show: boolean) => void,
+  setAddresses: (addresses: UserAddress[]) => void,
+  setUserAddress: (address: UserAddress) => void,
   fetchAddresses: (
     setAddresses: (addresses: UserAddress[]) => void,
     setUserAddress: (address: UserAddress) => void,

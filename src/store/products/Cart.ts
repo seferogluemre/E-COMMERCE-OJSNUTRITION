@@ -16,6 +16,7 @@ export interface CartItem {
   price: number;
   pieces: number;
   photo_src: string;
+  variant_name: string;
 }
 
 export interface CartStore {
@@ -25,6 +26,7 @@ export interface CartStore {
   updateQuantity: (itemId: string, quantity: number) => void;
   getTotalPrice: () => number;
   getTotalItems: () => number;
+  fetchUserCart: () => Promise<void>;
 }
 
 const loadFromLocalStorage = (): CartItem[] => {
@@ -67,7 +69,7 @@ export const useCartStore = create<CartStore>((set, get) => {
       const cartData = await response.json();
       console.log("cartData", cartData);
       if (cartData.status === "success" && cartData.data.items) {
-        const formattedItems: CartItem[] = cartData.data.items.map((item) => ({
+        const formattedItems: CartItem[] = cartData.data.items.map((item:any) => ({
           id: item.product_id,
           name: item.product,
           product_variant_id: item.product_variant_id,
@@ -79,6 +81,7 @@ export const useCartStore = create<CartStore>((set, get) => {
           price: item.unit_price,
           pieces: item.pieces,
           photo_src: item.product_variant_detail.photo_src,
+          variant_name: item.product_variant_detail.variant_name,
         }));
         set({ items: formattedItems });
       } else {
@@ -248,6 +251,7 @@ export const useCartStore = create<CartStore>((set, get) => {
                 price: item.unit_price,
                 pieces: item.pieces,
                 photo_src: item.product_variant_detail.photo_src,
+                variant_name: item.product_variant_detail.variant_name,
               })
             );
 
@@ -279,6 +283,8 @@ export const useCartStore = create<CartStore>((set, get) => {
       const { items } = get();
       return items.length;
     },
+
+    fetchUserCart,
   };
 });
 

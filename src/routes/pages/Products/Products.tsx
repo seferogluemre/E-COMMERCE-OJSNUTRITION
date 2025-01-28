@@ -24,16 +24,11 @@ function Products() {
           );
 
           if (response.data && Array.isArray(response.data.data.results)) {
-            setProducts((prevProducts: ProductListProp[]) => [
+            setProducts((prevProducts) => [
               ...prevProducts,
               ...response.data.data.results,
             ]);
-          } else {
-            console.error(
-              "API yanıtı beklenilen formatta değil:",
-              response.data
-            );
-          }
+          } 
         } catch (error) {
           console.error(
             "API isteği sırasında bir hata oluştu:",

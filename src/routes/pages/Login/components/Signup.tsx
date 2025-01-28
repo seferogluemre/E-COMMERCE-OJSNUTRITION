@@ -19,8 +19,6 @@ interface IFormInputs {
   password: string;
 }
 
-
-
 // Form validation şeması
 const schema = yup.object().shape({
   firstName: yup.string().required("Ad alanı zorunludur"),
@@ -49,8 +47,6 @@ function Signup() {
     message: "Başarıyla giriş yapıldı",
     isVisible: false,
   });
-
-
 
   const [alert, setAlert] = useState<{
     type: "success" | "danger";

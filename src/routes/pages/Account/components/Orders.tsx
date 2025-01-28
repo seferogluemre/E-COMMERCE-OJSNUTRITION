@@ -4,64 +4,6 @@ import { useEffect, useState } from "react";
 import { getOrderDetail, getOrders, Order, OrderDetail } from "../../../../services/api/collections/Orders";
 import { addProductComment } from "../../../../services/api/collections/Products";
 import { useToastStore } from "../../../../store/toast/ToastStore";
-// Interface güncellemeleri
-interface Address {
-  title: string;
-  country: string;
-  region: string;
-  subregion: string;
-  full_address: string;
-  phone_number: string;
-}
-
-interface PaymentDetail {
-  card_digits: string;
-  card_expiration_date: string;
-  card_security_code: string;
-  payment_type: string;
-  card_type: string;
-  base_price: number;
-  shipment_fee: number;
-  payment_fee: number;
-  discount_ratio: number;
-  discount_amount: number;
-  final_price: number;
-}
-
-interface ProductVariantDetail {
-  size: {
-    gram: number;
-    pieces: number;
-    total_services: number;
-  };
-  aroma: string;
-  photo_src: string;
-}
-
-interface CartItem {
-  product_id: string;
-  product_slug: string;
-  product_variant_id: string;
-  product: string;
-  product_variant_detail: ProductVariantDetail;
-  pieces: number;
-  unit_price: number;
-  total_price: number;
-}
-
-interface ShoppingCart {
-  total_price: number;
-  items: CartItem[];
-}
-
-interface OrderDetail {
-  order_no: string;
-  order_status: string;
-  shipment_tracking_number: string;
-  address: Address;
-  payment_detail: PaymentDetail;
-  shopping_cart: ShoppingCart;
-}
 
 function Orders() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -69,13 +11,13 @@ function Orders() {
   const [selectedOrder, setSelectedOrder] = useState<string | null>(null);
   const [orderDetail, setOrderDetail] = useState<OrderDetail | null>(null);
   const [showCommentModal, setShowCommentModal] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<{slug: string, name: string} | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<{ slug: string, name: string } | null>(null);
   const [commentForm, setCommentForm] = useState({
     stars: 5,
     title: '',
     comment: ''
   });
-  const [submitting, setSubmitting] = useState(false);
+  const [submitting, setSubmitting] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -99,6 +41,7 @@ function Orders() {
       const response = await getOrderDetail(orderNo);
       console.log(response);
       setOrderDetail(response);
+      console.log(response);
       setSelectedOrder(orderNo);
     } catch (error) {
       console.error("Order detail fetching failed:", error);
@@ -134,7 +77,7 @@ function Orders() {
       setShowCommentModal(false);
       // Reset form
       setCommentForm({ stars: 5, title: '', comment: '' });
-      useToastStore.getState().showToast( "Geri bildiriminiz için teşekkür ederiz","success");
+      useToastStore.getState().showToast("Geri bildiriminiz için teşekkür ederiz", "success");
     } catch (error: any) {
       console.error('Error submitting comment:', error);
       if (error.response?.data?.reason) {
@@ -155,12 +98,40 @@ function Orders() {
   if (loading) {
     return <div>Yükleniyor...</div>;
   }
+  // Sipariş durumuna göre renk belirleme
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'delivered':
+        return 'success';
+      case 'in_cargo':
+        return 'info';
+      case 'getting_ready':
+        return 'warning';
+      default:
+        return 'primary';
+    }
+  };
+
+  // Sipariş durumunu Türkçe metne çevirme
+  const getStatusText = (status: string) => {
+    switch (status) {
+      case 'delivered':
+        return 'Teslim Edildi';
+      case 'in_cargo':
+        return 'Kargoda';
+      case 'getting_ready':
+        return 'Hazırlanıyor';
+      default:
+        return 'Sipariş Alındı';
+    }
+  };
+
 
   if (selectedOrder && orderDetail) {
     return (
       <div className="content-area">
-        <Button 
-          variant="link" 
+        <Button
+          variant="link"
           className="d-flex align-items-center mb-4"
           onClick={() => {
             setSelectedOrder(null);
@@ -320,7 +291,7 @@ function Orders() {
         <Card key={order.order_no} className="mb-3">
           <Card.Body>
             <div className="d-flex justify-content-between align-items-start mb-3">
-              <h5 className="text-success">{order.order_status=="delivered"?"Teslim Edildi":"Sipariş Alındı"}</h5>
+              <h5 className="text-success">{order.order_status == "delivered" ? "Teslim Edildi" : "Sipariş Alındı"}</h5>
               <h6>Toplam: ₺{order.total_price.toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</h6>
             </div>
             {order.cart_detail.map((item) => (
@@ -346,8 +317,8 @@ function Orders() {
               <p className="mb-1">
                 Sipariş Tarihi: {new Date(order.created_at).toLocaleDateString('tr-TR')}
               </p>
-              <Button 
-                variant="link" 
+              <Button
+                variant="link"
                 className="p-0"
                 onClick={() => handleViewDetail(order.order_no)}
               >
@@ -361,32 +332,5 @@ function Orders() {
   );
 }
 
-// Sipariş durumuna göre renk belirleme
-const getStatusColor = (status: string) => {
-  switch (status) {
-    case 'delivered':
-      return 'success';
-    case 'in_cargo':
-      return 'info';
-    case 'getting_ready':
-      return 'warning';
-    default:
-      return 'primary';
-  }
-};
-
-// Sipariş durumunu Türkçe metne çevirme
-const getStatusText = (status: string) => {
-  switch (status) {
-    case 'delivered':
-      return 'Teslim Edildi';
-    case 'in_cargo':
-      return 'Kargoda';
-    case 'getting_ready':
-      return 'Hazırlanıyor';
-    default:
-      return 'Sipariş Alındı';
-  }
-};
 
 export default Orders;

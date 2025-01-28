@@ -65,6 +65,9 @@ export interface Product {
   variants: Variant[];
   comment_count: number;
   average_star: number;
+  price?: number;
+  commentCount?: number;
+  photo_src?: string;
 }
 
 interface ColorProps {
@@ -81,7 +84,7 @@ function ProductDetail() {
   const [count, setCount] = useState<number>(0);
   const [, setStoredValue] = UseLocalStorage(LOCAL_KEY, "");
   const [selectedSize, setSelectedSize] = useState<number>();
-  const [selectedAroma, setSelectedAroma] = useState<number>();
+  const [selectedAroma, setSelectedAroma] = useState<number>(); 
   const [photoSrc, setPhotoSrc] = useState<string>("");
   const [matchingTotalPrice, setMatchingTotalPrice] = useState<number>(0);
   const [totalServices, setTotalServices] = useState<number>(0);
@@ -252,7 +255,7 @@ function ProductDetail() {
       setCount(count + 1);
     } else if (count > 0) {
       setCount(count - 1);
-    }
+    } 
   };
 
   const handleAddToCart = () => {
@@ -445,10 +448,7 @@ function ProductDetail() {
                     new Set(product.variants.map((variant) => variant.aroma))
                   ).map((item, index) => {
                     const isSelected = selectedAroma === index;
-                    // Seçilen aroma ile ilişkili photo_src değerini bul.
-                    const selectedVariant = product.variants.find(
-                      (variant) => variant.aroma === item
-                    );
+                    
                     return (
                       <div
                         key={index}
@@ -507,7 +507,6 @@ function ProductDetail() {
                       gram,
                       totalServices,
                       discountPercentage,
-                      photo_src,
                     } = item;
                     const isSelected = selectedSize === index;
                     const isAvailable =
@@ -730,7 +729,17 @@ function ProductDetail() {
         <ProductComment />
       </Container>
       <Container className="pb-4">
-        <BestSeller best_seller={bestSeller} />
+        <BestSeller 
+          best_seller={bestSeller.map(product => ({
+            ...product,
+            price_info: {
+              total_price: product.variants?.[0]?.price.total_price || 0,
+              discounted_price: product.variants?.[0]?.price.discounted_price || 0
+            },
+            discounted_percentage: product.variants?.[0]?.price.discount_percentage || 0,
+            photo_src: product.photo_src || ''
+          }))} 
+        />
       </Container>
     </Container>
   );

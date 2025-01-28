@@ -10,7 +10,7 @@ export default function ErrorPage() {
         display: "flex",
         justifyContent: "center",
         color: "black",
-        fontSize: "29px",
+        fontSize: "39px",
         alignItems: "center",
       }}
     >

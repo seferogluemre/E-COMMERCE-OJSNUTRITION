@@ -3,7 +3,7 @@ import { createAxiosInstance } from "../axios";
 
 export type PaymentType = 'credit_cart';
 
-interface PaymentData {
+export interface PaymentData {
   address_id: string;
   payment_type: PaymentType;
   card_digits: string;

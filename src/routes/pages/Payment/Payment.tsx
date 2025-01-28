@@ -32,16 +32,18 @@ function Payment() {
     title: "",
     first_name: "",
     last_name: "",
-    address: "",
+    full_address: "",
     city: "",
     district: "",
     phone_number: "",
+    id: "",
+    region: { name: "", id: 0 },
+    subregion: { name: "", id: 0 }
   });
   const cartItems = useCartStore((state) => state.items);
   const [editingAddress, setEditingAddress] = useState<UserAddress | null>(null);
   const [showNewAddressForm, setShowNewAddressForm] = useState<boolean>(false);
   const [newlyAddedAddressId, setNewlyAddedAddressId] = useState<string | null>(null);
-  const [paymentMethod, setPaymentMethod] = useState<string>("");
   const [cardInfo, setCardInfo] = useState({
     cardNumber: "",
     expirationDate: "",
@@ -137,11 +139,6 @@ function Payment() {
     setSelectedAddress(address);
   };
 
-  const handleContinue = () => {
-    if (selectedAddress) {
-      setActiveStep(activeStep + 1);
-    }
-  };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -173,10 +170,13 @@ function Payment() {
       title: address.title,
       first_name: address.first_name,
       last_name: address.last_name,
-      address: address.full_address,
+      full_address: address.full_address,
       city: address.city,
       district: address.district,
       phone_number: address.phone_number,
+      id: address.id || "",
+      region: address.region || { name: "", id: 0 },
+      subregion: address.subregion || { name: "", id: 0 }
     });
     setSelectedCity(address.city);
   };
@@ -192,7 +192,7 @@ function Payment() {
           title: formData.title,
           first_name: formData.first_name,
           last_name: formData.last_name,
-          full_address: formData.address,
+          full_address: formData.full_address,
           city: formData.city,
           district: formData.district,
           phone_number: formData.phone_number,
@@ -208,7 +208,7 @@ function Payment() {
       // Adresi localStorage'a kaydet
       const addressData = {
         ...formData,
-        full_address: formData.address,
+        full_address: formData.full_address,
         first_name: formData.first_name,
         last_name: formData.last_name,
         phone_number: formData.phone_number,
@@ -226,10 +226,13 @@ function Payment() {
       title: "",
       first_name: "",
       last_name: "",
-      address: "",
+      full_address: "",
       city: "",
       district: "",
       phone_number: "",
+      id: "",
+      region: { name: "", id: 0 },
+      subregion:{ name: "", id: 0 },
     });
   };
 
@@ -238,7 +241,7 @@ function Payment() {
     try {
       const addressData = {
         ...formData,
-        full_address: formData.address,
+        full_address: formData.full_address,
       };
 
       await handleSubmitAddress(
@@ -246,13 +249,16 @@ function Payment() {
         cities,
         districts,
         setShowNewAddressForm,
+        setUserAddresses,
+        setSelectedAddress,
         fetchUserAddresses
       );
 
       // Adres listesini yenile ve yeni eklenen adresi işaretle
-      const updatedAddresses = await fetchUserAddresses();
-      if (updatedAddresses && updatedAddresses.length > 0) {
-        setNewlyAddedAddressId(updatedAddresses[0].id);
+      await fetchUserAddresses();
+      const addresses = userAddresses;
+      if (addresses && addresses.length > 0) {
+        setNewlyAddedAddressId(addresses[0].id);
         setTimeout(() => setNewlyAddedAddressId(null), 5000);
       }
       setShowNewAddressForm(false);
@@ -500,8 +506,8 @@ function Payment() {
                 <Form.Control
                   as="textarea"
                   rows={3}
-                  name="address"
-                  value={formData.address}
+                  name="full_address"
+                  value={formData.full_address}
                   onChange={handleInputChange}
                   required
                 />
@@ -580,8 +586,8 @@ function Payment() {
                 <Form.Control
                   as="textarea"
                   rows={3}
-                  name="address"
-                  value={formData.address}
+                  name="full_address"
+                  value={formData.full_address}
                   onChange={handleInputChange}
                   required
                 />
@@ -649,7 +655,7 @@ function Payment() {
                 <Form.Select
                   name="city"
                   value={formData.city}
-                  onChange={handleInputChange}
+                  onChange={handleCityChange}
                   required
                 >
                   <option value="">Şehir Seçiniz</option>
@@ -663,7 +669,7 @@ function Payment() {
                 <Form.Select
                   name="district"
                   value={formData.district}
-                  onChange={handleInputChange}
+                  onChange={handleDistrictChange}
                   required
                 >
                   <option value="">İlçe Seçiniz</option>
@@ -678,7 +684,7 @@ function Payment() {
             <Form.Control
               as="textarea"
               rows={3}
-              name="address"
+              name="full_address"
               onChange={handleInputChange}
               required
             />
@@ -903,7 +909,7 @@ function Payment() {
                       />
                       <div>
                         <h6 className="mb-1">{item.name}</h6>
-                        <p className="text-secondary small mb-1">{item.details}</p>
+                        <p className="text-secondary small mb-1">{item.variant_name}</p>
                         <p className="text-secondary small mb-0">
                           {item.pieces} adet x {item.price} TL
                         </p>

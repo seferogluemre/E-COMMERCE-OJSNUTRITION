@@ -6,7 +6,6 @@ import { login } from "../../../../services/api/collections/auth";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Notification from "../../../../components/layout/ToastNotification/Notification";
-import { useCartStore } from "../../../../store/products/Cart";
 
 // Form verileri için interface tanımı
 interface ILoginFormInputs {
@@ -23,7 +22,11 @@ const schema = yup.object().shape({
   password: yup.string().required("Şifre alanı zorunludur"),
 });
 
-function MemberLogin() {
+interface MemberLoginProps {
+  onLoginSuccess: () => void;
+}
+
+function MemberLogin({ onLoginSuccess }: MemberLoginProps) {
   const {
     register,
     handleSubmit,
@@ -36,17 +39,6 @@ function MemberLogin() {
     message: "Başarıyla giriş yapıldı",
     isVisible: false,
   });
-
-  const showNotification = (
-    type: "success" | "error" | "info",
-    message: string
-  ) => {
-    setNotification({ type, message, isVisible: true });
-    setTimeout(() => {
-      setNotification((prev) => ({ ...prev, isVisible: false }));
-    }, 3000);
-  };
-
   const navigate = useNavigate();
   const [loginError, setLoginError] = useState<string | null>(null);
 

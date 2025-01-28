@@ -47,15 +47,6 @@ function Addresses() {
     null
   );
 
-  useEffect(() => {
-    const storedAddress = localStorage.getItem("userAddress");
-    if (storedAddress) {
-      setUserAddress(JSON.parse(storedAddress));
-    } else {
-      setShowForm(true);
-    }
-  }, []);
-
   // Şehirleri getirme
   useEffect(() => {
     const fetchCities = async () => {
