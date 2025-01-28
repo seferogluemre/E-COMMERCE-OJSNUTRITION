@@ -304,7 +304,7 @@ function Payment() {
       
       if (response.status === 'success') {
         setPaymentSuccess(true);
-        setTimeout(() => navigate('/'), 3000);
+        setTimeout(() => navigate('/'), 3800);
       }
     } catch (error) {
       console.error('Payment failed:', error);
@@ -315,11 +315,13 @@ function Payment() {
   };
 
   const renderSuccessScreen = () => (
-    <div className="text-center py-5">
+    <div className="text-center py-5" id="success-screen">
       <div className="mb-4">
         <img src="/assets/succes_checkmark.gif" alt="Success" className="mb-3" width={100} height={100} />
         <h4 className="text-success">Ödemeniz başarıyla alındı.</h4>
-        <p className="text-muted">websitesimiz.com'a yönlendiriliyorsunuz...</p>
+        <div className="d-flex justify-content-center column-gap-3">
+          <button className="btn btn-primary" onClick={() => navigate('/')}>Anasayfa</button>
+        </div>
       </div>
     </div>
   );
