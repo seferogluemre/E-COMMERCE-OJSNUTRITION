@@ -56,7 +56,8 @@ function MemberLogin({ onLoginSuccess }: MemberLoginProps) {
             timestamp: new Date().getTime(),
           })
         );
-          navigate("/");
+        onLoginSuccess();
+        navigate("/");
       } else {
         setLoginError(
           "E-posta veya şifre hatalı. Lütfen bilgilerinizi kontrol ediniz."

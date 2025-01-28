@@ -4,6 +4,7 @@ import BestSellerCard from "./BestSellerCard";
 import { BestSellerPropsCS } from "../../type/type";
 import "./_BestSeller.scss";
 import { PHOTO_URL } from "../../../routes/pages/Products/components/types";
+import React from 'react';
 
 // HOC yapısında tipi belirleyelim
 interface WithBestSellerProps {
@@ -18,20 +19,35 @@ const WithBestSeller = <P extends WithBestSellerProps>(
     const { best_seller } = props;
     const products = useLoaderData();
 
-    const dataToDisplay = best_seller || products;
+    // If best_seller props exist, save them to localStorage
+    React.useEffect(() => {
+      if (best_seller && best_seller.length > 0) {
+        localStorage.setItem('bestSeller', JSON.stringify(best_seller));
+      }
+    }, [best_seller]);
+
+    // Get data from localStorage if no props provided
+    const dataToDisplay = best_seller || (() => {
+      try {
+        const localData = localStorage.getItem('bestSeller');
+        return localData ? JSON.parse(localData) : products;
+      } catch (error) {
+        console.error('Error reading from localStorage:', error);
+        return products;
+      }
+    })();
 
     return <WrappedComponent {...props} best_seller={dataToDisplay} />;
   };
 };
 
+
 interface BestSellerProps {
   best_seller: BestSellerPropsCS[];
 }
 
-function BestSeller({ best_seller }: BestSellerProps) {
+const BestSeller: React.FC<BestSellerProps> = ({ best_seller }) => {
   const navigate = useNavigate();
-
-  const dataToDisplay = Array.isArray(best_seller) ? best_seller : [];
 
   return (
     <Container className="my-5 best-seller-container">
@@ -39,25 +55,23 @@ function BestSeller({ best_seller }: BestSellerProps) {
         <h1 className="fs-3">Çok Satanlar</h1>
       </div>
       <Row className="d-flex justify-content-center row-gap-lg-5 row-gap-4">
-        {dataToDisplay.length > 0 ? (
-          dataToDisplay.map((data: BestSellerPropsCS, index: number) => (
+        {best_seller.length > 0 ? (
+          best_seller.map((product) => (
             <div
               className="col-lg-4 col-md-6 col-sm-6 col-xxl-2 flex-wrap d-flex justify-content-center best_seller_column"
-              key={data.slug}
-              onClick={() => navigate(`/products/${data.slug}`)}
+              key={product.slug}
+              onClick={() => navigate(`/products/${product.slug}`)}
             >
               <BestSellerCard
-                slug={data.slug}
-                key={index}
-                discounted_percentage={data.price_info?.discount_percentage}
-                name={data.name}
-                photo_src={PHOTO_URL + data.photo_src}
-                short_explanation={data.short_explanation.toUpperCase()}
-                average_star={data.average_star}
-                comment_count={data.comment_count}
+                slug={product.slug}
+                name={product.name}
+                photo_src={PHOTO_URL + product.photo_src}
+                short_explanation={product.short_explanation.toUpperCase()}
+                average_star={product.average_star}
+                comment_count={product.comment_count}
                 price_info={{
-                  discounted_price: data.price_info.discounted_price,
-                  total_price: data.price_info.total_price,
+                  discounted_price: product.price_info.discounted_price,
+                  total_price: product.price_info.total_price,
                 }}
               />
             </div>
@@ -68,9 +82,8 @@ function BestSeller({ best_seller }: BestSellerProps) {
       </Row>
     </Container>
   );
-}
+};
 
-// BestSellerWithWrapper'a tip parametresi ekledik
 const BestSellerWithWrapper = WithBestSeller(BestSeller);
 
 export default BestSellerWithWrapper;

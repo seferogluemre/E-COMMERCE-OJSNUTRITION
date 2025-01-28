@@ -52,6 +52,7 @@ function Signup() {
     type: "success" | "danger";
     message: string;
   } | null>(null);
+  console.log(alert)
 
   const onSubmit = async (formData: IFormInputs) => {
     try {

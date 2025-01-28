@@ -160,7 +160,7 @@ const SSS: SSSData = {
   ],
 };
 function ControlledTabsExample() {
-  const [key, setKey] = useState("genel");
+  const [key, setKey] = useState<string>("genel");
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const handleToggle = (index: number) => {
@@ -180,7 +180,7 @@ function ControlledTabsExample() {
           <Tabs
             id="controlled-tab-example"
             activeKey={key}
-            onSelect={(k) => setKey(k)}
+            onSelect={(k) => k && setKey(k)}
             className="mb-5 pb-5"
           >
             <Tab eventKey="genel" title="genel">

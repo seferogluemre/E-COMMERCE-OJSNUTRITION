@@ -74,13 +74,13 @@ export const handleSubmitAddress = async (
   formData: UserAddress,
   cities: City[],
   districts: District[],
-  setShowForm: (show: boolean) => void,
-  setAddresses: (addresses: UserAddress[]) => void,
-  setUserAddress: (address: UserAddress) => void,
-  fetchAddresses: (
-    setAddresses: (addresses: UserAddress[]) => void,
-    setUserAddress: (address: UserAddress) => void,
-    setShowForm: (show: boolean) => void
+  setShowForm?: (show: boolean) => void,
+  setAddresses?: (addresses: UserAddress[]) => void,
+  setUserAddress?: (address: UserAddress) => void,
+  fetchAddresses?: (
+    setAddresses?: (addresses: UserAddress[]) => void,
+    setUserAddress?: (address: UserAddress) => void,
+    setShowForm?: (show: boolean) => void
   ) => Promise<void>
 ) => {
   const formattedPhone = `+90${formData.phone_number.replace(/^\+90/, "")}`;
@@ -105,8 +105,10 @@ export const handleSubmitAddress = async (
     const response = await api.post("/users/addresses", addressData);
     if (response.status === 200) {
       console.log("Adres başarıyla kaydedildi.");
-      setShowForm(false);
-      fetchAddresses(setAddresses, setUserAddress, setShowForm);
+      if (setShowForm) setShowForm(false);
+      if (fetchAddresses && setAddresses && setUserAddress && setShowForm) {
+        fetchAddresses(setAddresses, setUserAddress, setShowForm);
+      }
     } else {
       console.error("Adres kaydedilemedi:", response.data);
       useToastStore.getState().showToast("Hesabınıza adres eklendi", "success");

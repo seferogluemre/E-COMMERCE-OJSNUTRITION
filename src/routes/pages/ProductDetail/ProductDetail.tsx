@@ -300,6 +300,7 @@ function ProductDetail() {
       const cartItem: CartItem = {
         id: product.id,
         name: product.name,
+        variant_name: `${selectedSizeInfo.gram}g ${selectedAromaName}`,
         product_variant_id: selectedVariant.id,
         aroma: selectedAromaName,
         size: {
@@ -733,7 +734,7 @@ function ProductDetail() {
           best_seller={bestSeller.map(product => ({
             ...product,
             price_info: {
-              total_price: product.variants?.[0]?.price.total_price || 0,
+              total_price: product.variants?.[0]?.price.total_price,
               discounted_price: product.variants?.[0]?.price.discounted_price || 0
             },
             discounted_percentage: product.variants?.[0]?.price.discount_percentage || 0,

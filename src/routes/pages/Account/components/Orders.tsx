@@ -295,7 +295,7 @@ function Orders() {
               <h6>Toplam: ₺{order.total_price.toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</h6>
             </div>
             {order.cart_detail.map((item) => (
-              <div key={item.variant_id} className="d-flex column-gap-4 mb-3">
+              <div key={item.product_variant_id} className="d-flex column-gap-4 mb-3">
                 <div>
                   <img
                     src={PHOTO_URL + item.photo_src}
@@ -308,7 +308,7 @@ function Orders() {
                 <div>
                   <h6>{item.name}</h6>
                   <p className="mb-1">Adet: {item.pieces}</p>
-                  <p className="mb-1">Birim Fiyat: ₺{item.unit_price}</p>
+                  <p className="mb-1">Birim Fiyat: ₺{item.price}</p>
                 </div>
               </div>
             ))}

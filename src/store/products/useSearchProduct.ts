@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 import { BASE_URL } from "../../routes/pages/Products/components/types";
-import { ProductListProp } from "../../assets/components/type/type";
+import { ProductListProp } from "../../components/type/type";
 
 interface SearchState {
   products: ProductListProp[];

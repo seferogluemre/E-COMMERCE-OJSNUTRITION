@@ -21,6 +21,8 @@ interface UserAddress {
   district: string;
   phone_number: string;
   id: string;
+  region: { id: number; name: string };
+  subregion: { id: number; name: string };
 }
 
 function Addresses() {
@@ -37,6 +39,8 @@ function Addresses() {
     district: "",
     phone_number: "",
     id: "",
+    region: { id: 0, name: "" },
+    subregion: { id: 0, name: "" },
   });
   const [cities, setCities] = useState<City[]>([]);
   const [districts, setDistricts] = useState<District[]>([]);
@@ -46,6 +50,7 @@ function Addresses() {
   const [editingAddress, setEditingAddress] = useState<UserAddress | null>(
     null
   );
+  console.log(editingAddress,userAddress)
 
   // Şehirleri getirme
   useEffect(() => {
@@ -102,8 +107,7 @@ function Addresses() {
       formData,
       cities,
       districts,
-      setShowForm,
-      fetchAddresses
+     
     );
   };
 
@@ -140,6 +144,8 @@ function Addresses() {
       district: address.district,
       phone_number: address.phone_number,
       id: address.id,
+      region: address.region,
+      subregion: address.subregion,
     });
     console.log(address);
     setShowEditModal(true);
@@ -264,7 +270,7 @@ function Addresses() {
               giriniz
             </Form.Text>
           </Form.Group>
-          <Button type="submit" onClick={handleSubmit}>
+          <Button type="submit">
             Kaydet
           </Button>
         </Form>

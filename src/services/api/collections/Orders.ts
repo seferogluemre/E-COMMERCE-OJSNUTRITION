@@ -1,14 +1,14 @@
 import axios from "axios";
 import { BASE_URL } from "../../../routes/pages/Products/components/types";
 import { getAccessToken } from "./storage";
+import { CartItem } from "../../../store/products/Cart";
 
 export interface Order {
-  id: string;
-  status: string;
-  products: string;
-  orderDate: string;
-  orderNumber: string;
-  photo_src: string;
+  order_no: string;
+  order_status: string;
+  total_price: number;
+  cart_detail: CartItem[];
+  created_at: string;
 }
 
 export interface OrderDetail {
