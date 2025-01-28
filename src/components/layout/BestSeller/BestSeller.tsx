@@ -5,8 +5,16 @@ import { BestSellerPropsCS } from "../../type/type";
 import "./_BestSeller.scss";
 import { PHOTO_URL } from "../../../routes/pages/Products/components/types";
 
-const WithBestSeller = (WrappedComponent) => {
-  return (props: { best_seller }) => {
+// HOC yapısında tipi belirleyelim
+interface WithBestSellerProps {
+  best_seller: BestSellerPropsCS[]; // best_seller'ı bir dizi olarak belirledik
+}
+
+// HOC fonksiyonu, WrappedComponent'in prop tipini de alacak
+const WithBestSeller = <P extends WithBestSellerProps>(
+  WrappedComponent: React.ComponentType<P>
+) => {
+  return (props: P) => {
     const { best_seller } = props;
     const products = useLoaderData();
 
@@ -16,7 +24,11 @@ const WithBestSeller = (WrappedComponent) => {
   };
 };
 
-function BestSeller({ best_seller }) {
+interface BestSellerProps {
+  best_seller: BestSellerPropsCS[];
+}
+
+function BestSeller({ best_seller }: BestSellerProps) {
   const navigate = useNavigate();
 
   const dataToDisplay = Array.isArray(best_seller) ? best_seller : [];
@@ -58,5 +70,7 @@ function BestSeller({ best_seller }) {
   );
 }
 
+// BestSellerWithWrapper'a tip parametresi ekledik
 const BestSellerWithWrapper = WithBestSeller(BestSeller);
+
 export default BestSellerWithWrapper;
