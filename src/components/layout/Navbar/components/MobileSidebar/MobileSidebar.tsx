@@ -47,11 +47,9 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
         "https://fe1111.projects.academy.onlyjs.com/api/v1/categories"
       );
 
-      const categoriesData: CategoriesResponseProps[] =
-        categoriesResponse.data.data;
+      const categoriesData: CategoriesResponseProps = categoriesResponse.data;
 
-      // Çocuk verilerini işleyin
-      const updatedCategories = categoriesData.data?.map(
+      const updatedCategories = categoriesData.data.map(
         (item: CategoryProps) => ({
           ...item,
           subChildren: item.children?.[0]?.sub_children || [],
@@ -74,7 +72,7 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
     setShowSubProducts(false);
   }, [location]);
 
-  const handleCategoryClick = (category) => {
+  const handleCategoryClick = (category:CategoryProp) => {
     setSelectedSubChildren(category.subChildren);
     setSelectedCategory(category); // Tüm kategori bilgilerini set ediyorsunuz
     setIsDrawerOpen(true); // Çekmeceyi açıyorsunuz

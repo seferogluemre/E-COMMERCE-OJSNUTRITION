@@ -730,17 +730,7 @@ function ProductDetail() {
         <ProductComment />
       </Container>
       <Container className="pb-4">
-        <BestSeller 
-          best_seller={bestSeller.map(product => ({
-            ...product,
-            price_info: {
-              total_price: product.variants?.[0]?.price.total_price,
-              discounted_price: product.variants?.[0]?.price.discounted_price || 0
-            },
-            discounted_percentage: product.variants?.[0]?.price.discount_percentage || 0,
-            photo_src: product.photo_src || ''
-          }))} 
-        />
+      <BestSeller best_seller={bestSeller} />
       </Container>
     </Container>
   );
