@@ -69,7 +69,7 @@ export const useCartStore = create<CartStore>((set, get) => {
       const cartData = await response.json();
       console.log("cartData", cartData);
       if (cartData.status === "success" && cartData.data.items) {
-        const formattedItems: CartItem[] = cartData.data.items.map((item:any) => ({
+        const formattedItems: CartItem[] = cartData.data.items.map((item: any) => ({
           id: item.product_id,
           name: item.product,
           product_variant_id: item.product_variant_id,
@@ -134,9 +134,9 @@ export const useCartStore = create<CartStore>((set, get) => {
           if (existingItem) {
             newItems = state.items.map((i) =>
               i.id === item.id &&
-              i.aroma === item.aroma &&
-              i.size.gram === item.size.gram &&
-              i.size.total_services === item.size.total_services
+                i.aroma === item.aroma &&
+                i.size.gram === item.size.gram &&
+                i.size.total_services === item.size.total_services
                 ? { ...i, pieces: i.pieces + item.pieces }
                 : i
             );
@@ -181,7 +181,6 @@ export const useCartStore = create<CartStore>((set, get) => {
               pieces: itemToRemove.pieces,
             }),
           });
-
           if (!response.ok) {
             throw new Error("Ürün sepetten silinemedi");
           }

@@ -50,7 +50,7 @@ function Addresses() {
   const [editingAddress, setEditingAddress] = useState<UserAddress | null>(
     null
   );
-  console.log(editingAddress,userAddress)
+  console.log(editingAddress, userAddress)
 
   // Şehirleri getirme
   useEffect(() => {
@@ -107,7 +107,7 @@ function Addresses() {
       formData,
       cities,
       districts,
-     
+
     );
   };
 

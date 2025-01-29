@@ -7,7 +7,7 @@ import { useToastStore } from "../../../../store/toast/ToastStore";
 
 function Orders() {
   const [orders, setOrders] = useState<Order[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [selectedOrder, setSelectedOrder] = useState<string | null>(null);
   const [orderDetail, setOrderDetail] = useState<OrderDetail | null>(null);
   const [showCommentModal, setShowCommentModal] = useState(false);
@@ -126,7 +126,6 @@ function Orders() {
     }
   };
 
-
   if (selectedOrder && orderDetail) {
     return (
       <div className="content-area">
@@ -151,7 +150,6 @@ function Orders() {
                 </h5>
               </div>
             </div>
-
             <div className="border-bottom pb-4 mb-4">
               {orderDetail.shopping_cart.items.map((item) => (
                 <div key={item.product_variant_id} className="d-flex column-gap-4 mb-3">
@@ -331,6 +329,5 @@ function Orders() {
     </div>
   );
 }
-
 
 export default Orders;

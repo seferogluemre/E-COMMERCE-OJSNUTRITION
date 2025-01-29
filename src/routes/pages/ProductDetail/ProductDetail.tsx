@@ -84,7 +84,7 @@ function ProductDetail() {
   const [count, setCount] = useState<number>(0);
   const [, setStoredValue] = UseLocalStorage(LOCAL_KEY, "");
   const [selectedSize, setSelectedSize] = useState<number>();
-  const [selectedAroma, setSelectedAroma] = useState<number>(); 
+  const [selectedAroma, setSelectedAroma] = useState<number>();
   const [photoSrc, setPhotoSrc] = useState<string>("");
   const [matchingTotalPrice, setMatchingTotalPrice] = useState<number>(0);
   const [totalServices, setTotalServices] = useState<number>(0);
@@ -255,7 +255,7 @@ function ProductDetail() {
       setCount(count + 1);
     } else if (count > 0) {
       setCount(count - 1);
-    } 
+    }
   };
 
   const handleAddToCart = () => {
@@ -449,7 +449,7 @@ function ProductDetail() {
                     new Set(product.variants.map((variant) => variant.aroma))
                   ).map((item, index) => {
                     const isSelected = selectedAroma === index;
-                    
+
                     return (
                       <div
                         key={index}
@@ -730,7 +730,7 @@ function ProductDetail() {
         <ProductComment />
       </Container>
       <Container className="pb-4">
-      <BestSeller best_seller={bestSeller} />
+        <BestSeller best_seller={bestSeller} />
       </Container>
     </Container>
   );

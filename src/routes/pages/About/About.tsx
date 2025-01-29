@@ -54,41 +54,41 @@ function About() {
               <div className="mt-4">
                 <h4 className="fw-bolder mb-5">Sertifikalarımız</h4>
                 <div className="row">
-                  <div className="col-12 aboutUs">
+                  <div className="col-12 aboutUs py-2">
                     <img
                       className="me-2"
                       style={{ width: 100, height: 100 }}
-                      src="/src/assets/images/certificatesImages/certificates1.png"
+                      src="/assets/certificatesImages/certificates1.png"
                       alt=""
                     />
                     <img
                       className="me-2"
                       style={{ width: 100, height: 100 }}
-                      src="/src/assets/images/certificatesImages/certificates2.png"
+                      src="/assets/certificatesImages/certificates2.png"
                       alt=""
                     />
                     <img
                       className="me-2"
                       style={{ width: 100, height: 100 }}
-                      src="/src/assets/images/certificatesImages/certificates3.png"
+                      src="/assets/certificatesImages/certificates3.png"
                       alt=""
                     />
                     <img
                       className="me-2"
                       style={{ width: 100, height: 100 }}
-                      src="/src/assets/images/certificatesImages/certificates4.png"
+                      src="/assets/certificatesImages/certificates4.png"
                       alt=""
                     />
                     <img
                       className="me-2"
                       style={{ width: 100, height: 100 }}
-                      src="/src/assets/images/certificatesImages/certificates5.png"
+                      src="/assets/certificatesImages/certificates5.png"
                       alt=""
                     />
                     <img
                       className="me-2"
                       style={{ width: 100, height: 100 }}
-                      src="/src/assets/images/certificatesImages/certificates6.png"
+                      src="/assets/certificatesImages/certificates6.png"
                       alt=""
                     />
                   </div>

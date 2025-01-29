@@ -9,7 +9,7 @@ function Nav() {
           <div className="row px-2">
             <div className="col-4 d-flex column-gap-1 align-items-center justify-content-start">
               <img
-                src="/src/assets/images/icons/cargoIcon.png"
+                src="/assets/icons/cargoIcon.png"
                 width={16}
                 height={16}
                 alt=""
@@ -20,7 +20,7 @@ function Nav() {
             </div>
             <div className="col-4 d-flex column-gap-1 align-items-center justify-content-start">
               <img
-                src="/src/assets/images/icons/smileIcon.png"
+                src="/assets/icons/smileIcon.png"
                 width={16}
                 height={16}
                 alt=""
@@ -31,7 +31,7 @@ function Nav() {
             </div>
             <div className="col-4 d-flex column-gap-1 align-items-center justify-content-start">
               <img
-                src="/src/assets/images/icons/securityIShopcon.png"
+                src="/assets/icons/securityIShopcon.png"
                 width={16}
                 height={16}
                 alt=""

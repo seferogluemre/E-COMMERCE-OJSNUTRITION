@@ -5,7 +5,6 @@ export function useProductVariants(productVariants: ProductVariant[]) {
     const [selectedVariant, setSelectedVariant] = useState<ProductVariant>(
         () => productVariants[0]
     );
-
     const productVariantsByAroma = productVariants.reduce(
         (previousValue, currentValue) => {
             if (previousValue[currentValue.aroma]) {
@@ -17,7 +16,6 @@ export function useProductVariants(productVariants: ProductVariant[]) {
         },
         {} as Record<string, ProductVariant[]>
     );
-
     const productSizes = productVariants.reduce(
         (previousValue, currentValue) => {
             if (
@@ -31,7 +29,6 @@ export function useProductVariants(productVariants: ProductVariant[]) {
         },
         [] as ProductVariantSize[]
     );
-
     const productAromas = Object.keys(productVariantsByAroma);
 
     function getAromaSizes(aroma: string) {

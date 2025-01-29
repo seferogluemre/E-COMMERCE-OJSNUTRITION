@@ -28,7 +28,7 @@ function Products() {
               ...prevProducts,
               ...response.data.data.results,
             ]);
-          } 
+          }
         } catch (error) {
           console.error(
             "API isteği sırasında bir hata oluştu:",
