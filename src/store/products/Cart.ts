@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { useToastStore } from "../toast/ToastStore";
-import { BASE_URL } from "../../routes/pages/Products/components/types";
 import { getAccessToken } from "../../services/api/collections/storage";
 import { createAxiosInstance } from "../../services/api/axios";
+import { BASE_URL } from "../../services/api/collections/auth";
 
 export interface CartItem {
   id: string;
@@ -185,7 +185,6 @@ export const useCartStore = create<CartStore>((set, get) => {
             throw new Error("Ürün sepetten silinemedi");
           }
         }
-
         set((state) => {
           const newItems = state.items.filter((item) => item.id !== itemId);
 

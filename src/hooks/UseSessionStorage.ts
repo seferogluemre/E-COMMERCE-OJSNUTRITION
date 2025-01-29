@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Product } from "../routes/pages/Products/components/types";
+import { Product } from "../routes/Products/components/types";
 
 const UseLocalStorage = (key: string, initialValue: string) => {
   const [storedValue, setStoredValue] = useState(() => {

@@ -1,5 +1,4 @@
 import { createAxiosInstance } from "../axios";
-import { BASE_URL } from "../../../routes/pages/Products/components/types";
 import {
   setTokenAndAuthUser,
   setAuthUser,
@@ -8,6 +7,8 @@ import {
   removeTokenAndAuthUser,
 } from "./storage";
 import { useToastStore } from "../../../store/toast/ToastStore";
+export const BASE_URL = "https://fe1111.projects.academy.onlyjs.com/api/v1";
+export const PHOTO_URL = "https://fe1111.projects.academy.onlyjs.com";
 
 interface LoginApiData {
   username: string;

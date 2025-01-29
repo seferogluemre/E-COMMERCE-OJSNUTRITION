@@ -1,7 +1,7 @@
 import { useToastStore } from "../../../store/toast/ToastStore";
 import { createAxiosInstance } from "../axios";
+import { BASE_URL } from "./auth";
 import { getAccessToken } from "./storage";
-import { BASE_URL } from "../../../routes/pages/Products/components/types";
 
 export interface UserAddress {
   title: string;

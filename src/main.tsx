@@ -9,21 +9,21 @@ import {
   PaymentPage,
   RootLayout,
   SSSPage,
-} from "./routes/pages/index";
+} from "./routes/index";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import { loader } from "./components/layout/BestSeller/loader";
-import ErrorPage from "./routes/pages/error-page";
-import { allProductLoader } from "./routes/pages/Products/loader";
-import { ProductDetailLoader } from "./routes/pages/ProductDetail/ProductDetailLoader";
+import { loader } from "./components/BestSeller/loader";
+import ErrorPage from "./routes/error-page";
+import { allProductLoader } from "./routes/Products/loader";
+import { ProductDetailLoader } from "./routes/ProductDetail/ProductDetailLoader";
 import React from "react";
 
 const LazyProductPage = React.lazy(
-  () => import("./routes/pages/Products/Products")
+  () => import("./routes/Products/Products")
 );
 
 const LazyProductDetailPage = React.lazy(
-  () => import("./routes/pages/ProductDetail/ProductDetail")
+  () => import("./routes/ProductDetail/ProductDetail")
 );
 
 const routes = createBrowserRouter([

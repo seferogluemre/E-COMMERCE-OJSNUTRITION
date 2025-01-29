@@ -23,10 +23,10 @@ export const handlePaymentSubmit = async (paymentData: PaymentData): Promise<Pay
   try {
     const api = createAxiosInstance();
     console.log("Request Data:", JSON.stringify(paymentData, null, 2)); // Request data'yı yazdır
-    
+
     const response = await api.post<PaymentResponse>('/orders/complete-shopping', paymentData);
     console.log("Response Data:", response.data); // Response data'yı yazdır
-    
+
     useToastStore.getState().showToast("Ödeme başarılı bir şekilde tamamlandı", "success");
     return response.data;
   } catch (error: any) {
@@ -36,12 +36,12 @@ export const handlePaymentSubmit = async (paymentData: PaymentData): Promise<Pay
     console.log("Error Response Data:", error.response?.data);
     console.log("Error Response Status:", error.response?.status);
     console.log("Error Response Headers:", error.response?.headers);
-    
-    const errorMessage = error.response?.data?.reason?.payment_type?.[0] || 
-                        error.response?.data?.detail || 
-                        error.response?.data?.message || 
-                        "Ödeme işlemi sırasında bir hata oluştu";
-    
+
+    const errorMessage = error.response?.data?.reason?.payment_type?.[0] ||
+      error.response?.data?.detail ||
+      error.response?.data?.message ||
+      "Ödeme işlemi sırasında bir hata oluştu";
+
     useToastStore.getState().showToast(errorMessage, "error");
     throw error;
   }

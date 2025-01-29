@@ -1,6 +1,6 @@
 import axios from "axios";
-import { BASE_URL } from "../../routes/pages/Products/components/types";
 import {
+  BASE_URL,
   getAccessToken,
   isTokenExpired,
   refreshAccessToken,

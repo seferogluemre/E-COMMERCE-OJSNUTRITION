@@ -1,6 +1,6 @@
 import axios from "axios";
-import { BASE_URL } from "../../../routes/pages/Products/components/types";
 import { getAccessToken } from "./storage";
+import { BASE_URL } from "./auth";
 
 export const addProductComment = async (productSlug: string, data: {
   stars: number;
