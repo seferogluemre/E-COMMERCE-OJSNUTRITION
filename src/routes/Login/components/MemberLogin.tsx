@@ -2,10 +2,10 @@ import { Button, FormControl, FormGroup, FormLabel } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { login } from "../../../../services/api/collections/auth";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Notification from "../../../../components/ToastNotification/Notification";
+import { login } from "../../../services/api/collections/auth";
+import Notification from "../../../components/ToastNotification/Notification";
 
 // Form verileri için interface tanımı
 interface ILoginFormInputs {

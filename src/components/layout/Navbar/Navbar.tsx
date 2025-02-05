@@ -61,7 +61,7 @@ function NavbarComp() {
 
   const getTotalItems = useCartStore((state) => state.getTotalItems);
 
-  // Token kontrolü için effect
+  // Token kontrolü
   useEffect(() => {
     const checkToken = async () => {
       const token = getAccessToken();

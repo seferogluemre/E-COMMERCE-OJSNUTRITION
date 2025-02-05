@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Card, Button, Row, Col, Form, Alert, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { createAxiosInstance } from "../../../../services/api/axios";
-import {
-  City,
-  deleteAddress,
-  District,
-  fetchAddresses,
-  handleSubmitAddress,
-  updateUserAddress,
-} from "../../../../services/api/collections/Addresses";
+
 import { MdDelete, MdEdit } from "react-icons/md";
+import { City, deleteAddress, District, fetchAddresses, handleSubmitAddress, updateUserAddress } from "../../../services/api/collections/Addresses";
+import { createAxiosInstance } from "../../../services/api/axios";
 
 interface UserAddress {
   title: string;

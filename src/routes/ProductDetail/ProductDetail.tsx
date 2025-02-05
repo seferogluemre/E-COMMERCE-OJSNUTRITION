@@ -234,7 +234,6 @@ function ProductDetail() {
     Şeftali: "/assets/icons/seftali.webp",
   };
 
-  console.log(productState[0]);
 
   const isVariantAvailable = (
     aroma: string,

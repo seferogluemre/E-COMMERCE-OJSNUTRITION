@@ -1,9 +1,9 @@
 import { Card, Button, Modal, Form } from "react-bootstrap";
-import { PHOTO_URL } from "../../Products/components/types";
 import { useEffect, useState } from "react";
-import { getOrderDetail, getOrders, Order, OrderDetail } from "../../../../services/api/collections/Orders";
-import { addProductComment } from "../../../../services/api/collections/Products";
-import { useToastStore } from "../../../../store/toast/ToastStore";
+import { getOrderDetail, getOrders, Order, OrderDetail } from "../../../services/api/collections/Orders";
+import { addProductComment } from "../../../services/api/collections/Products";
+import { useToastStore } from "../../../store/toast/ToastStore";
+import { PHOTO_URL } from "../../../services/api/collections/auth";
 
 function Orders() {
   const [orders, setOrders] = useState<Order[]>([]);

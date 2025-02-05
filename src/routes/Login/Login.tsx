@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Container, Row, Tab, Tabs } from "react-bootstrap";
 import Signup from "./components/Signup";
 import MemberLogin from "./components/MemberLogin";
-import { useCartStore } from "../../../store/products/Cart";
+import { useCartStore } from "../../store/products/Cart";
 
 function Login() {
   const [activeTab, setActiveTab] = useState<string>("signup");

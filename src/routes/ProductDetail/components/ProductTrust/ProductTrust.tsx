@@ -7,7 +7,7 @@ function ProductTrust() {
         <div className="row px-2">
           <div className="col-lg-4 col-sm-6 d-flex column-gap-1 align-items-center justify-content-start">
             <img
-              src="/src/assets/images/icons/cargoIcon.png"
+              src="/assets/icons/cargoIcon.png"
               width={16}
               height={16}
               alt=""
@@ -18,7 +18,7 @@ function ProductTrust() {
           </div>
           <div className="col-lg-4 col-sm-6 d-flex column-gap-1 align-items-center justify-content-start">
             <img
-              src="/src/assets/images/icons/smileIcon.png"
+              src="/assets/icons/smileIcon.png"
               width={16}
               height={16}
               alt=""
@@ -27,7 +27,7 @@ function ProductTrust() {
           </div>
           <div className="col-lg-4 col-sm-6 d-flex column-gap-1 align-items-center justify-content-start">
             <img
-              src="/src/assets/images/icons/securityIShopcon.png"
+              src="/assets/icons/securityIShopcon.png"
               width={16}
               height={16}
               alt=""

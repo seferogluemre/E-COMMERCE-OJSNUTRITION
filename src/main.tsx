@@ -11,12 +11,13 @@ import {
   SSSPage,
 } from "./routes/index";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
+import "./sass/style.scss";
 import { loader } from "./components/BestSeller/loader";
 import ErrorPage from "./routes/error-page";
 import { allProductLoader } from "./routes/Products/loader";
 import { ProductDetailLoader } from "./routes/ProductDetail/ProductDetailLoader";
 import React from "react";
+
 
 const LazyProductPage = React.lazy(
   () => import("./routes/Products/Products")

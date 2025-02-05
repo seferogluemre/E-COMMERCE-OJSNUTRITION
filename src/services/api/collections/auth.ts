@@ -148,7 +148,6 @@ export const updateUserData = async (userData: User) => {
   try {
     const api = createAxiosInstance();
 
-    // Telefon numarasına +90 ekliyoruz
     const updatedPhoneNumber = `+90${userData.phone_number?.replace(
       /^\+90/,
       ""

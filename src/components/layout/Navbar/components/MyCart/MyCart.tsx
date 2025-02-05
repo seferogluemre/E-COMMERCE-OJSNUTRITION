@@ -1,9 +1,9 @@
 import { Button, CardFooter, Offcanvas } from "react-bootstrap";
 import { CgShoppingCart } from "react-icons/cg";
-import { PHOTO_URL } from "../../../../../routes/pages/Products/components/types";
 import { useCartStore } from "../../../../../store/products/Cart";
 import { useNavigate } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
+import { PHOTO_URL } from "../../../../../services/api/collections/auth";
 
 interface CartProps {
   show: boolean;

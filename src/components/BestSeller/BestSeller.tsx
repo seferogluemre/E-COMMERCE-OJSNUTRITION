@@ -3,7 +3,7 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 import BestSellerCard from "./BestSellerCard";
 import "./_BestSeller.scss";
 import { PriceInfo } from "../../routes/Products/Products";
-import { PHOTO_URL } from "../../routes/Products/components/types";
+import { PHOTO_URL } from "../../services/api/collections/auth";
 
 export interface BestSellerPropsCS {
   name: string;

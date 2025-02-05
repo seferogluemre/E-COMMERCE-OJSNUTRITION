@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from "./components/types";
+import { BASE_URL } from "../../services/api/collections/auth";
 
 export async function allProductLoader() {
   try {
