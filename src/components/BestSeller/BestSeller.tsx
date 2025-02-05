@@ -28,7 +28,6 @@ export interface BestSellerProps {
 }
 
 
-
 const WithBestSeller = (WrappedComponent) => {
   return (props: { best_seller }) => {
     const { best_seller } = props;

@@ -1,5 +1,5 @@
 import { Container, Row } from "react-bootstrap";
-import "./Categories.scss";
+import styles from "./Categories.module.scss"; // Sass Modules dosyamızı import ettik.
 import { useNavigate } from "react-router-dom";
 
 interface CategoryProp {
@@ -10,7 +10,7 @@ interface CategoryProp {
 function Categories() {
   const navigate = useNavigate();
 
-  const caategoriesImagesArray: CategoryProp[] = [
+  const categoriesImagesArray: CategoryProp[] = [
     { CategoriesPhoto: "/assets/categoriesImages/card1.png", to: "/" },
     { CategoriesPhoto: "/assets/categoriesImages/card2.png", to: "/" },
     { CategoriesPhoto: "/assets/categoriesImages/card3.png", to: "/" },
@@ -20,24 +20,20 @@ function Categories() {
   ];
 
   return (
-    <>
-      <Container className="my-5">
-        <Row className="d-flex justify-content-center">
-          {caategoriesImagesArray.map((category, index) => (
-            <div
-              className="col-lg-4 col-md-6  pb-3 category-column text-center"
-              key={index}
-              onClick={() => navigate(category.to)}
-            >
-              <img
-                src={category.CategoriesPhoto}
-                className="img-fluid rounded-4"
-              />
-            </div>
-          ))}
-        </Row>
-      </Container>
-    </>
+    <Container className="my-5">
+      <Row className="d-flex justify-content-center">
+        {categoriesImagesArray.map((category, index) => (
+          <div
+            className={`col-lg-4 col-md-6 pb-3 ${styles.categoryColumn}`}
+            key={index}
+            onClick={() => navigate(category.to)}
+          >
+            <img src={category.CategoriesPhoto} className="img-fluid" alt="Category" />
+          </div>
+        ))}
+      </Row>
+    </Container>
   );
 }
+
 export default Categories;
