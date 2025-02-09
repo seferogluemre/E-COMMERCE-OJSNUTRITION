@@ -1,6 +1,7 @@
 import { Card, CardBody, CardHeader, CardText } from "react-bootstrap";
 import FiveStar from "../FiveStars/FiveStar";
 import { BestSellerProps } from "./BestSeller";
+import styles from './Bestseller.module.scss'; // CSS Modülünü import ediyoruz
 
 function BestSellerCard({
   name,
@@ -11,45 +12,44 @@ function BestSellerCard({
   discounted_percentage,
 }: BestSellerProps) {
   return (
-    <>
-      <Card className="best_seller-card border-0">
-        <CardHeader className="best-seller-card-header p-2 border-0 bg-transparent">
-          <img src={photo_src} className="best-seller-product-image" />
-        </CardHeader>
-        <CardBody className="best_seller-card-body flex-wrap">
-          <CardText className="best_seller-card_name">
-            {name.toLocaleUpperCase()}
-          </CardText>
-          <CardText className="best_seller-card_title">
-            {slug?.toLocaleUpperCase()}
-          </CardText>
-          <CardText className="column-gap-1 d-flex pb-3 justify-content-center">
-            <FiveStar />
-          </CardText>
-          <CardText className="m-0">{comment_count} Yorum</CardText>
-          <div className="product-price">
-            {price_info.discounted_price && (
-              <span
-                className="original-price "
-                style={{ textDecoration: "line-through" }}
-              >
-                {price_info.total_price} TL
-              </span>
-            )}
-            <span className="current-price m-1 text-danger">
+    <Card className={styles.best_seller_card}> {/* className'i styles üzerinden değiştiriyoruz */}
+      <CardHeader className={`${styles.best_seller_card_header} p-2 border-0 bg-transparent`}>
+        <img src={photo_src} className={styles.best_seller_product_image} alt={name} />
+        {discounted_percentage && (
+          <p className={styles.discounted_percentage}>
+            %{discounted_percentage}
+            <br />
+            İNDİRİM
+          </p>
+        )}
+      </CardHeader>
+      <CardBody className={`${styles.best_seller_card_body} flex-wrap`}>
+        <CardText className={styles.best_seller_card_name}>
+          {name.toLocaleUpperCase()}
+        </CardText>
+        <CardText className={styles.best_seller_card_title}>
+          {slug?.toLocaleUpperCase()}
+        </CardText>
+        <CardText className="column-gap-1 d-flex pb-3 justify-content-center">
+          <FiveStar />
+        </CardText>
+        <CardText className="m-0">{comment_count} Yorum</CardText>
+        <div className="product-price">
+          {price_info.discounted_price && (
+            <span
+              className="original-price"
+              style={{ textDecoration: "line-through" }}
+            >
               {price_info.total_price} TL
             </span>
-            {discounted_percentage && (
-              <p className="discounted-percentage">
-                %{discounted_percentage}
-                <br />
-                İNDİRİM
-              </p>
-            )}
-          </div>
-        </CardBody>
-      </Card>
-    </>
+          )}
+          <span className="current-price m-1 text-danger">
+            {price_info.discounted_price || price_info.total_price} TL
+          </span>
+        </div>
+      </CardBody>
+    </Card>
   );
 }
+
 export default BestSellerCard;

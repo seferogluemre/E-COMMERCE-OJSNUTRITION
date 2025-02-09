@@ -9,7 +9,7 @@ import {
 import "./_Navbar.scss";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { IoSearchOutline } from "react-icons/io5";
+import { IoCartOutline, IoSearchOutline } from "react-icons/io5";
 import { AiOutlineUser } from "react-icons/ai";
 import { GrCart } from "react-icons/gr";
 import { useSearchProduct } from "../../../store/products/useSearchProduct";
@@ -59,8 +59,8 @@ function NavbarComp() {
   const handleShowTwo = () => setShowTwo(true);
   const handleCloseTwo = () => setShowTwo(false);
 
+  const cartItems = useCartStore((state) => state.cartItems);
   const getTotalItems = useCartStore((state) => state.getTotalItems);
-
   // Token kontrolü
   useEffect(() => {
     const checkToken = async () => {
@@ -178,23 +178,33 @@ function NavbarComp() {
               </ul>
             </div>
 
-            <div className="border-0 position-relative" id="nav-dropdown-cart">
-              <span className="position-absolute top-0 px-2 start-100 translate-middle rounded-circle bg-danger">
-                {getTotalItems()}
-              </span>
-
-              <div className="cart-icon-container">
-                <Button
-                  id="nav-dropdown-cart"
-                  className="btn btn-secondary"
-                  onClick={handleShowTwo}
-                >
-                  <GrCart className="fs-5" />
-                  Sepetim
-                </Button>
-                <MyCart handleCloseTwo={handleCloseTwo} show={showTwo} />
+            <button
+              className={`btn btn-secondary d-flex align-items-center justify-content-center gap-2`}
+              onClick={handleShowTwo}
+              id="cart-container"
+              style={{ transition: 'all 0.3s ease' }}
+            >
+              <div className="position-relative">
+                  <span
+                    className="position-absolute badge rounded-pill bg-danger"
+                    id="cart-badge"
+                    style={{
+                      top: '-8px',
+                      right: '-8px',
+                      fontSize: '0.75rem',
+                      minWidth: '18px',
+                      height: '18px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                  >
+                    {getTotalItems()}
+                  </span>
+                <IoCartOutline className="fs-3" />
               </div>
-            </div>
+              <span>Sepetim</span>
+            </button>
             <NavbarBrand>
               <div
                 className="position-relative cart-icon-container"
@@ -227,6 +237,7 @@ function NavbarComp() {
         />
       </Form>
       <MobileSidebar show={show} handleClose={handleClose} />
+      <MyCart handleCloseTwo={handleCloseTwo} show={showTwo} />
     </>
   );
 }

@@ -1,0 +1,88 @@
+#uncontrolled-tab-example {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    color: black !important;        
+
+    #tab{
+        background-color: #b8b8b8 !important;
+        color: black !important;
+        max-width: 180px !important;
+    }
+    .nav-link{
+        color: black;
+    }
+    #uncontrolled-tab-example-tab-signup, #uncontrolled-tab-example-tab-member_login {
+        width: 190px !important;
+        height: 80px !important;
+        background-color: #e0e0e0 !important;
+        border-radius: 0px !important;
+        margin: 5px 10px !important;
+
+        &.active {
+            color: blue !important;
+            border: 0px !important;
+            background-color: white !important;
+        }
+    }
+}
+
+.form-container{
+    width: 50% !important;
+    border: 1px solid #e0e0e0 !important;
+    border-top: 1px solid #e0e0e0 !important;
+}
+
+.form-control{
+    box-shadow: none !important;
+
+    &:focus{
+        outline: none !important;
+        box-shadow: none !important;
+        border: 1px solid black !important;
+    }
+}
+
+@media (min-width:768px) and (max-width:1200px){
+    .form-container{
+        width: 100% !important;
+    }
+    #uncontrolled-tab-example {
+        #tab{
+            max-width: 120px !important;
+        }
+        #uncontrolled-tab-example-tab-signup, #uncontrolled-tab-example-tab-member_login {
+            width: 120px !important;
+            height: 50px !important;
+        }
+    }
+}
+@media (max-width: 768px) {
+    .form-container{
+        width: 100% !important;
+    }
+    #uncontrolled-tab-example {
+        #tab{
+            max-width: 100px !important;
+        }
+        #uncontrolled-tab-example-tab-signup, #uncontrolled-tab-example-tab-member_login {
+            width: 120px !important;
+            height: 50px !important;
+        }
+    }
+}
+@media (max-width: 576px) {
+    .form-container{
+        width: 100% !important;
+    }
+    #uncontrolled-tab-example {
+        #tab{
+            max-width: 150px !important;
+        }
+        #uncontrolled-tab-example-tab-signup, #uncontrolled-tab-example-tab-member_login {
+            width: 120px !important;
+            height: 50px !important;
+        }
+    }
+}

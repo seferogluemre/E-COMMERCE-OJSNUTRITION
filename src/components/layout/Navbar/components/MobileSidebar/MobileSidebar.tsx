@@ -46,18 +46,23 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
       const categoriesResponse = await axios.get(
         "https://fe1111.projects.academy.onlyjs.com/api/v1/categories"
       );
+      
+      // API'den gelen veriyi doğru şekilde çıkartalım
+      const categoriesData = categoriesResponse.data?.data?.data;
 
-      const categoriesData: CategoriesResponseProps = categoriesResponse.data;
-
-      const updatedCategories = categoriesData.data.map(
-        (item: CategoryProps) => ({
+      if (Array.isArray(categoriesData)) {
+        const updatedCategories = categoriesData.map((item: CategoryProps) => ({
           ...item,
           subChildren: item.children?.[0]?.sub_children || [],
-        })
-      );
-      setCategories(updatedCategories);
+        }));
+        setCategories(updatedCategories);
+      } else {
+        console.error("Categories data is not in expected format");
+        setCategories([]);
+      }
     } catch (error) {
       console.error("Error fetching categories:", error);
+      setCategories([]);
     }
   }
 

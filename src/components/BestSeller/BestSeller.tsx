@@ -1,9 +1,10 @@
 import { Container, Row } from "react-bootstrap";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import BestSellerCard from "./BestSellerCard";
-import "./_BestSeller.scss";
+import styles from "./BestSeller.module.scss";
 import { PriceInfo } from "../../routes/Products/Products";
 import { PHOTO_URL } from "../../services/api/collections/auth";
+import { JSX } from "react/jsx-runtime";
 
 export interface BestSellerPropsCS {
   name: string;
@@ -27,12 +28,10 @@ export interface BestSellerProps {
   average_star: number;
 }
 
-
-const WithBestSeller = (WrappedComponent) => {
-  return (props: { best_seller }) => {
+const WithBestSeller = (WrappedComponent: JSX.IntrinsicAttributes) => {
+  return (props: { best_seller: JSX.IntrinsicAttributes }) => {
     const { best_seller } = props;
     const products = useLoaderData();
-
     const dataToDisplay = best_seller || products;
 
     return <WrappedComponent {...props} best_seller={dataToDisplay} />;
@@ -41,11 +40,10 @@ const WithBestSeller = (WrappedComponent) => {
 
 function BestSeller({ best_seller }) {
   const navigate = useNavigate();
-
   const dataToDisplay = Array.isArray(best_seller) ? best_seller : [];
 
   return (
-    <Container className="my-5 best-seller-container">
+    <Container className={`my-5 ${styles.best_seller_container}`}>
       <div className="text-center m-0">
         <h1 className="fs-3">Çok Satanlar</h1>
       </div>
@@ -53,7 +51,7 @@ function BestSeller({ best_seller }) {
         {dataToDisplay.length > 0 ? (
           dataToDisplay.map((data: BestSellerPropsCS, index: number) => (
             <div
-              className="col-lg-4 col-md-6 col-sm-6 col-xxl-2 flex-wrap d-flex justify-content-center best_seller_column"
+              className={`col-lg-4 col-md-6 col-sm-6 col-xxl-2 flex-wrap d-flex justify-content-center ${styles.best_seller_column}`}
               key={data.slug}
               onClick={() => navigate(`/products/${data.slug}`)}
             >

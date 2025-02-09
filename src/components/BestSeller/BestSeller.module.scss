@@ -1,0 +1,114 @@
+.best_seller_column {
+    flex: 16.5% !important;
+
+    .best_seller_card {
+        width: 320px !important;
+        height: 365px !important;
+        margin-bottom: 60px auto !important;
+        text-align: center;
+        border: 0px;
+        text-align: center;
+
+        &:hover {
+            .best_seller_product_image {
+                transform: scale(1.07);
+                cursor: pointer;
+            }
+        }
+
+        .best_seller_card_header {
+            padding: 0 !important;
+            border: none !important;
+            width: 100% !important;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .best_seller_card_body {
+            border: 0px !important;
+            padding: 12px;
+        }
+
+        .discounted-percentage {
+            position: absolute !important;
+            top: -10px !important;
+            right: -20px;
+            background-color: red !important;
+            width: 65px !important;
+            height: 45px;
+            color: aliceblue !important;
+            font-size: 15px;
+            display: flex;
+            z-index: 3050 !important;
+            justify-content: center;
+            font-weight: 400 !important;
+        }
+
+        .best_seller_product_price {
+            color: red;
+            font-size: 20px !important;
+            font-weight: 600 !important;
+            position: relative !important;
+        }
+
+        .best_seller_card_name {
+            font-size: 19px !important;
+        }
+
+        .best_seller_card_title {
+            font-size: 13px !important;
+            font-weight: 600 !important;
+            margin: 0px;
+        }
+    }
+}
+
+.best_seller_product_image {
+    transition: 0.3s ease-in-out;
+    height: 170px !important;
+    width: 170px !important;
+}
+
+@media (max-width: 576px) {
+    .best_seller_column {
+        flex: 43% !important;
+        width: 43% !important;
+        padding: 0px;
+
+        .best_seller_card {
+            margin: 3px;
+            height: 450px !important;
+            margin-bottom: 10px;
+            background-color: transparent;
+
+            .best_seller_product_image {
+                width: 100% !important;
+                height: 170px !important;
+                object-fit: cover !important;
+            }
+        }
+
+        .best_seller_card_header {
+            padding: 3px !important;
+        }
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1400px) {
+    .best_seller_column {
+        width: 33% !important;
+        flex: 33% !important;
+
+        .best_seller_card {
+            width: 260px !important;
+            height: 250px !important;
+            margin-bottom: 50px !important;
+
+            .best_seller_product_image {
+                max-width: 105% !important;
+                height: 230px !important;
+                object-fit: cover !important;
+            }
+        }
+    }
+}

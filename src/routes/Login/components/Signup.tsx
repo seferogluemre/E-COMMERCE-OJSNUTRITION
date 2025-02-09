@@ -88,6 +88,7 @@ function Signup() {
               <FormLabel>Ad</FormLabel>
               <FormControl
                 type="text"
+                className="form-control"
                 {...register("firstName")}
                 isInvalid={!!errors.firstName}
               />
@@ -100,6 +101,7 @@ function Signup() {
             <FormGroup controlId="signupLastName">
               <FormLabel>Soyad</FormLabel>
               <FormControl
+               className="form-control"
                 type="text"
                 {...register("lastName")}
                 isInvalid={!!errors.lastName}
@@ -114,6 +116,7 @@ function Signup() {
         <FormGroup className="mb-3" controlId="signupEmail">
           <FormLabel>E-Posta</FormLabel>
           <FormControl
+           className="form-control"
             type="email"
             {...register("email")}
             isInvalid={!!errors.email}
@@ -126,6 +129,7 @@ function Signup() {
         <FormGroup className="mb-4" controlId="signupPassword">
           <FormLabel>Şifre</FormLabel>
           <FormControl
+           className="form-control"
             type="password"
             {...register("password")}
             isInvalid={!!errors.password}

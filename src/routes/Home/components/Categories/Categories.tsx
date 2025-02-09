@@ -1,5 +1,5 @@
 import { Container, Row } from "react-bootstrap";
-import styles from "./Categories.module.scss"; // Sass Modules dosyamızı import ettik.
+import styles from "./Categories.module.scss";
 import { useNavigate } from "react-router-dom";
 
 interface CategoryProp {

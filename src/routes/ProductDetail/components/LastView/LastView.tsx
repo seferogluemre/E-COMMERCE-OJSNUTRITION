@@ -27,7 +27,6 @@ const LastView: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Get Product Local Data
     const storedProducts: LastViewProduct[] = JSON.parse(localStorage.getItem(LOCAL_KEY) || "[]");
     setLastViewProducts(storedProducts);
   }, []);

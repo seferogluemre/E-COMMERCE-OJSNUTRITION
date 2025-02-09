@@ -28,6 +28,7 @@
       border: 0px !important;
       padding: 12px;
     }
+
     .discounted-percentage {
       position: absolute !important;
       top: -10px !important;
@@ -48,9 +49,11 @@
       font-size: 20px !important;
       font-weight: 600 !important;
     }
+
     .product_list-card_name {
       font-size: 17.5px !important;
     }
+
     .product_list-card_title {
       font-size: 12px !important;
       font-weight: bold !important;
@@ -58,6 +61,7 @@
     }
   }
 }
+
 .product_list-card-image {
   width: 270px !important;
   transition: transform 0.2s ease-out;
@@ -74,6 +78,7 @@
       margin: 0px auto;
       height: 450px !important;
     }
+
     .product_list-card-image {
       max-width: 100% !important;
       height: 220px !important;

@@ -604,17 +604,17 @@ function ProductDetail() {
                 <div className="d-flex pt-2 justify-content-between column-gap-md-3">
                   <div className="count-box">
                     <button
-                      onClick={() => handleCountChange(true)}
-                      className="product-counter-btn"
-                    >
-                      <GoPlus />
-                    </button>
-                    <span className="fs-4 m-2">{count}</span>
-                    <button
                       onClick={() => handleCountChange(false)}
                       className="product-counter-btn"
                     >
                       <FaMinus />
+                    </button>
+                    <span className="fs-4 m-2">{count}</span>
+                    <button
+                      onClick={() => handleCountChange(true)}
+                      className="product-counter-btn"
+                    >
+                      <GoPlus />
                     </button>
                   </div>
                   <div className="cart">

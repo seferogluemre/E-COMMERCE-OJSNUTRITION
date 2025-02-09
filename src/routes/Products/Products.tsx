@@ -1,7 +1,7 @@
 import { Container, Row } from "react-bootstrap";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import ProductCard from "./components/ProductCard/ProductCard";
-import "./components/ProductCard/_ProductCard.scss";
+import "./components/ProductCard/ProductCard.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL, PHOTO_URL } from "../../services/api/collections/auth";
