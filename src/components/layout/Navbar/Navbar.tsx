@@ -185,22 +185,22 @@ function NavbarComp() {
               style={{ transition: 'all 0.3s ease' }}
             >
               <div className="position-relative">
-                  <span
-                    className="position-absolute badge rounded-pill bg-danger"
-                    id="cart-badge"
-                    style={{
-                      top: '-8px',
-                      right: '-8px',
-                      fontSize: '0.75rem',
-                      minWidth: '18px',
-                      height: '18px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}
-                  >
-                    {getTotalItems()}
-                  </span>
+                <span
+                  className="position-absolute badge rounded-pill bg-danger"
+                  id="cart-badge"
+                  style={{
+                    top: '-8px',
+                    right: '-8px',
+                    fontSize: '0.75rem',
+                    minWidth: '18px',
+                    height: '18px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  {getTotalItems()}
+                </span>
                 <IoCartOutline className="fs-3" />
               </div>
               <span>Sepetim</span>
