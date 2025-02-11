@@ -59,7 +59,6 @@ function NavbarComp() {
   const handleShowTwo = () => setShowTwo(true);
   const handleCloseTwo = () => setShowTwo(false);
 
-  const cartItems = useCartStore((state) => state.cartItems);
   const getTotalItems = useCartStore((state) => state.getTotalItems);
   // Token kontrolü
   useEffect(() => {

@@ -1,7 +1,7 @@
 import { Card, CardBody, CardHeader, CardText } from "react-bootstrap";
 import FiveStar from "../FiveStars/FiveStar";
 import { BestSellerProps } from "./BestSeller";
-import styles from './Bestseller.module.scss'; // CSS Modülünü import ediyoruz
+import "./BestSeller.scss"
 
 function BestSellerCard({
   name,
@@ -12,22 +12,22 @@ function BestSellerCard({
   discounted_percentage,
 }: BestSellerProps) {
   return (
-    <Card className={styles.best_seller_card}> {/* className'i styles üzerinden değiştiriyoruz */}
-      <CardHeader className={`${styles.best_seller_card_header} p-2 border-0 bg-transparent`}>
-        <img src={photo_src} className={styles.best_seller_product_image} alt={name} />
+    <Card className="best_seller_card">
+      <CardHeader className="best_seller_card_header p-2 border-0 bg-transparent">
+        <img src={photo_src} className="best_seller_product_image" alt={name} />
         {discounted_percentage && (
-          <p className={styles.discounted_percentage}>
+          <p className="discounted_percentage">
             %{discounted_percentage}
             <br />
             İNDİRİM
           </p>
         )}
       </CardHeader>
-      <CardBody className={`${styles.best_seller_card_body} flex-wrap`}>
-        <CardText className={styles.best_seller_card_name}>
+      <CardBody className="best_seller_card_body flex-wrap">
+        <CardText className="best_seller_card_name">
           {name.toLocaleUpperCase()}
         </CardText>
-        <CardText className={styles.best_seller_card_title}>
+        <CardText className="best_seller_card_title">
           {slug?.toLocaleUpperCase()}
         </CardText>
         <CardText className="column-gap-1 d-flex pb-3 justify-content-center">

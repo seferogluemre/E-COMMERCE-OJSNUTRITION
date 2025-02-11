@@ -1,0 +1,81 @@
+.accordion-item {
+  margin: 8px 0px !important;
+
+  .accordion-header {
+    border: 0 !important; // Çerçeveyi kaldır
+    border-bottom: 1px solid rgb(197, 197, 197) !important;
+
+    .accordion-body {
+      border: 0px !important; // Çerçeveyi kaldır
+    }
+
+    .accordion-button::after {
+      display: none !important; // Bootstrap'in varsayılan ok simgesini kaldırır
+    }
+
+    .toggle-icon {
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-left: auto;
+    }
+  }
+
+  &.active {
+    background: #007bff !important;
+    color: #fff !important;
+
+    .accordion-header {
+      background: #0056b3 !important;
+      color: white !important;
+    }
+
+    .accordion-body {
+      background: #f8f9fa !important;
+      color: black !important;
+    }
+  }
+}
+
+.tab-container {
+  background: #E5E5E5 !important;
+  padding: 5px !important;
+  row-gap: 10px !important;
+  display: flex;
+  flex-direction: column;
+}
+
+#tab-title {
+  position: relative;
+  top: -50px;
+}
+
+#controlled-tab-example {
+  .nav-item {
+    margin-right: 15px;
+    text-align: center;
+    margin-bottom: 20px;
+
+    #controlled-tab-example-tab-kargo,
+    #controlled-tab-example-tab-genel,
+    #controlled-tab-example-tab-ürünler {
+      background: #E5E5E5;
+      border-radius: 0px;
+      width: 75px;
+      height: 50px;
+      color: #000000;
+      text-align: center !important;
+      margin-bottom: 40px;
+      transition: all 0.3s ease;
+    }
+
+    // Aktif olan tab
+    .nav-link.active {
+      background: #222222 !important;
+      color: white !important;
+      width: 75px;
+      border-radius: 0px;
+      height: 50px;
+      text-align: center;
+    }
+  }
+}
