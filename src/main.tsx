@@ -17,6 +17,7 @@ import ErrorPage from "./routes/error-page";
 import { allProductLoader } from "./routes/Products/loader";
 import { ProductDetailLoader } from "./routes/ProductDetail/ProductDetailLoader";
 import React from "react";
+import { CategoryProductsLoaader } from "./routes/CategoryProducts/CategoryProductsLoader";
 
 
 const LazyProductPage = React.lazy(
@@ -26,6 +27,10 @@ const LazyProductPage = React.lazy(
 const LazyProductDetailPage = React.lazy(
   () => import("./routes/ProductDetail/ProductDetail")
 );
+
+const LazyCategoryProductsPage=React.lazy(
+  ()=>import("./routes/CategoryProducts/CategoryProducts")
+)
 
 const routes = createBrowserRouter([
   {
@@ -63,6 +68,15 @@ const routes = createBrowserRouter([
           </React.Suspense>
         ),
         loader: ProductDetailLoader,
+      },
+      {
+        path: "/products/category/:main_category",
+        element: (
+          <React.Suspense>
+            <LazyCategoryProductsPage />
+          </React.Suspense>
+        ),
+        loader: CategoryProductsLoaader,
       },
       {
         path: "/contact",

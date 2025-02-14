@@ -27,8 +27,8 @@ export interface BestSellerProps {
   average_star: number;
 }
 
-const WithBestSeller = (WrappedComponent: JSX.IntrinsicAttributes) => {
-  return (props: { best_seller: JSX.IntrinsicAttributes }) => {
+const WithBestSeller = (WrappedComponent: React.ComponentType<any>) => {
+  return (props: { best_seller?: any }) => {
     const { best_seller } = props;
     const products = useLoaderData();
     const dataToDisplay = best_seller || products;
