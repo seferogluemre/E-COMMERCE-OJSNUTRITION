@@ -1,7 +1,7 @@
 import { Container, Row } from "react-bootstrap";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import BestSellerCard from "./BestSellerCard";
-import { PriceInfo } from "../../routes/Products/Products";
+import { PriceInfo, ProductListProp } from "../../routes/Products/Products";
 import { PHOTO_URL } from "../../services/api/collections/auth";
 import "./BestSeller.scss"
 
@@ -37,7 +37,9 @@ const WithBestSeller = (WrappedComponent: React.ComponentType<any>) => {
   };
 };
 
-function BestSeller({ best_seller }) {
+
+function BestSeller({ best_seller }: BestSellerPropsCS[]) {
+
   const navigate = useNavigate();
   const dataToDisplay = Array.isArray(best_seller) ? best_seller : [];
 

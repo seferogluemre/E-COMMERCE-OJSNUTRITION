@@ -3,7 +3,7 @@
   top: 90% !important;
   right: 10 !important;
   background: white;
-  z-index: 1000;
+  z-index: 3050 !important;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
   .search-results-container {
@@ -91,15 +91,18 @@
         font-size: 16px !important;
         color: red !important;
       }
+
       .original-price {
         font-size: 14px !important;
       }
     }
+
     .product-image {
       border-radius: 5px !important;
     }
   }
 }
+
 @media (min-width: 576px) and (max-width: 768px) {
   .search-results {
     position: fixed;
@@ -117,10 +120,12 @@
         font-size: 16px !important;
         color: red !important;
       }
+
       .original-price {
         font-size: 14px !important;
       }
     }
+
     .product-image {
       border-radius: 5px !important;
     }
