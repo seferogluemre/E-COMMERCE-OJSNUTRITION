@@ -78,6 +78,10 @@
   }
 }
 
+.dropdown-menu {
+  z-index: 3050 !important;
+}
+
 #cart-container {
   width: 170px !important;
   height: 45px !important;

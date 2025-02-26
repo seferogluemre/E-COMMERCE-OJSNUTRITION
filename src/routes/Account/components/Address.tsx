@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Card, Button, Row, Col, Form, Alert, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-import { MdDelete, MdEdit } from "react-icons/md";
+import { MdDelete, MdEdit, MdPlusOne } from "react-icons/md";
 import { City, deleteAddress, District, fetchAddresses, handleSubmitAddress, updateUserAddress } from "../../../services/api/collections/Addresses";
 import { createAxiosInstance } from "../../../services/api/axios";
+import { PiPlus, PiPlusMinus } from "react-icons/pi";
+import { GoPlus } from "react-icons/go";
 
 interface UserAddress {
   title: string;
@@ -303,25 +305,22 @@ function Addresses() {
                     onClick={() => handleEditClick(address)}
                     style={{ cursor: "pointer" }}
                   >
-                    <MdEdit className="fs-3" />
                     Adresi Düzenle
                   </div>
                 </Card.Footer>
               </Card>
             </Col>
           ))}
-          <Col md={6} className="mb-4">
-            <Button
-              variant="outline-primary"
-              className="w-100 h-100 d-flex flex-column align-items-center justify-content-center"
-              style={{ minHeight: "200px" }}
+          <Col md={6} className="mb-4" id="new-address-append">
+            <div
+              className="  btn-light d-flex flex-column align-items-center justify-content-center"
               onClick={() => {
                 setShowAlert(false);
                 setShowForm(true);
               }}
             >
-              <span>Yeni Adres Ekle</span>
-            </Button>
+              <span><GoPlus />Yeni Adres Ekle</span>
+            </div>
           </Col>
         </Row>
       )}

@@ -110,11 +110,10 @@ function ProductComment() {
                 {getVisiblePages().map((page) => (
                   <Button
                     key={page}
-                    className={`mx-1 ${currentPage === page ? "active" : ""}`}
+                    className={`mx-1 btn btn-secondary ${currentPage === page ? "active" : ""}`}
                     onClick={() => handlePageChange(page)}
                     style={{
-                      backgroundColor:
-                        currentPage === page ? "blue" : "transparent",
+
                       color: currentPage === page ? "white" : "black",
                     }}
                   >
@@ -124,7 +123,6 @@ function ProductComment() {
                 {currentPage < pageCount && (
                   <Button
                     onClick={() => handlePageChange(currentPage + 1)}
-                    className="mx-1"
                   >
                     &gt;
                   </Button>

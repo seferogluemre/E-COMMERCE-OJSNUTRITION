@@ -69,6 +69,18 @@
   }
 }
 
+#new-address-append {
+  width: 200px;
+  height: 100px;
+  position: relative;
+  right: -32%;
+  top: -10% !important;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 // Responsive tasarım için ek media query'ler
 @media (max-width: 768px) {
   .address-container {
