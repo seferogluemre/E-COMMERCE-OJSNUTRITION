@@ -14,19 +14,21 @@
 
 #custom-form-control {
   display: none !important;
+
+  .custom-form-control:focus {
+    box-shadow: none !important;
+    border-color: transparent !important;
+  }
 }
 
-.custom-form-control:focus {
-  box-shadow: none !important;
-  border-color: transparent !important;
-}
 
 .badge {
-  font-size: 0.85rem !important;
-  width: 1.4rem;
+  font-size: 0.69rem !important;
+  width: 1.2rem;
   display: none !important;
   height: 1.4rem;
 }
+
 #cart-badge {
   display: block !important;
 }
@@ -80,6 +82,7 @@
   width: 170px !important;
   height: 45px !important;
   background-color: #919191;
+  border: none;
   border-radius: 5px;
   color: #ffff !important;
 }
