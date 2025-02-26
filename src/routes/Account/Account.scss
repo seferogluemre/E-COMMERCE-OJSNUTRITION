@@ -81,6 +81,14 @@
   }
 }
 
+#order-container {
+  display: flex !important;
+  border: 0px;
+  border-bottom: 1px solid #333;
+  border-bottom-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+}
+
 // Responsive tasarım için ek media query'ler
 @media (max-width: 768px) {
   .address-container {

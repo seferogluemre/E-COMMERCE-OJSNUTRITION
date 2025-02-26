@@ -286,43 +286,42 @@ function Orders() {
     <div className="content-area">
       <h3 className="mb-4">Siparişlerim ({orderCount})</h3>
       {orders.map((order) => (
-        <Card key={order.order_no} className="mb-3">
+        <Card key={order.order_no} className="mb-3  rounded" id="order-container">
           <Card.Body>
             <div className="d-flex justify-content-between align-items-start mb-3">
               <h5 className="text-success">{order.order_status == "delivered" ? "Teslim Edildi" : "Sipariş Alındı"}</h5>
-              <h6>Toplam: ₺{order.total_price.toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</h6>
             </div>
-            {order.cart_detail.map((item) => (
-              <div key={item.product_variant_id} className="d-flex column-gap-4 mb-3">
-                <div>
-                  <img
-                    src={PHOTO_URL + item.photo_src}
-                    className="img-fluid"
-                    width={100}
-                    height={100}
-                    alt={item.name}
-                  />
+            {order.cart_detail.slice(0, 1).map((item) => (
+              <div key={item.product_variant_id} className="mb-3">
+                <div className="d-flex flex-row  justify-content-between align-items-center">
+                  <div className="left d-flex flex-row column-gap-4 align-items-center">
+                    <img
+                      src={PHOTO_URL + item.photo_src}
+                      className="img-fluid"
+                      width={100}
+                      height={100}
+                      alt={item.name}
+                    />
+                    <div className="detail">
+                      <p className="mb-1">{order.cart_detail.map((item) => (item.name))}</p>
+                      <p className="mb-1">Sipariş No: {order.order_no}</p>
+                      <p className="mb-1">
+                        Sipariş Tarihi: {new Date(order.created_at).toLocaleDateString('tr-TR')}
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    className="p-2b btn  btn-outline-dark border-1"
+                    onClick={() => handleViewDetail(order.order_no)}
+                  >
+                    Detay Görüntüle
+                  </button>
                 </div>
-                <div>
-                  <h6>{item.name}</h6>
-                  <p className="mb-1">Adet: {item.pieces}</p>
-                  <p className="mb-1">Birim Fiyat: ₺{item.price}</p>
-                </div>
+
               </div>
             ))}
-            <div className="border-top pt-2">
-              <p className="mb-1">Sipariş No: {order.order_no}</p>
-              <p className="mb-1">
-                Sipariş Tarihi: {new Date(order.created_at).toLocaleDateString('tr-TR')}
-              </p>
-              <Button
-                variant="link"
-                className="p-0"
-                onClick={() => handleViewDetail(order.order_no)}
-              >
-                Detay Görüntüle
-              </Button>
-            </div>
+
+
           </Card.Body>
         </Card>
       ))}
