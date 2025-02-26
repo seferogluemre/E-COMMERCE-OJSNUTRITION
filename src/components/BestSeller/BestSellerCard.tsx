@@ -13,7 +13,7 @@ function BestSellerCard({
 }: BestSellerProps) {
   return (
     <Card className="best_seller_card">
-      <CardHeader className="best_seller_card_header p-2 border-0 bg-transparent">
+      <CardHeader id="best_seller_card_header" className="best_seller_card_header p-2 border-0 bg-transparent">
         <img src={photo_src} className="best_seller_product_image" alt={name} />
         {discounted_percentage && (
           <p className="discounted_percentage">
