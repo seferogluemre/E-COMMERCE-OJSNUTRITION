@@ -1,5 +1,4 @@
 import {
-  Button,
   Container,
   NavbarBrand,
   NavbarCollapse,
@@ -11,7 +10,6 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCartOutline, IoSearchOutline } from "react-icons/io5";
 import { AiOutlineUser } from "react-icons/ai";
-import { GrCart } from "react-icons/gr";
 import { useSearchProduct } from "../../../store/products/useSearchProduct";
 import { useState, useEffect } from "react";
 import Search from "./components/Search";
@@ -54,13 +52,14 @@ function NavbarComp() {
     navigate("/");
   };
 
-  const [showTwo, setShowTwo] = useState(false);
+  const [showTwo, setShowTwo] = useState<boolean>(false);
 
   const handleShowTwo = () => setShowTwo(true);
   const handleCloseTwo = () => setShowTwo(false);
 
   const getTotalItems = useCartStore((state) => state.getTotalItems);
   // Token kontrolü
+
   useEffect(() => {
     const checkToken = async () => {
       const token = getAccessToken();
