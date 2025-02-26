@@ -31,6 +31,7 @@ function Account() {
             <h2 className="mb-4 fs-2">Hesabım</h2>
             <Nav className="tabs-link" id="tabs_link">
               <Nav.Link
+                id="account"
                 className={activeTab === "account" ? "active" : ""}
                 onClick={() => setActiveTab("account")}
               >
@@ -38,6 +39,7 @@ function Account() {
                 <span>Hesap Bilgilerim</span>
               </Nav.Link>
               <Nav.Link
+                id="orders"
                 className={activeTab === "orders" ? "active" : ""}
                 onClick={() => setActiveTab("orders")}
               >
@@ -47,10 +49,11 @@ function Account() {
                 </span>
               </Nav.Link>
               <Nav.Link
+                id="addresses"
                 className={activeTab === "addresses" ? "active" : ""}
                 onClick={() => setActiveTab("addresses")}
               >
-                <CiLocationOn className="fs-5 m-1" />
+                <CiLocationOn className="fs-4 m-1" />
                 <span>
                   Adreslerim
                 </span>

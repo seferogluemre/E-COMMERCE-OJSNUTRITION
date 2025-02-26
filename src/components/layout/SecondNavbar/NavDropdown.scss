@@ -11,6 +11,10 @@
   }
 }
 
+.dropdown {
+  // column-gap: 120px !important;
+}
+
 @media (min-width: 768px) {
   #Nav {
     height: 50px;
@@ -35,8 +39,11 @@
 
 @media (min-width: 768px) and (max-width: 992px) {
   #NavDropdown {
+
+
     .dropdown {
-      padding: 0px 120px !important;
+      padding: 0px 100px !important;
+
 
       .dropdown-item-container {
         position: relative;

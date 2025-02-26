@@ -1,5 +1,11 @@
 .tabs-link {
   flex-direction: column;
+
+  #addresses,
+  #orders,
+  #account {
+    color: #333 !important;
+  }
 }
 
 // Adres formu stilleri
