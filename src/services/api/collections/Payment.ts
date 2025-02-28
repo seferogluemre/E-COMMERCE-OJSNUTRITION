@@ -30,12 +30,6 @@ export const handlePaymentSubmit = async (paymentData: PaymentData): Promise<Pay
     useToastStore.getState().showToast("Ödeme başarılı bir şekilde tamamlandı", "success");
     return response.data;
   } catch (error: any) {
-    // Tüm hata detaylarını konsola yazdır
-    console.log("Full Error:", error);
-    console.log("Error Response:", error.response);
-    console.log("Error Response Data:", error.response?.data);
-    console.log("Error Response Status:", error.response?.status);
-    console.log("Error Response Headers:", error.response?.headers);
 
     const errorMessage = error.response?.data?.reason?.payment_type?.[0] ||
       error.response?.data?.detail ||

@@ -37,7 +37,7 @@ function MyCart({ show, handleCloseTwo }: CartProps) {
         {!items || !Array.isArray(items) || items.length === 0 ? (
           <div className="d-flex flex-column align-items-center justify-content-center h-100">
             <img
-              src="/assets/empty-cart-yellow.png"
+              src="/assets/emptycart.gif"
               alt="Boş Sepet"
               className="img-fluid mb-3"
               style={{ maxWidth: "200px" }}

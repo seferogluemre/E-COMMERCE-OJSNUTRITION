@@ -28,8 +28,8 @@ const LazyProductDetailPage = React.lazy(
   () => import("./routes/ProductDetail/ProductDetail")
 );
 
-const LazyCategoryProductsPage=React.lazy(
-  ()=>import("./routes/CategoryProducts/CategoryProducts")
+const LazyCategoryProductsPage = React.lazy(
+  () => import("./routes/CategoryProducts/CategoryProducts")
 )
 
 const routes = createBrowserRouter([
