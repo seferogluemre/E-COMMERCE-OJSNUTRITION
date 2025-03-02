@@ -4,7 +4,7 @@ import ProductCard from "./components/ProductCard/ProductCard";
 import "./components/ProductCard/ProductCard.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { BASE_URL, PHOTO_URL } from "../../services/api/collections/auth";
+import { BASE_URL, PHOTO_URL } from "../../services/api/collections/Auth";
 import { getAllProducts } from "./components/types";
 
 export interface ProductListProp {

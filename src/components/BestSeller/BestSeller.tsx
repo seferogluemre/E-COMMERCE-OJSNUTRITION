@@ -2,7 +2,7 @@ import { Container, Row } from "react-bootstrap";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import BestSellerCard from "./BestSellerCard";
 import { PriceInfo, ProductListProp } from "../../routes/Products/Products";
-import { PHOTO_URL } from "../../services/api/collections/auth";
+import { PHOTO_URL } from "../../services/api/collections/Auth";
 import "./BestSeller.scss"
 
 export interface BestSellerPropsCS {

@@ -1,6 +1,6 @@
 import { useToastStore } from "../../../store/toast/ToastStore";
 import { createAxiosInstance } from "../axios";
-import { BASE_URL } from "./auth";
+import { BASE_URL } from "./Auth";
 import { getAccessToken } from "./storage";
 
 export interface UserAddress {

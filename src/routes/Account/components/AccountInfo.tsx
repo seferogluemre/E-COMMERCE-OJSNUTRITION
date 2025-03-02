@@ -6,9 +6,9 @@ import {
   User,
   changePassword,
   ChangePasswordData,
-} from "../../../services/api/collections/auth";
+} from "../../../services/api/collections/Auth";
 import { useToastStore } from "../../../store/toast/ToastStore";
-import { BASE_URL } from "../../../services/api/collections/auth";
+import { BASE_URL } from "../../../services/api/collections/Auth";
 interface Country {
   id: number;
   name: string;

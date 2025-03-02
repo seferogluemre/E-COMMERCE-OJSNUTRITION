@@ -15,7 +15,7 @@ import { AiOutlineCheck } from "react-icons/ai";
 import { ProductImage } from "./components/ProductImage";
 import { useCartStore, CartItem } from "../../store/products/Cart";
 import { useToastStore } from "../../store/toast/ToastStore";
-import { PHOTO_URL } from "../../services/api/collections/auth";
+import { PHOTO_URL } from "../../services/api/collections/Auth";
 
 interface NutritionalContent {
   ingredients: { aroma: string; value: string[] }[];

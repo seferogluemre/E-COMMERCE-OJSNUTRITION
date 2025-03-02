@@ -13,11 +13,11 @@ import {
   ChildProps,
   MobileSidebarProps,
 } from "./SidebarType";
-import { isAuthenticated } from "../../../../../services/api/collections/auth";
+import { isAuthenticated } from "../../../../../services/api/collections/Auth";
 import {
   getAuthUser,
   removeTokenAndAuthUser,
-} from "../../../../../services/api/collections/storage";
+} from "../../../../../services/api/collections/Storage";
 import { useToastStore } from "../../../../../store/toast/ToastStore";
 
 function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
@@ -46,7 +46,7 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
       const categoriesResponse = await axios.get(
         "https://fe1111.projects.academy.onlyjs.com/api/v1/categories"
       );
-      
+
       // API'den gelen veriyi doğru şekilde çıkartalım
       const categoriesData = categoriesResponse.data?.data?.data;
 
@@ -77,7 +77,7 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
     setShowSubProducts(false);
   }, [location]);
 
-  const handleCategoryClick = (category:CategoryProp) => {
+  const handleCategoryClick = (category: CategoryProp) => {
     setSelectedSubChildren(category.subChildren);
     setSelectedCategory(category); // Tüm kategori bilgilerini set ediyorsunuz
     setIsDrawerOpen(true); // Çekmeceyi açıyorsunuz

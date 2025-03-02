@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from "../../services/api/collections/auth";
+import { BASE_URL } from "../../services/api/collections/Auth";
 import { LoaderFunctionArgs } from "react-router-dom";
 
 export async function CategoryProductsLoaader({ params }: LoaderFunctionArgs) {

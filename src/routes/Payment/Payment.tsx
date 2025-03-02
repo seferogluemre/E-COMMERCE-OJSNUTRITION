@@ -9,14 +9,14 @@ import {
 } from "../../services/api/collections/Addresses";
 import { createAxiosInstance } from "../../services/api/axios";
 import { useCartStore } from "../../store/products/Cart";
-import { getAuthUser } from "../../services/api/collections/storage";
+import { getAuthUser } from "../../services/api/collections/Storage";
 import { Card, Container, Row, Col, Form, Button, Image, InputGroup } from 'react-bootstrap';
 import { BiCheckCircle, BiMapPin, BiPlus, BiCheck } from "react-icons/bi";
 import { BsTruck } from "react-icons/bs";
 import "./Payment.scss";
 import { handlePaymentSubmit, PaymentData } from "../../services/api/collections/Payment";
 import { useNavigate } from "react-router-dom";
-import { PHOTO_URL } from "../../services/api/collections/auth";
+import { PHOTO_URL } from "../../services/api/collections/Auth";
 
 function Payment() {
   const [activeStep, setActiveStep] = useState<number>(1);

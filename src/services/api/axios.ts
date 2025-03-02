@@ -4,7 +4,7 @@ import {
   getAccessToken,
   isTokenExpired,
   refreshAccessToken,
-} from "./collections/auth";
+} from "./collections/Auth";
 
 export const createAxiosInstance = () => {
   const instance = axios.create({

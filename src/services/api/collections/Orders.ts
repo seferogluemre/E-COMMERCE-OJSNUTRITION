@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getAccessToken } from "./storage";
 import { CartItem } from "../../../store/products/Cart";
-import { BASE_URL } from "./auth";
+import { BASE_URL } from "./Auth";
 
 export interface Order {
   order_no: string;

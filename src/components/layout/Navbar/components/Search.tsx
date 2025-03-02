@@ -2,7 +2,7 @@ import { useSearchProduct } from "../../../../store/products/useSearchProduct";
 import "./Search.scss";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
-import { PHOTO_URL } from "../../../../services/api/collections/auth";
+import { PHOTO_URL } from "../../../../services/api/collections/Auth";
 import { ProductListProp } from "../../../../routes/Products/Products";
 
 const Search = () => {

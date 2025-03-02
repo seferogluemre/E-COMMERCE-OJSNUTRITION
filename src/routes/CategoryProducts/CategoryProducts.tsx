@@ -1,6 +1,6 @@
 import { Container, Row } from "react-bootstrap"
 import ProductCard from "../Products/components/ProductCard/ProductCard";
-import { BASE_URL, PHOTO_URL } from "../../services/api/collections/auth";
+import { BASE_URL, PHOTO_URL } from "../../services/api/collections/Auth";
 import { ProductListProp } from "../Products/Products";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -15,7 +15,7 @@ function CategoryProducts() {
     const [loading, setLoading] = useState<boolean>(false);
     const [products, setProducts] = useState<ProductListProp[]>(category_products);
 
-    const params=useParams();
+    const params = useParams();
 
     useEffect(() => {
         const MoreProduct = async () => {
@@ -27,7 +27,7 @@ function CategoryProducts() {
                     );
 
                     if (response.data && Array.isArray(response.data.data.results)) {
-                        setProducts((prevProducts:ProductListProp[]) => [
+                        setProducts((prevProducts: ProductListProp[]) => [
                             ...prevProducts,
                             ...response.data.data.results,
                         ]);

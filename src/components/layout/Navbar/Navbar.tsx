@@ -20,11 +20,11 @@ import {
   getAccessToken,
   isTokenExpired,
   refreshAccessToken,
-} from "../../../services/api/collections/auth";
+} from "../../../services/api/collections/Auth";
 import {
   getAuthUser,
   removeTokenAndAuthUser,
-} from "../../../services/api/collections/storage";
+} from "../../../services/api/collections/Storage";
 import { useNavigate } from "react-router-dom";
 import MyCart from "./components/MyCart/MyCart";
 import { useCartStore } from "../../../store/products/Cart";

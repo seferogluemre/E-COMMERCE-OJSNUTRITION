@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { login } from "../../../services/api/collections/auth";
+import { login } from "../../../services/api/collections/Auth";
 import Notification from "../../../components/ToastNotification/Notification";
 
 // Form verileri için interface tanımı
@@ -39,7 +39,9 @@ function MemberLogin({ onLoginSuccess }: MemberLoginProps) {
     message: "Başarıyla giriş yapıldı",
     isVisible: false,
   });
+
   const navigate = useNavigate();
+
   const [loginError, setLoginError] = useState<string | null>(null);
 
   const onSubmit = async (formData: ILoginFormInputs) => {
@@ -57,7 +59,7 @@ function MemberLogin({ onLoginSuccess }: MemberLoginProps) {
           })
         );
         onLoginSuccess();
-        navigate("/");
+        navigate("/account");
       } else {
         setLoginError(
           "E-posta veya şifre hatalı. Lütfen bilgilerinizi kontrol ediniz."
@@ -104,7 +106,7 @@ function MemberLogin({ onLoginSuccess }: MemberLoginProps) {
         </FormGroup>
 
         <div className="text-end mb-3">
-          <a href="#" className="text-decoration-none">
+          <a href="" className="text-decoration-none">
             Şifremi Unuttum?
           </a>
         </div>

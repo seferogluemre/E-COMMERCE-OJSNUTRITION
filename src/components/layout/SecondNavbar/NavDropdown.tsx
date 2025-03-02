@@ -4,7 +4,7 @@ import axios from "axios";
 import "./NavDropdown.scss";
 import { NavLink } from "react-router-dom";
 import { FaLongArrowAltDown } from "react-icons/fa";
-import { PHOTO_URL } from "../../../services/api/collections/auth";
+import { PHOTO_URL } from "../../../services/api/collections/Auth";
 interface SubChild {
   name: string;
   slug: string;

@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { useToastStore } from "../toast/ToastStore";
-import { getAccessToken } from "../../services/api/collections/storage";
+import { getAccessToken } from "../../services/api/collections/Storage";
 import { createAxiosInstance } from "../../services/api/axios";
-import { BASE_URL } from "../../services/api/collections/auth";
+import { BASE_URL } from "../../services/api/collections/Auth";
 
 export interface CartItem {
   id: string;

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getAccessToken } from "./storage";
-import { BASE_URL } from "./auth";
+import { BASE_URL } from "./Auth";
 
 export const addProductComment = async (productSlug: string, data: {
   stars: number;

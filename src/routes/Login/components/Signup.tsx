@@ -7,7 +7,7 @@ import {
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { register as registerUser } from "../../../services/api/collections/auth";
+import { register as registerUser } from "../../../services/api/collections/Auth";
 import { useState } from "react";
 import Notification from "../../../components/ToastNotification/Notification";
 
@@ -101,7 +101,7 @@ function Signup() {
             <FormGroup controlId="signupLastName">
               <FormLabel>Soyad</FormLabel>
               <FormControl
-               className="form-control"
+                className="form-control"
                 type="text"
                 {...register("lastName")}
                 isInvalid={!!errors.lastName}
@@ -116,7 +116,7 @@ function Signup() {
         <FormGroup className="mb-3" controlId="signupEmail">
           <FormLabel>E-Posta</FormLabel>
           <FormControl
-           className="form-control"
+            className="form-control"
             type="email"
             {...register("email")}
             isInvalid={!!errors.email}
@@ -129,7 +129,7 @@ function Signup() {
         <FormGroup className="mb-4" controlId="signupPassword">
           <FormLabel>Şifre</FormLabel>
           <FormControl
-           className="form-control"
+            className="form-control"
             type="password"
             {...register("password")}
             isInvalid={!!errors.password}

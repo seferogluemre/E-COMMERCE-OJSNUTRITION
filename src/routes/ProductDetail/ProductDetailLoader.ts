@@ -2,7 +2,7 @@ import axios from "axios";
 import { LoaderFunctionArgs } from "react-router-dom";
 import { Product } from "./ProductDetail";
 import { BestSellerProps } from "../../components/BestSeller/BestSeller";
-import { BASE_URL } from "../../services/api/collections/auth";
+import { BASE_URL } from "../../services/api/collections/Auth";
 
 export async function ProductDetailLoader({
   params,

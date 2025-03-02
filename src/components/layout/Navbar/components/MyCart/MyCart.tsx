@@ -3,7 +3,7 @@ import { CgShoppingCart } from "react-icons/cg";
 import { useCartStore } from "../../../../../store/products/Cart";
 import { useNavigate } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
-import { PHOTO_URL } from "../../../../../services/api/collections/auth";
+import { PHOTO_URL } from "../../../../../services/api/collections/Auth";
 
 interface CartProps {
   show: boolean;
