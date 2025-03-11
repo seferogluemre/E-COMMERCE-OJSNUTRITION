@@ -5,7 +5,7 @@ import {
   getAccessToken,
   getRefreshToken,
   removeTokenAndAuthUser,
-} from "./storage";
+} from "./Storage";
 import { useToastStore } from "../../../store/toast/ToastStore";
 export const BASE_URL = "https://fe1111.projects.academy.onlyjs.com/api/v1";
 export const PHOTO_URL = "https://fe1111.projects.academy.onlyjs.com";
@@ -133,7 +133,7 @@ export const login = async (
       useToastStore.getState().showToast("Giriş başarıyla yapıldı");
       return { success: true, data: jsonResponse };
     } else {
-      useToastStore.getState().showToast("Giriş başarısız oldu");
+      useToastStore.getState().showToast("Giriş başarısız oldu lütfen tekrar deneyiniz");
       return { success: false, error: jsonResponse };
     }
   } catch (error) {
@@ -167,7 +167,7 @@ export const updateUserData = async (userData: User) => {
       }
     );
     useToastStore.getState().showToast("Bilgileriniz başarıyla güncellendi");
-    return response.data; // Başarılıysa dönen yanıtı döndük
+    return response.data;
   } catch (error) {
     useToastStore
       .getState()
@@ -249,4 +249,4 @@ export const isTokenExpired = (token: string): boolean => {
   }
 };
 
-export { getAccessToken } from "./storage";
+export { getAccessToken } from "./Storage";

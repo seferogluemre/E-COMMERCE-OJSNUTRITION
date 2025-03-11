@@ -32,19 +32,19 @@ function Login() {
       <Container className="my-5 w-75">
         <Row className="px-lg-5 d-flex justify-content-center">
           <div className="form-container">
-          <Tabs
-            activeKey={activeTab}
-            onSelect={(k) => setActiveTab(k!)}
-            id="uncontrolled-tab-example"
-            className="mb-3"
-          >
-            <Tab eventKey="signup" title="Üye Ol" id="tab">
-              {renderContent()}
-            </Tab>
-            <Tab eventKey="member_login" title="Üye Girişi" id="tab">
-              {renderContent()}
-            </Tab>
-          </Tabs>
+            <Tabs
+              activeKey={activeTab}
+              onSelect={(k) => setActiveTab(k!)}
+              id="uncontrolled-tab-example"
+              className="mb-3"
+            >
+              <Tab eventKey="signup" title="Üye Ol" id="tab">
+                {renderContent()}
+              </Tab>
+              <Tab eventKey="member_login" title="Üye Girişi" id="tab">
+                {renderContent()}
+              </Tab>
+            </Tabs>
           </div>
         </Row>
       </Container>

@@ -323,8 +323,8 @@ function Payment() {
   const renderSuccessScreen = () => (
     <div className="text-center py-5" id="success-screen">
       <div className="mb-4">
-        <img src="/assets/succes_checkmark.gif" alt="Success" className="mb-3" width={100} height={100} />
-        <h4 className="text-success">Ödemeniz başarıyla alındı.</h4>
+        <img src="/assets/success_gif.gif" alt="Success" className="mb-3 success_image" width={100} height={100} />
+        <h2 className="text-success fs-2">Ödemeniz başarıyla alındı.</h2>
         <div className="d-flex justify-content-center column-gap-3">
           <button className="btn btn-primary" onClick={() => navigate('/')}>Anasayfa</button>
         </div>

@@ -7,13 +7,11 @@ import { useState } from "react";
 import { login } from "../../../services/api/collections/Auth";
 import Notification from "../../../components/ToastNotification/Notification";
 
-// Form verileri için interface tanımı
 interface ILoginFormInputs {
   email: string;
   password: string;
 }
 
-// Form validation şeması
 const schema = yup.object().shape({
   email: yup
     .string()
@@ -59,7 +57,7 @@ function MemberLogin({ onLoginSuccess }: MemberLoginProps) {
           })
         );
         onLoginSuccess();
-        navigate("/account");
+        navigate("/");
       } else {
         setLoginError(
           "E-posta veya şifre hatalı. Lütfen bilgilerinizi kontrol ediniz."

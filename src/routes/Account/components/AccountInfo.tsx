@@ -128,7 +128,7 @@ function AccountInfo() {
       <h3 className="mb-4">Hesap Bilgilerim</h3>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
-          <Form.Label>*Ad</Form.Label>
+          <Form.Label>Ad</Form.Label>
           <Form.Control
             type="text"
             name="first_name"
@@ -140,7 +140,7 @@ function AccountInfo() {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>*Soyad</Form.Label>
+          <Form.Label>Soyad</Form.Label>
           <Form.Control
             type="text"
             name="last_name"
@@ -190,7 +190,7 @@ function AccountInfo() {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>*Email</Form.Label>
+          <Form.Label>Email</Form.Label>
           <Form.Control
             type="email"
             name="email"

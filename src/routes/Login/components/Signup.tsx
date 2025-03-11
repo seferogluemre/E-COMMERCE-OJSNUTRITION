@@ -89,6 +89,7 @@ function Signup() {
               <FormControl
                 type="text"
                 className="form-control"
+                placeholder="Adınız"
                 {...register("firstName")}
                 isInvalid={!!errors.firstName}
               />
@@ -103,6 +104,7 @@ function Signup() {
               <FormControl
                 className="form-control"
                 type="text"
+                placeholder="Soyadınız"
                 {...register("lastName")}
                 isInvalid={!!errors.lastName}
               />
@@ -118,6 +120,7 @@ function Signup() {
           <FormControl
             className="form-control"
             type="email"
+            placeholder="E-posta"
             {...register("email")}
             isInvalid={!!errors.email}
           />
@@ -131,6 +134,7 @@ function Signup() {
           <FormControl
             className="form-control"
             type="password"
+            placeholder="Şifreniz"
             {...register("password")}
             isInvalid={!!errors.password}
           />
