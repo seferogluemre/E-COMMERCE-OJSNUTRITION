@@ -49,10 +49,10 @@ function NavDropdown() {
   const Links: LinksProps[] = [
     { Link: "Protein", to: "/products", category: "protein" },
     { Link: "Spor Gıdaları", to: "/products", category: "spor-gidalari" },
-    { Link: "Tüm ürünler", to: "/products", category: "products" },
     { Link: "Saglık", to: "/products", category: "saglik" },
     { Link: "Gıda", to: "/products", category: "gida" },
     { Link: "Vitamin", to: "/products", category: "vitamin" },
+    { Link: "Tüm ürünler", to: "/products", category: "all" },
   ];
 
   useEffect(() => {
@@ -71,6 +71,9 @@ function NavDropdown() {
   }
 
   const getCategoryBySlug = (slug: string) => {
+    if (slug === "all") {
+      setHoveredLink(null)
+    }
     console.log(categories.find((cat) => cat.slug === slug));
     return categories.find((cat) => cat.slug === slug);
   };

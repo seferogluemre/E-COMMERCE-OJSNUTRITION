@@ -15,9 +15,9 @@ function BestSellerCard({
     <Card className="best_seller_card">
       <CardHeader id="best_seller_card_header" className="best_seller_card_header border-0 bg-transparent">
         <div className="image-container">
-          <img 
-            src={photo_src} 
-            className="best_seller_product_image" 
+          <img
+            src={photo_src}
+            className="best_seller_product_image"
             alt={name}
             loading="lazy"
           />
@@ -37,7 +37,7 @@ function BestSellerCard({
         <CardText className="best_seller_card_title">
           {slug?.toLocaleUpperCase()}
         </CardText>
-        <CardText className="column-gap-1 d-flex pb-3 justify-content-center">
+        <CardText className="column-gap-1 d-flex pb-1 justify-content-center">
           <FiveStar />
         </CardText>
         <CardText className="m-0">{comment_count} Yorum</CardText>

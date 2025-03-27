@@ -37,7 +37,7 @@ const ProductVariantSelector: React.FC<ProductVariantSelectorProps> = ({
                 variant.is_available
         );
     };
-
+    console.log("boyut verileri,", variants)
     return (
         <>
             <div className="variants-container">
@@ -97,6 +97,7 @@ const ProductVariantSelector: React.FC<ProductVariantSelectorProps> = ({
                                 `${item.size.gram}-${item.size.total_services}`,
                                 {
                                     gram: item.size.gram,
+                                    pieces: item.size.gram ? item.size.gram : item.size.pieces,
                                     totalServices: item.size.total_services,
                                     discountPercentage:
                                         item.price.discount_percentage || null,
@@ -107,6 +108,7 @@ const ProductVariantSelector: React.FC<ProductVariantSelectorProps> = ({
                     ].map((item, index) => {
                         const {
                             gram,
+                            pieces,
                             totalServices,
                             discountPercentage,
                         } = item;
@@ -139,7 +141,7 @@ const ProductVariantSelector: React.FC<ProductVariantSelectorProps> = ({
                                     cursor: isAvailable ? "pointer" : "not-allowed",
                                 }}
                             >
-                                <span>{gram}G</span>
+                                <span>{gram ? gram + "G" : pieces + " Adet"}</span>
                                 <span>{totalServices} Servis</span>
                                 {!isAvailable && (
                                     <div

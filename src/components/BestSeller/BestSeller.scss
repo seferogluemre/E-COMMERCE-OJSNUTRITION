@@ -40,7 +40,6 @@
             .best_seller_card_title {
                 font-size: 0.9rem;
                 color: #666;
-                margin-bottom: 1rem;
                 min-height: 20px;
             }
         }
@@ -74,10 +73,17 @@
     }
 }
 
+.image-container img {
+    padding: 0px !important;
+    height: 100% !important;
+    object-fit: fill !important;
+}
+
 .best_seller_product_image {
     transition: 0.3s ease-in-out;
-    height: 170px !important;
-    width: 170px !important;
+    height: 195px !important;
+    width: 150px !important;
+    transform: scale(1.25);
 }
 
 @media (max-width: 576px) {
@@ -113,12 +119,12 @@
         .best_seller_card {
             width: 260px !important;
             height: 250px !important;
-            margin-bottom: 50px !important;
+            margin-bottom: 95px !important;
 
             .best_seller_product_image {
-                max-width: 105% !important;
-                height: 230px !important;
-                object-fit: cover !important;
+                height: 150px !important;
+                width: 150px !important;
+                transform: scale(1.2);
             }
         }
     }

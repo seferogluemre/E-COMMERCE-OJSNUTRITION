@@ -354,8 +354,6 @@ function ProductDetail() {
                 handleAddToCart={handleAddToCart}
               />
 
-              <hr />
-
               <div className="properties pt-1 d-block d-md-none d-xl-block">
                 <ProductInfoAccordion
                   features={product.explanation.features}

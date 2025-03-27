@@ -61,7 +61,7 @@ function BestSeller({ best_seller }: BestSellerPropsCS[]) {
                 key={index}
                 discounted_percentage={data.price_info?.discount_percentage}
                 name={data.name}
-                photo_src={PHOTO_URL + data.photo_src}
+                photo_src={index === 3 ? "/assets/productImage.png" : PHOTO_URL + data.photo_src}
                 short_explanation={data.short_explanation.toUpperCase()}
                 average_star={data.average_star}
                 comment_count={data.comment_count}
