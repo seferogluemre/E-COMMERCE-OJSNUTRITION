@@ -171,7 +171,7 @@ function Addresses() {
   const handleDeleteAddress = async (addressId: string) => {
     try {
       await deleteAddress(addressId);
-      setAddreses(prevAddresses => 
+      setAddreses(prevAddresses =>
         prevAddresses.filter(address => address.id !== addressId)
       );
     } catch (error) {
