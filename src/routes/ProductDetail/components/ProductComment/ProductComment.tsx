@@ -4,6 +4,7 @@ import { FaStar } from "react-icons/fa";
 import { dummyCommentsData } from "../../../../data/CommentsDummyData";
 import { createAxiosInstance } from "../../../../services/api/axios";
 import { useParams } from "react-router-dom";
+import { BASE_URL } from "../../../../services/api/collections/Auth";
 
 interface Comment {
   stars: string;
@@ -16,41 +17,32 @@ interface Comment {
 }
 
 function ProductComment() {
-  const { slug } = useParams(); // URL'den ürün slug'ını al
+  const { productSlug } = useParams();
   const [apiComments, setApiComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
   const reviews = [...apiComments, ...dummyCommentsData]; // API ve dummy yorumları birleştir
-  
+
   useEffect(() => {
     const fetchComments = async () => {
-      if (!slug) {
+      if (!productSlug) {
         console.error("Product slug is undefined");
         setLoading(false);
         return;
       }
-
       try {
-        const api = createAxiosInstance();
-        const response = await api.get(`/product/${slug}/comments`, {
-          params: {
-            limit: 10,
-            offset: 0
-          }
-        });
-        
-        if (response.data.status === "success") {
-          setApiComments(response.data.data.results);
-        }
+        const response = await fetch(`${BASE_URL}/products/${productSlug}/comments?limit=10&offset=0`);
+        const data = await response.json();
+        setApiComments(data.data.results)
       } catch (error) {
         console.error("Error fetching comments:", error);
-        setApiComments([]); // Set empty array on error
+        setApiComments([]);
       } finally {
         setLoading(false);
       }
     };
 
     fetchComments();
-  }, [slug]);
+  }, [productSlug]);
 
   const averageRating =
     reviews.reduce((acc, review) => acc + parseInt(review.stars), 0) /

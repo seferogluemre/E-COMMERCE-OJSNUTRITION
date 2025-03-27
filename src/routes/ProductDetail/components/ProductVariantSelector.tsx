@@ -64,9 +64,10 @@ const ProductVariantSelector: React.FC<ProductVariantSelectorProps> = ({
                                     src={aromaColors[item.trim()] || "transparent"}
                                     style={{
                                         display: "inline-block",
-                                        width: "35px",
-                                        padding: "5px",
-                                        height: "100%",
+                                        width: "43px",
+                                        padding: "3px",
+                                        height: "104%",
+                                        objectFit: "cover"
                                     }}
                                     alt={`${item} aroma`}
                                 />

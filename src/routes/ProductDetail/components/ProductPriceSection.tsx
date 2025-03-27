@@ -38,7 +38,7 @@ const ProductPriceSection: React.FC<ProductPriceSectionProps> = ({
                             {matchingTotalPrice}TL
                         </h1>
                     )}
-                    <p>{totalServices} Servis</p>
+                    <p>{totalServices} TL/ Servis</p>
                 </div>
             </div>
             <div className="d-flex pt-2 justify-content-between column-gap-md-3">
