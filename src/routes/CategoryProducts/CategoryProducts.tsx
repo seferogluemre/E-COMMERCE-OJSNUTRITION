@@ -16,7 +16,6 @@ function CategoryProducts() {
     const [products, setProducts] = useState<ProductListProp[]>(category_products);
 
     const params = useParams();
-
     useEffect(() => {
         const MoreProduct = async () => {
             if (loading) {
@@ -25,7 +24,6 @@ function CategoryProducts() {
                     const response = await axios.get(
                         BASE_URL + `/products?limit=12&offset=${offset}?main_category=${params.main_category}`
                     );
-
                     if (response.data && Array.isArray(response.data.data.results)) {
                         setProducts((prevProducts: ProductListProp[]) => [
                             ...prevProducts,
@@ -56,7 +54,6 @@ function CategoryProducts() {
             setPage((prevPage: number) => prevPage + 1);
         }
     };
-
     useEffect(() => {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);

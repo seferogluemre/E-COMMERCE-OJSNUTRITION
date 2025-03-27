@@ -101,7 +101,7 @@ function ProductDetail() {
     Muz: "/assets/icons/muz.webp",
     "Salted Caramel": "/assets/icons/karamel.webp",
     "Choco Nut": "/assets/icons/çokonat.webp",
-    "Hindistan Cevizi": "#FFEBCD",
+    "Hindistan Cevizi": "/assets/icons/aromasız.webp",
     "Raspberry Cheesecake": "/assets/icons/rasperryChescake.webp",
     Çilek: "/assets/icons/çilek.webp",
     Aromasız: "/assets/icons/aromasız.webp",
@@ -113,6 +113,7 @@ function ProductDetail() {
     Muhallebi: "/assets/icons/muhallebi.webp",
     Ahududu: "/assets/icons/ahududu.webp",
     Şeftali: "/assets/icons/seftali.webp",
+    "Tigers Blood": "/assets/icons/tigers.webp"
   };
 
   const updatePhotoBasedOnSelection = (

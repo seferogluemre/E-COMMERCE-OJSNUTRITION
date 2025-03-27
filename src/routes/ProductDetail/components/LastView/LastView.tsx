@@ -67,8 +67,7 @@ const LastView: React.FC = () => {
                     <CardText className="m-0">
                       {data.comment_count} Yorum
                     </CardText>
-                    <CardText className="m-0">{data.price}TL</CardText>
-                    <CardText className="best-seller-product-price"></CardText>
+                    <CardText className="best-seller-product-price text-danger">{data.price}TL</CardText>
                   </CardBody>
                 </Card>
               </div>

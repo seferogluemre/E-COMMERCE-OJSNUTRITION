@@ -175,7 +175,7 @@ const AddressStep: React.FC<AddressStepProps> = ({
                 cities,
                 districts,
                 setShowNewAddressForm,
-                setUserAddresses,
+                userAddresses,
                 setSelectedAddress,
                 fetchUserAddresses,
             );
