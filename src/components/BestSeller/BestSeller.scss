@@ -1,65 +1,77 @@
 .best_seller_column {
     flex: 16.5% !important;
+    padding: 15px;
+    margin-bottom: 20px;
 
     .best_seller_card {
         width: 320px !important;
         height: 365px !important;
         margin-bottom: 60px auto !important;
         text-align: center;
-        border: 0px;
-        text-align: center;
+        border: none !important;
+        transition: all 0.3s ease;
+        height: 100%;
 
-        &:hover {
+        &_header {
+            padding: 1rem !important;
+            position: relative;
+            
             .best_seller_product_image {
-                transform: scale(1.07);
-                cursor: pointer;
+                width: 100%;
+                height: 250px;
+                object-fit: contain;
+                display: block;
+                margin: 0 auto;
+                transition: transform 0.3s ease;
             }
         }
 
-        #best_seller_card_header {
-            padding: 0 !important;
-            border: none !important;
-            width: 100% !important;
-            position: relative;
+        &_body {
+            padding: 1rem;
+            text-align: center;
+
+            .best_seller_card_name {
+                font-size: 1.1rem;
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+                min-height: 40px;
+            }
+
+            .best_seller_card_title {
+                font-size: 0.9rem;
+                color: #666;
+                margin-bottom: 1rem;
+                min-height: 20px;
+            }
         }
 
-        .best_seller_card_body {
-            border: 0px !important;
-            padding: 12px;
+
+        .discounted_percentage {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ff4444;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
         }
 
-        .best_seller_product_price {
-            color: red;
-            font-size: 20px !important;
-            font-weight: 600 !important;
-            position: relative !important;
-        }
-
-        .best_seller_card_name {
-            font-size: 19px !important;
-        }
-
-        .best_seller_card_title {
-            font-size: 13px !important;
-            font-weight: 600 !important;
-            margin: 0px;
+        .product-price {
+            margin-top: 1rem;
+            
+            .original-price {
+                color: #999;
+                margin-right: 0.5rem;
+            }
+            
+            .current-price {
+                font-weight: bold;
+                font-size: 1.1rem;
+            }
         }
     }
-}
-
-.discounted_percentage {
-    position: absolute !important;
-    top: -10px !important;
-    right: -20px;
-    background-color: red !important;
-    width: 65px !important;
-    height: 45px;
-    color: aliceblue !important;
-    font-size: 15px;
-    display: flex;
-    z-index: 3050 !important;
-    justify-content: center;
-    font-weight: 400 !important;
 }
 
 .best_seller_product_image {

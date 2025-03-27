@@ -6,6 +6,7 @@ import Categories from "./components/Categories/Categories";
 import { useLoaderData } from "react-router-dom";
 
 function HomePage() {
+
   const { products } = useLoaderData();
 
   return (

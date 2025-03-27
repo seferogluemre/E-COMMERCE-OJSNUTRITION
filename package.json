@@ -12,6 +12,8 @@
   "dependencies": {
     "@4c/tsconfig": "^0.4.1",
     "@hookform/resolvers": "^3.10.0",
+    "@maskito/core": "^3.5.0",
+    "@maskito/react": "^3.5.0",
     "axios": "^1.7.9",
     "blaze-slider": "^1.9.3",
     "bootstrap": "^5.3.3",

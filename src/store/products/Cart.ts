@@ -27,6 +27,7 @@ export interface CartStore {
   getTotalPrice: () => number;
   getTotalItems: () => number;
   fetchUserCart: () => Promise<void>;
+  clearCart: () => void;
 }
 
 const loadFromLocalStorage = (): CartItem[] => {
@@ -283,6 +284,10 @@ export const useCartStore = create<CartStore>((set, get) => {
     },
 
     fetchUserCart,
+
+    clearCart: () => {
+      set({ items: [] });
+    },
   };
 });
 

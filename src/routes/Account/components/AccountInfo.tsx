@@ -56,7 +56,6 @@ function AccountInfo() {
       }
     };
     fetchUserData();
-
     const fetchCountries = async () => {
       try {
         const response = await fetch(`${BASE_URL}/world/countries?limit=260`);
@@ -72,7 +71,6 @@ function AccountInfo() {
         setCountries([]);
       }
     };
-
     fetchCountries();
   }, []);
 
@@ -150,7 +148,6 @@ function AccountInfo() {
             }
           />
         </Form.Group>
-
         <Form.Group className="mb-3">
           <Form.Label>Telefon</Form.Label>
           <div className="input-group">

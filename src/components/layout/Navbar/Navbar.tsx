@@ -46,8 +46,11 @@ function NavbarComp() {
     searchProducts(query);
   };
 
+  const clearCart = useCartStore(state => state.clearCart);
+
   const handleLogout = () => {
     removeTokenAndAuthUser();
+    clearCart();
     useToastStore.getState().showToast("Çıkış yapıldı", "success");
     navigate("/");
   };

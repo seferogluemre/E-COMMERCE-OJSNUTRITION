@@ -168,6 +168,17 @@ function Addresses() {
     }
   };
 
+  const handleDeleteAddress = async (addressId: string) => {
+    try {
+      await deleteAddress(addressId);
+      setAddreses(prevAddresses => 
+        prevAddresses.filter(address => address.id !== addressId)
+      );
+    } catch (error) {
+      console.error("Error deleting address:", error);
+    }
+  };
+
   return (
     <div className="content-area">
       <h3 className="mb-4">Adreslerim</h3>
@@ -297,7 +308,7 @@ function Addresses() {
                   <div className="delete-address">
                     <MdDelete
                       className="fs-3"
-                      onClick={() => deleteAddress(address.id)}
+                      onClick={() => handleDeleteAddress(address.id)}
                     />
                   </div>
                   <div
