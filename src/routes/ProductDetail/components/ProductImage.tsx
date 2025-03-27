@@ -67,9 +67,8 @@ export const ProductImage: React.FC<ProductImageProps> = ({
           backgroundColor: "white",
           backgroundImage: `url('${src}')`,
           backgroundRepeat: "no-repeat",
-          backgroundSize: `${imgWidth * zoomLevel}px ${
-            imgHeight * zoomLevel
-          }px`,
+          backgroundSize: `${imgWidth * zoomLevel}px ${imgHeight * zoomLevel
+            }px`,
           backgroundPositionX: `${-x * zoomLevel + magnifierWidth / 2}px`,
           backgroundPositionY: `${-y * zoomLevel + magnifierHeight / 2}px`,
           borderRadius: "4px",

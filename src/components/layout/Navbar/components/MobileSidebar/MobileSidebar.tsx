@@ -47,7 +47,6 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
         "https://fe1111.projects.academy.onlyjs.com/api/v1/categories"
       );
 
-      // API'den gelen veriyi doğru şekilde çıkartalım
       const categoriesData = categoriesResponse.data?.data?.data;
 
       if (Array.isArray(categoriesData)) {
