@@ -32,7 +32,7 @@ const ProductPriceSection: React.FC<ProductPriceSectionProps> = ({
                     <p>{totalServices} TL/ Servis</p>
                 </div>
             </div>
-            <div className="d-flex pt-2 justify-content-between column-gap-md-3">
+            <div id="count-box" className="d-flex pt-2 justify-content-between column-gap-md-3">
                 <div className="count-box">
                     <button
                         onClick={() => handleCountChange(false)}
@@ -48,7 +48,7 @@ const ProductPriceSection: React.FC<ProductPriceSectionProps> = ({
                         <GoPlus />
                     </button>
                 </div>
-                <div className="cart d-block">
+                <div className="cart">
                     <button
                         className="add-to-cart-btn"
                         onClick={handleAddToCart}

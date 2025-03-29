@@ -305,15 +305,13 @@ function ProductDetail() {
                 handleAddToCart={handleAddToCart}
               />
 
-              <div className="properties pt-1 d-block d-md-none d-xl-block">
-                <ProductInfoAccordion
-                  features={product.explanation.features}
-                  usage={product.explanation.usage}
-                  nutritionalContent={product.explanation.nutritional_content}
-                  gramSize={product.variants[0].size.gram}
-                  totalServices={product.variants[0].size.total_services}
-                />
-              </div>
+              <ProductInfoAccordion
+                features={product.explanation.features}
+                usage={product.explanation.usage}
+                nutritionalContent={product.explanation.nutritional_content}
+                gramSize={product.variants[0].size.gram}
+                totalServices={product.variants[0].size.total_services}
+              />
             </div>
           </div>
         ))}

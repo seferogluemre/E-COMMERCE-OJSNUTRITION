@@ -72,7 +72,7 @@ const ProductVariantSelector: React.FC<ProductVariantSelectorProps> = ({
             </div>
             <hr />
             <div className="product-size-container mt-2">
-                <div className="text-start pb-lg-2 pb-md-3">
+                <div className="text-start pb-lg-2 pb-md-3 py-2">
                     <h3 className="fs-4">Boyut:</h3>
                 </div>
                 <div className="d-flex column-gap-3">
