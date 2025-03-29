@@ -139,7 +139,9 @@ export interface LastViewProduct {
     photo_src: string;
     slug: string;
     comment_count: number;
-    price: number;
+    price_info: {
+        total_price: number
+    };
 }
 
 export interface CategoryProp {

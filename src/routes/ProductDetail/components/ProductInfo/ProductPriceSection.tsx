@@ -48,7 +48,7 @@ const ProductPriceSection: React.FC<ProductPriceSectionProps> = ({
                         <GoPlus />
                     </button>
                 </div>
-                <div className="cart">
+                <div className="cart d-block">
                     <button
                         className="add-to-cart-btn"
                         onClick={handleAddToCart}
