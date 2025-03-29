@@ -1,20 +1,7 @@
 
 import React from "react";
 import { Form, Row, Col, Button, InputGroup, Image } from "react-bootstrap";
-import { type UserAddress, type City, type District } from "../../../services/api/collections/Addresses";
-
-interface AddressFormProps {
-    formData: UserAddress;
-    setFormData: React.Dispatch<React.SetStateAction<UserAddress>>;
-    selectedCity: string;
-    setSelectedCity: React.Dispatch<React.SetStateAction<string>>;
-    cities: City[];
-    districts: District[];
-    onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
-    onCancel: () => void;
-    title: string;
-    submitButtonText?: string;
-}
+import { AddressFormProps } from "../../../types/PaymentTypes";
 
 const AddressForm: React.FC<AddressFormProps> = ({
     formData,

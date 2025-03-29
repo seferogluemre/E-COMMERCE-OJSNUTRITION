@@ -1,4 +1,5 @@
-import { ReviewsProps } from "../routes/Home/components/BlazeSlider/BlazeSliderComponent";
+import { ReviewsProps } from "../types/CommentTypes";
+
 export const dummyCommentsData: ReviewsProps[] = [
   {
     stars: "5",

@@ -8,7 +8,6 @@ function About() {
         <div className="container">
           <div className="row">
             <div className="col-12">
-              {/* İlk bölüm */}
               <div className="d-flex flex-column gap-3">
                 <h4 className="fw-bolder">
                   Sağlıklı ve Fit Yaşamayı Zevkli ve Kolay Hale Getirmek İçin
@@ -50,7 +49,6 @@ function About() {
                 </p>
               </div>
 
-              {/* Sertifikalar bölümü */}
               <div className="mt-4">
                 <h4 className="fw-bolder mb-5">Sertifikalarımız</h4>
                 <div className="row">

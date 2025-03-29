@@ -1,13 +1,8 @@
 import { create } from "zustand";
 import axios from "axios";
-import { ProductListProp } from "../../routes/Products/Products";
 import { BASE_URL } from "../../services/api/collections/Auth";
+import { SearchState } from "../../types/ProductTypes";
 
-interface SearchState {
-  products: ProductListProp[];
-  setProducts: (products: ProductListProp[]) => void;
-  searchProducts: (query: string) => Promise<void>;
-}
 
 export const useSearchProduct = create<SearchState>((set) => ({
   products: [],

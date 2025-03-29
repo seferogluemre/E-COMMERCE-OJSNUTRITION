@@ -61,7 +61,6 @@ function NavbarComp() {
   const handleCloseTwo = () => setShowTwo(false);
 
   const getTotalItems = useCartStore((state) => state.getTotalItems);
-  // Token kontrolü
 
   useEffect(() => {
     const checkToken = async () => {

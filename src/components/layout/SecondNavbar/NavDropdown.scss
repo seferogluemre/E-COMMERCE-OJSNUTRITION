@@ -11,9 +11,6 @@
   }
 }
 
-.dropdown {
-  // column-gap: 120px !important;
-}
 
 @media (min-width: 768px) {
   #Nav {
@@ -43,7 +40,6 @@
 
     .dropdown {
       padding: 0px 100px !important;
-
 
       .dropdown-item-container {
         position: relative;
@@ -115,7 +111,7 @@
       .dropdown-item-container {
         flex: 1;
         text-align: center;
-        
+
         .dropdown-item {
           width: 100%;
           padding: 8px 0;
@@ -254,11 +250,11 @@
   #NavDropdown {
     .container {
       .dropdown {
-        & > :first-child {
+        &> :first-child {
           margin-left: 150px;
         }
-        
-        & > :last-child {
+
+        &> :last-child {
           margin-right: 280px;
         }
       }
@@ -270,11 +266,11 @@
   #NavDropdown {
     .container {
       .dropdown {
-        & > :first-child {
+        &> :first-child {
           margin-left: 120px;
         }
-        
-        & > :last-child {
+
+        &> :last-child {
           margin-right: 220px;
         }
       }
@@ -287,7 +283,7 @@
     width: 100%;
     max-width: 1320px;
     padding: 0 12px;
-    
+
     .dropdown {
       width: 100%;
       display: flex;

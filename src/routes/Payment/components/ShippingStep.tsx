@@ -2,11 +2,7 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import { BsTruck } from "react-icons/bs";
-import { type UserAddress } from "../../../services/api/collections/Addresses";
-
-interface ShippingStepProps {
-    selectedAddress: UserAddress | null;
-}
+import { ShippingStepProps } from "../../../types/PaymentTypes";
 
 const ShippingStep: React.FC<ShippingStepProps> = ({ selectedAddress }) => {
     if (!selectedAddress) return null;

@@ -1,19 +1,5 @@
 import { AiOutlineCheck } from "react-icons/ai";
-import { Variant } from "../ProductDetail";
-
-interface ColorProps {
-    [key: string]: string;
-}
-
-interface ProductVariantSelectorProps {
-    variants: Variant[];
-    selectedAroma: number | undefined;
-    setSelectedAroma: (index: number) => void;
-    selectedSize: number | undefined;
-    setSelectedSize: (index: number) => void;
-    updatePhotoBasedOnSelection: (aromaIndex: number | undefined, sizeIndex: number | undefined) => void;
-    aromaColors: ColorProps;
-}
+import { ProductVariantSelectorProps } from "../../../../types/ProductTypes";
 
 const ProductVariantSelector: React.FC<ProductVariantSelectorProps> = ({
     variants,
@@ -37,7 +23,6 @@ const ProductVariantSelector: React.FC<ProductVariantSelectorProps> = ({
                 variant.is_available
         );
     };
-    console.log("boyut verileri,", variants)
     return (
         <>
             <div className="variants-container">
@@ -142,7 +127,7 @@ const ProductVariantSelector: React.FC<ProductVariantSelectorProps> = ({
                                 }}
                             >
                                 <span>{gram ? gram + "G" : pieces + " Adet"}</span>
-                                <span>{totalServices} Servis</span>
+                                <span>{totalServices ? totalServices + " Servis" : ""}</span>
                                 {!isAvailable && (
                                     <div
                                         className="position-absolute w-100 h-100 d-flex flex-column justify-content-center align-items-center"

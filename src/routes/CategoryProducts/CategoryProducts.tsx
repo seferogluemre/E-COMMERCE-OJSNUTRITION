@@ -1,12 +1,11 @@
 import { Container, Row } from "react-bootstrap"
 import ProductCard from "../Products/components/ProductCard/ProductCard";
 import { BASE_URL, PHOTO_URL } from "../../services/api/collections/Auth";
-import { ProductListProp } from "../Products/Products";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { getAllProducts } from "../Products/components/types";
 import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import "../Products/components/ProductCard/ProductCard.scss"
+import { getAllProducts, ProductListProp } from "../../types/ProductTypes";
 
 function CategoryProducts() {
     const { category_products } = useLoaderData();
@@ -68,7 +67,7 @@ function CategoryProducts() {
                 <Row>
                     {products?.map((product: ProductListProp) => (
                         <div
-                            className="col-xxl-3 col-lg-4 col-md-6 col-sm-6 my-3 product_list_card_column"
+                            className="col-xxl-3 col-lg-4 col-md-6 col-sm-6 mt-3 product_list_card_column"
                             key={product.id}
                             onClick={() => navigate("/products/" + product.slug)}
                         >

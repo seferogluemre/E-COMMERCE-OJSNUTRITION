@@ -6,11 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { login } from "../../../services/api/collections/Auth";
 import Notification from "../../../components/ToastNotification/Notification";
-
-interface ILoginFormInputs {
-  email: string;
-  password: string;
-}
+import { ILoginFormInputs, MemberLoginProps } from "../../../types/LoginTypes";
 
 const schema = yup.object().shape({
   email: yup
@@ -19,10 +15,6 @@ const schema = yup.object().shape({
     .required("Email alanı zorunludur"),
   password: yup.string().required("Şifre alanı zorunludur"),
 });
-
-interface MemberLoginProps {
-  onLoginSuccess: () => void;
-}
 
 function MemberLogin({ onLoginSuccess }: MemberLoginProps) {
   const {

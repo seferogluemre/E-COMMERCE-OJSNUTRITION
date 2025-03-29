@@ -6,25 +6,19 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import "./MobileSidebar.scss";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import ProductsDrawer from "./ProductsDrawer";
-import {
-  CategoriesResponseProps,
-  CategoryProp,
-  CategoryProps,
-  ChildProps,
-  MobileSidebarProps,
-} from "./SidebarType";
+
 import { isAuthenticated } from "../../../../../services/api/collections/Auth";
 import {
   getAuthUser,
   removeTokenAndAuthUser,
 } from "../../../../../services/api/collections/Storage";
 import { useToastStore } from "../../../../../store/toast/ToastStore";
+import { CategoriesResponseProps, CategoryProp, CategoryProps, ChildProps, MobileSidebarProps } from "../../../../../types/SidebarTypes";
 
 function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
   const user = getAuthUser() ? JSON.parse(getAuthUser()!) : null;
   const authenticated = isAuthenticated();
   const navigate = useNavigate();
-  //State
   const [categories, setCategories] = useState<CategoryProps[]>([]);
   const [selectedSubChildren, setSelectedSubChildren] = useState<
     CategoriesResponseProps["subChildren"]
@@ -151,7 +145,7 @@ function MobileSidebar({ show, handleClose }: MobileSidebarProps) {
                   <li
                     className="my-3 d-flex justify-content-between"
                     key={item.id}
-                    onClick={() => handleCategoryClick(item)}
+                    onClick={() => handleCategoryClick(item as CategoryProp)}
                   >
                     {item.name}
                     <span>

@@ -9,16 +9,6 @@ import CommentCard from "../CommentCard/CommentCard";
 import { dummyCommentsData } from "../../../../data/CommentsDummyData";
 import FiveStar from "../../../../components/FiveStars/FiveStar";
 
-export interface ReviewsProps {
-  stars: string;
-  comment: string;
-  title: string;
-  created_at: string;
-  aroma: string;
-  first_name: string;
-  last_name: string;
-}
-
 const BlazeSliderComponent = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const prevButtonRef = useRef<HTMLButtonElement>(null);

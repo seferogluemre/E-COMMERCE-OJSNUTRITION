@@ -1,20 +1,6 @@
 import React from "react";
 import { Card, Image } from "react-bootstrap";
-
-interface CartItem {
-    id: string;
-    name: string;
-    price: number;
-    pieces?: number;
-    photo_src?: string;
-    variant_name?: string;
-}
-
-interface CartSummaryProps {
-    cartItems: CartItem[];
-    totalAmount: number;
-    photoUrl: string;
-}
+import { CartSummaryProps } from "../../../types/PaymentTypes";
 
 const CartSummary: React.FC<CartSummaryProps> = ({ cartItems, totalAmount, photoUrl }) => {
     return (

@@ -1,18 +1,7 @@
-import { useNavigate } from "react-router-dom";
-import { type UserAddress } from "../../../services/api/collections/Addresses";
 import { type PaymentData, handlePaymentSubmit } from "../../../services/api/collections/Payment";
 import SuccessScreen from "./SuccessScreen";
 import PaymentForm from "./PaymentForm";
-
-interface PaymentStepProps {
-    isLoading: boolean;
-    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-    paymentSuccess: boolean;
-    setPaymentSuccess: React.Dispatch<React.SetStateAction<boolean>>;
-    selectedAddress: UserAddress | null;
-    clearCart: () => void;
-    navigate: ReturnType<typeof useNavigate>;
-}
+import { PaymentStepProps } from "../../../types/PaymentTypes";
 
 const PaymentStep: React.FC<PaymentStepProps> = ({
     isLoading,
@@ -23,17 +12,11 @@ const PaymentStep: React.FC<PaymentStepProps> = ({
     clearCart,
     navigate,
 }) => {
-    const handleSubmitPayment = async (cardInfo: {
-        cardNumber: string;
-        expirationDate: string;
-        cvv: string;
-        cardHolderName: string;
-    }) => {
+    const handleSubmitPayment = async () => {
         if (!selectedAddress?.id) return;
-
         setIsLoading(true);
         try {
-            // Always use the hardcoded values for the API request
+
             const paymentData: PaymentData = {
                 address_id: selectedAddress.id,
                 payment_type: "credit_cart",

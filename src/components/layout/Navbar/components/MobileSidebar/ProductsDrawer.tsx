@@ -1,14 +1,7 @@
 import { Offcanvas } from "react-bootstrap";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-
-interface ProductsDrawerProps {
-  show: boolean;
-  onHide: () => void;
-  items: any[];
-  title: string;
-  onSubCategoryClick?: (items: any[], title: string) => void;
-}
+import { ProductsDrawerProps } from "../../../../../types/SidebarTypes";
 
 function ProductsDrawer({
   show,
@@ -21,7 +14,7 @@ function ProductsDrawer({
 
   const handleProductClick = (slug: string) => {
     navigate(`/products/${slug}`);
-    onHide(); // Drawer'ı kapat
+    onHide();
   };
 
   return (

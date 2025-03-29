@@ -29,12 +29,10 @@ function Payment() {
     const token = localStorage.getItem("access_token");
     setIsLoggedIn(!!token);
 
-    // Fetch user addresses if logged in
     if (token) {
       fetchUserAddresses();
     }
 
-    // Check saved guest address
     if (!token) {
       const savedAddress = localStorage.getItem("guestAddress");
       if (savedAddress) {

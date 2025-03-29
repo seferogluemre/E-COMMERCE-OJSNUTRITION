@@ -10,15 +10,7 @@ import {
     handleSubmitAddress
 } from "../../../services/api/collections/Addresses";
 import AddressForm from "./AddressForm";
-
-interface AddressStepProps {
-    isLoggedIn: boolean;
-    userAddresses: UserAddress[];
-    selectedAddress: UserAddress | null;
-    setSelectedAddress: (address: UserAddress) => void;
-    fetchUserAddresses: () => Promise<void>;
-}
-
+import { AddressStepProps } from "../../../types/PaymentTypes";
 const AddressStep: React.FC<AddressStepProps> = ({
     isLoggedIn,
     userAddresses,
@@ -180,7 +172,6 @@ const AddressStep: React.FC<AddressStepProps> = ({
                 fetchUserAddresses,
             );
 
-            // Refresh address list and mark newly added address
             await fetchUserAddresses();
             const addresses = userAddresses;
             if (addresses && addresses.length > 0) {

@@ -1,7 +1,7 @@
 import { Card, CardBody, CardHeader, CardText } from "react-bootstrap";
 import FiveStar from "../FiveStars/FiveStar";
-import { BestSellerProps } from "./BestSeller";
 import "./BestSeller.scss"
+import { BestSellerProps } from "../../types/ProductTypes";
 
 function BestSellerCard({
   name,

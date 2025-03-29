@@ -1,6 +1,5 @@
 import { FaArrowRight } from "react-icons/fa";
-import { CategoriesResponseProps } from "./SidebarType";
-
+import { CategoriesResponseProps } from "../../../../../types/SidebarTypes";
 function DrawerList({
   subChildren,
   top_sellers,
@@ -9,7 +8,6 @@ function DrawerList({
 }: CategoriesResponseProps) {
   return (
     <div>
-      {/* Çok Satanlar Başlığı */}
       {top_sellers && top_sellers.length > 0 && (
         <div
           className="category-header py-3 d-flex justify-content-between align-items-center cursor-pointer border-bottom"
@@ -20,7 +18,6 @@ function DrawerList({
         </div>
       )}
 
-      {/* Alt Kategoriler Başlığı */}
       {subChildren && subChildren.length > 0 && (
         <div
           className="category-header py-3 d-flex justify-content-between align-items-center cursor-pointer border-bottom"
@@ -31,7 +28,6 @@ function DrawerList({
         </div>
       )}
 
-      {/* Ana Kategoriler Başlığı */}
       {children && children.length > 0 && (
         <div
           className="category-header py-3 d-flex justify-content-between align-items-center cursor-pointer border-bottom"

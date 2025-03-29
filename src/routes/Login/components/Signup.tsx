@@ -10,14 +10,7 @@ import * as yup from "yup";
 import { register as registerUser } from "../../../services/api/collections/Auth";
 import { useState } from "react";
 import Notification from "../../../components/ToastNotification/Notification";
-
-// Form verileri için interface tanımı
-interface IFormInputs {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-}
+import { IFormInputs } from "../../../types/LoginTypes";
 
 // Form validation şeması
 const schema = yup.object().shape({

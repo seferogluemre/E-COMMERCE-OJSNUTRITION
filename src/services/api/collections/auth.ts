@@ -7,35 +7,10 @@ import {
   removeTokenAndAuthUser,
 } from "./Storage";
 import { useToastStore } from "../../../store/toast/ToastStore";
+import { ChangePasswordData, LoginApiData, RegisterApiData, User } from "../../../types/AccountType";
+
 export const BASE_URL = "https://fe1111.projects.academy.onlyjs.com/api/v1";
 export const PHOTO_URL = "https://fe1111.projects.academy.onlyjs.com";
-
-interface LoginApiData {
-  username: string;
-  password: string;
-}
-
-interface RegisterApiData {
-  first_name: string;
-  last_name: string;
-  email: string;
-  password: string;
-  password2: string;
-  api_key: string;
-}
-
-export interface User {
-  first_name: string;
-  last_name: string;
-  phone_number: string | null;
-  email: string;
-}
-
-export interface ChangePasswordData {
-  old_password: string;
-  password: string;
-  password2: string;
-}
 
 export const isAuthenticated = () => {
   return !!getAccessToken();
@@ -106,7 +81,6 @@ export const login = async (
   apiKey: string
 ) => {
   try {
-    // API'ye gönderilecek veriler
     const dataForApi: LoginApiData & { api_key: string } = {
       username: email,
       password: password,

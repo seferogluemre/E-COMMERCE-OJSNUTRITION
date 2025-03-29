@@ -1,36 +1,7 @@
 import { useToastStore } from "../../../store/toast/ToastStore";
+import { City, District, UserAddress } from "../../../types/AccountType";
 import { createAxiosInstance } from "../axios";
-import { BASE_URL } from "./Auth";
-import { getAccessToken } from "./storage";
-
-export interface UserAddress {
-  title: string;
-  first_name: string;
-  last_name: string;
-  full_address: string;
-  city: string;
-  district: string;
-  id: string;
-  phone_number: string;
-  region: {
-    name: string;
-    id: number;
-  };
-  subregion: {
-    name: string;
-    id: number;
-  };
-}
-
-export interface City {
-  name: string;
-  id: number;
-}
-
-export interface District {
-  name: string;
-  id: number;
-}
+import { BASE_URL, getAccessToken } from "./Auth";
 
 export const fetchAddresses = async (
   setAddresses: (addresses: UserAddress[]) => void,

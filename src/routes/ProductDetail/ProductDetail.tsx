@@ -3,77 +3,25 @@ import { Container, Row } from "react-bootstrap";
 import { useLoaderData } from "react-router-dom";
 import "./_ProductDetail.scss";
 import ProductComment from "./components/ProductComment/ProductComment";
-import ProductTrust from "./components/ProductTrust/ProductTrust";
 import BestSeller from "../../components/BestSeller/BestSeller";
 import UseLocalStorage from "../../hooks/UseSessionStorage";
 import LastView from "./components/LastView/LastView";
-import { ProductImage } from "./components/ProductImage";
-import { useCartStore, CartItem } from "../../store/products/Cart";
+import { ProductImage } from "./components/ProductInfo/ProductImage";
+import { useCartStore } from "../../store/products/Cart";
 import { useToastStore } from "../../store/toast/ToastStore";
 import { PHOTO_URL } from "../../services/api/collections/Auth";
-import ProductVariantSelector from "./components/ProductVariantSelector";
-import ProductInfoAccordion from "./components/ProductInfoAccordion";
-import ProductPriceSection from "./components/ProductPriceSection";
-import ProductHeader from "./components/ProductHeader";
-
-export interface NutritionalContent {
-  ingredients: { aroma: string; value: string[] }[];
-  nutrition_facts: {
-    ingredients: { name: string; amounts: string[] }[];
-    portion_sizes: string[];
-  };
-  amino_acid_facts?: {
-    ingredients: { name: string; amounts: string[] }[];
-    portion_sizes: string[];
-  };
-}
-
-export interface Variant {
-  id: string;
-  size: {
-    gram: number;
-    pieces: number;
-    total_services: number;
-  };
-  aroma: string;
-  price: {
-    profit: number;
-    total_price: number;
-    discounted_price: number;
-    price_per_servings: number;
-    discount_percentage: number;
-  };
-  photo_src: string;
-  is_available: boolean;
-}
-
-export interface Product {
-  id: string;
-  name: string;
-  slug: string;
-  short_explanation: string;
-  explanation: {
-    usage: string;
-    features: string;
-    description: string;
-    nutritional_content: NutritionalContent;
-  };
-  main_category_id: string;
-  sub_category_id: string;
-  tags: string[];
-  variants: Variant[];
-  comment_count: number;
-  average_star: number;
-  price?: number;
-  commentCount?: number;
-  photo_src?: string;
-}
-
-interface ColorProps {
-  [key: string]: string;
-}
+import ProductVariantSelector from "./components/ProductInfo/ProductVariantSelector";
+import ProductInfoAccordion from "./components/ProductInfo/ProductInfoAccordion";
+import ProductPriceSection from "./components/ProductInfo/ProductPriceSection";
+import ProductHeader from "./components/ProductInfo/ProductHeader";
+import { Product, Variant } from "../../types/ProductTypes";
+import { CartItem } from "../../types/CartTypes";
 
 export const LOCAL_KEY = "lastView";
+
+export interface ColorProps {
+  [key: string]: string;
+}
 
 function ProductDetail() {
   const { product, bestSeller } = useLoaderData() as {
@@ -219,7 +167,9 @@ function ProductDetail() {
         variants: product.variants,
         comment_count: product.comment_count,
         average_star: product.average_star,
-        price: productData.price,
+        price_info: {
+          total_price: productData.price
+        },
         commentCount: productData.commentCount,
         photo_src: productData.photo,
       });

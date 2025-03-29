@@ -1,12 +1,5 @@
 import React from "react";
-
-interface StepIndicatorProps {
-    stepNumber: number;
-    title: string;
-    isActive: boolean;
-    isClickable: boolean;
-    onClick: () => void;
-}
+import { StepIndicatorProps } from "../../../types/PaymentTypes";
 
 const StepIndicator: React.FC<StepIndicatorProps> = ({
     stepNumber,

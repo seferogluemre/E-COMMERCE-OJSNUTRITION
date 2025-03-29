@@ -5,25 +5,7 @@ import "./components/ProductCard/ProductCard.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL, PHOTO_URL } from "../../services/api/collections/Auth";
-import { getAllProducts } from "./components/types";
-
-export interface ProductListProp {
-  average_star: number;
-  comment_count: number;
-  id: number;
-  name: string;
-  photo_src: string;
-  price_info: PriceInfo;
-  short_explanation: string;
-  slug: string;
-}
-export interface PriceInfo {
-  profit?: null;
-  total_price: number;
-  discounted_price?: number | null;
-  price_per_servings?: number;
-  discount_percentage?: number | null;
-}
+import { getAllProducts, ProductListProp } from "../../types/ProductTypes";
 
 function Products() {
   const { allProducts } = useLoaderData();

@@ -1,16 +1,7 @@
 import { IoAddOutline, IoRemoveOutline } from "react-icons/io5";
 import FiveStar from "../../FiveStars/FiveStar";
 import { useState } from "react";
-
-interface FooterLink {
-  title: string;
-  href: string;
-}
-
-interface FooterSection {
-  title: string;
-  links: FooterLink[];
-}
+import { FooterSection } from "../../../types/FooterTypes";
 
 const footerData: FooterSection[] = [
   {
@@ -60,9 +51,6 @@ const footerData: FooterSection[] = [
 const Footer: React.FC = () => {
   const [expandedSections, setExpandedSections] = useState<number[]>([]);
 
-  //   EXPANDED Statinde arama yaparak fonksiyona gönderdigimiz indexi arıyoruz eger var ise filter ile bu diziyi temizleyip kapanmasını saglıyoruz
-  //  eger index false dönerse yani expanded statinde bulunmazsa kapalı demektir ve açtık
-
   const toggleSection = (index: number) => {
     setExpandedSections((prev) =>
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
@@ -72,7 +60,6 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-dark text-white py-5 mt-5">
       <div className="container">
-        {/* Top Section */}
         <div className="mb-5">
           <div className="d-flex align-items-center mb-4">
             {[...Array(1)].map((_, index) => (

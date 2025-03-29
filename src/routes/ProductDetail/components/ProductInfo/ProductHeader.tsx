@@ -1,11 +1,5 @@
-import FiveStar from "../../../components/FiveStars/FiveStar";
-
-interface ProductHeaderProps {
-    name: string;
-    slug: string;
-    commentCount: number;
-    tags: string[];
-}
+import FiveStar from "../../../../components/FiveStars/FiveStar";
+import { ProductHeaderProps } from "../../../../types/ProductTypes";
 
 const ProductHeader: React.FC<ProductHeaderProps> = ({
     name,

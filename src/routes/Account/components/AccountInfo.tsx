@@ -9,20 +9,8 @@ import {
 } from "../../../services/api/collections/Auth";
 import { useToastStore } from "../../../store/toast/ToastStore";
 import { BASE_URL } from "../../../services/api/collections/Auth";
-interface Country {
-  id: number;
-  name: string;
-}
+import { CountriesResponse, Country } from "../../../types/AccountType";
 
-interface CountriesResponse {
-  status: string;
-  data: {
-    count: number;
-    next: string | null;
-    previous: string | null;
-    results: Country[];
-  };
-}
 
 function AccountInfo() {
   const [userData, setUserData] = useState<User>({

@@ -1,31 +1,9 @@
 import { Container, Row } from "react-bootstrap";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import BestSellerCard from "./BestSellerCard";
-import { PriceInfo, ProductListProp } from "../../routes/Products/Products";
 import { PHOTO_URL } from "../../services/api/collections/Auth";
 import "./BestSeller.scss"
-
-export interface BestSellerPropsCS {
-  name: string;
-  short_explanation: string;
-  price_info: PriceInfo;
-  photo_src: string;
-  comment_count?: number;
-  average_star: number;
-  discounted_percentage: number | null;
-  slug?: string;
-}
-
-export interface BestSellerProps {
-  name: string;
-  short_explanation: string;
-  slug?: string;
-  price_info: PriceInfo;
-  photo_src: string;
-  discounted_percentage?: number | null;
-  comment_count?: number;
-  average_star: number;
-}
+import { BestSellerProps } from "../../types/ProductTypes";
 
 const WithBestSeller = (WrappedComponent: React.ComponentType<any>) => {
   return (props: { best_seller?: any }) => {
@@ -37,8 +15,7 @@ const WithBestSeller = (WrappedComponent: React.ComponentType<any>) => {
   };
 };
 
-
-function BestSeller({ best_seller }: BestSellerPropsCS[]) {
+function BestSeller({ best_seller }: { best_seller: BestSellerProps }) {
 
   const navigate = useNavigate();
   const dataToDisplay = Array.isArray(best_seller) ? best_seller : [];
@@ -59,6 +36,7 @@ function BestSeller({ best_seller }: BestSellerPropsCS[]) {
               <BestSellerCard
                 slug={data.slug}
                 key={index}
+                id={data.id}
                 discounted_percentage={data.price_info?.discount_percentage}
                 name={data.name}
                 photo_src={index === 3 ? "/assets/productImage.png" : PHOTO_URL + data.photo_src}

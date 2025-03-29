@@ -1,7 +1,7 @@
 import BlazeSlider from "./components/BlazeSlider/BlazeSliderComponent";
 import BestSeller from "../../components/BestSeller/BestSeller";
-import Header from "./components/header/Header";
-import TwitchBanner from "./components/header/Figure";
+import Header from "./components/Header/Header";
+import TwitchBanner from "./components/Header/Figure";
 import Categories from "./components/Categories/Categories";
 import { useLoaderData } from "react-router-dom";
 

@@ -1,13 +1,5 @@
 import { Accordion } from "react-bootstrap";
-import { NutritionalContent } from "../ProductDetail";
-
-interface ProductInfoAccordionProps {
-    features: string;
-    usage: string;
-    nutritionalContent: NutritionalContent;
-    gramSize: number;
-    totalServices: number;
-}
+import { ProductInfoAccordionProps } from "../../../../types/ProductTypes";
 
 const ProductInfoAccordion: React.FC<ProductInfoAccordionProps> = ({
     features,

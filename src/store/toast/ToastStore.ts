@@ -1,12 +1,5 @@
 import { create } from "zustand";
-
-interface ToastState {
-  message: string;
-  type: "success" | "error" | "info";
-  isVisible: boolean;
-  showToast: (message: string, type?: "success" | "error" | "info") => void;
-  hideToast: () => void;
-}
+import { ToastState } from "../../types/ToastTypes";
 
 export const useToastStore = create<ToastState>((set) => ({
   message: "",

@@ -1,17 +1,8 @@
 import { FaMinus } from "react-icons/fa";
 import { GoPlus } from "react-icons/go";
 import { MdShoppingCart } from "react-icons/md";
-import ProductTrust from "./ProductTrust/ProductTrust";
-
-interface ProductPriceSectionProps {
-    matchingTotalPrice: number;
-    originalPrice: number;
-    discountPercentage: number;
-    totalServices: number;
-    count: number;
-    handleCountChange: (increment: boolean) => void;
-    handleAddToCart: () => void;
-}
+import ProductTrust from "../ProductTrust/ProductTrust";
+import { ProductPriceSectionProps } from "../../../../types/ProductTypes";
 
 const ProductPriceSection: React.FC<ProductPriceSectionProps> = ({
     matchingTotalPrice,

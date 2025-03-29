@@ -1,7 +1,6 @@
 import { Card, CardBody, CardHeader, CardText } from "react-bootstrap";
 import FiveStar from "../../../../components/FiveStars/FiveStar";
-import { ProductListProp } from "../../Products";
-
+import { ProductListProp } from "../../../../types/ProductTypes";
 
 function ProductCard({
   name,

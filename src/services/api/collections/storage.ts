@@ -1,4 +1,4 @@
-import { User } from "./Auth";
+import { User } from "../../../types/AccountType";
 
 const ACCESS_TOKEN_STORAGE_KEY = "access_token";
 export const USER_STORAGE_KEY = "user";

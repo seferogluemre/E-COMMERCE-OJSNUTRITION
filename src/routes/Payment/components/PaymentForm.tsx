@@ -1,14 +1,6 @@
 import React, { useState } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
-
-interface PaymentFormProps {
-    onSubmit: (cardInfo: {
-        cardNumber: string;
-        expirationDate: string;
-        cvv: string;
-        cardHolderName: string;
-    }) => void;
-}
+import { PaymentFormProps } from "../../../types/PaymentTypes";
 
 const PaymentForm: React.FC<PaymentFormProps> = ({ onSubmit }) => {
     const [cardInfo, setCardInfo] = useState({
@@ -127,7 +119,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ onSubmit }) => {
             <Button
                 id="payment-submit-button"
                 variant="dark"
-                className="w-100 py-2"
+                className="w-100 py-2 icon-link-hover"
                 type="submit"
                 disabled={!isFormValid}
             >

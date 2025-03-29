@@ -5,42 +5,8 @@ import "./NavDropdown.scss";
 import { NavLink } from "react-router-dom";
 import { FaAngleDown } from 'react-icons/fa'
 import { PHOTO_URL } from "../../../services/api/collections/Auth";
-
-interface SubChild {
-  name: string;
-  slug: string;
-  order: number;
-}
-
-interface Child {
-  id: string;
-  name: string;
-  slug: string;
-  order: number;
-  sub_children?: SubChild[];
-}
-
-interface TopSeller {
-  name: string;
-  slug: string;
-  description: string;
-  picture_src: string;
-}
-
-interface Category {
-  id: string;
-  name: string;
-  slug: string;
-  order: number;
-  children: Child[];
-  top_sellers: TopSeller[];
-}
-
-interface LinksProps {
-  Link: string;
-  to: string;
-  category: string;
-}
+import { Category, LinksProps } from "../../../types/NavTypes";
+import { Child, SubChild } from "../../../types/SidebarTypes";
 
 function NavDropdown() {
   const [categories, setCategories] = useState<Category[]>([]);

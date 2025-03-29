@@ -1,10 +1,6 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-
-interface SuccessScreenProps {
-    navigate: ReturnType<typeof useNavigate>;
-}
+import { SuccessScreenProps } from "../../../types/PaymentTypes";
 
 const SuccessScreen: React.FC<SuccessScreenProps> = ({ navigate }) => {
     return (

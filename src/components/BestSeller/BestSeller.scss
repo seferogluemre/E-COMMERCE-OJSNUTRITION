@@ -91,6 +91,7 @@
         flex: 43% !important;
         width: 43% !important;
         padding: 0px;
+        margin: 10px auto !important;
 
         .best_seller_card {
             margin: 3px;
@@ -99,7 +100,7 @@
             background-color: transparent;
 
             .best_seller_product_image {
-                width: 100% !important;
+                width: 81% !important;
                 height: 170px !important;
                 object-fit: cover !important;
             }

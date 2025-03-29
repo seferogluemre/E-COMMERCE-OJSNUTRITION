@@ -9,10 +9,7 @@ function Login() {
   const [activeTab, setActiveTab] = useState<string>("signup");
   const fetchUserCart = useCartStore((state) => state.fetchUserCart);
 
-
-  // Login başarılı olduğunda çağrılacak callback
   const onLoginSuccess = () => {
-    // Kullanıcı sepetini yükle
     fetchUserCart();
   };
 

@@ -4,11 +4,7 @@ import { useCartStore } from "../../../../../store/products/Cart";
 import { useNavigate } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
 import { PHOTO_URL } from "../../../../../services/api/collections/Auth";
-
-interface CartProps {
-  show: boolean;
-  handleCloseTwo: () => void;
-}
+import { CartProps } from "../../../../../types/CartTypes";
 
 function MyCart({ show, handleCloseTwo }: CartProps) {
   const { items, removeFromCart, updateQuantity, getTotalPrice } =
@@ -16,7 +12,6 @@ function MyCart({ show, handleCloseTwo }: CartProps) {
 
   const navigate = useNavigate();
 
-  // Sepete eklenen ürünün fiyatını türk lirasına formatladık
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("tr-TR", {
       style: "decimal",

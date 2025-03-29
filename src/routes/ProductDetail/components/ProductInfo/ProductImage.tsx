@@ -1,14 +1,5 @@
 import React, { useState } from "react";
-
-interface ProductImageProps {
-  src: string;
-  width?: string;
-  height?: string;
-  magnifierHeight?: number;
-  magnifierWidth?: number;
-  zoomLevel?: number;
-  className: string;
-}
+import { ProductImageProps } from "../../../../types/ProductTypes";
 
 export const ProductImage: React.FC<ProductImageProps> = ({
   src,

@@ -1,11 +1,7 @@
 import { Container, Row } from "react-bootstrap";
 import styles from "./Categories.module.scss";
 import { useNavigate } from "react-router-dom";
-
-interface CategoryProp {
-  CategoriesPhoto: string;
-  to: string;
-}
+import { CategoryProp } from "../../../../types/ProductTypes";
 
 function Categories() {
   const navigate = useNavigate();

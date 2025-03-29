@@ -1,11 +1,11 @@
-import { useToastStore } from "../../../../store/toast/ToastStore";
+import { useToastStore } from "../../store/toast/ToastStore";
 import ToastNotification from "./ToastNotification";
 
 const GlobalToast = () => {
-  const { message, show, hideToast } = useToastStore();
+  const { message, showToast, hideToast } = useToastStore();
 
   return (
-    <ToastNotification message={message} show={show} onClose={hideToast} />
+    <ToastNotification message={message} showToast={showToast} onClose={hideToast} />
   );
 };
 

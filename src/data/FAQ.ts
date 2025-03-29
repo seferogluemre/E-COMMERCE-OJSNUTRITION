@@ -1,5 +1,4 @@
-import { SSSData } from "../routes/FAQ/FAQ";
-
+import { SSSData } from "../types/FaqTypes";
 export const SSS: SSSData = {
     genel: [
         {

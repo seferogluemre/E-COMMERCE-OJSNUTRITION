@@ -7,17 +7,9 @@ import "./FAQ.scss";
 import { FaRegCreditCard } from "react-icons/fa6";
 import ContactForm from "../Contact/components/Form/Form";
 import { SSS } from "../../data/FAQ";
+import { SSSData, SSSItem } from "../../types/FaqTypes";
 
-interface SSSItem {
-  request: string;
-  reply: string;
-}
 
-export interface SSSData {
-  genel: SSSItem[];
-  ürünler?: SSSItem[];
-  kargo?: SSSItem[];
-}
 
 function ControlledTabsExample() {
   const [key, setKey] = useState<string>("genel");
@@ -46,7 +38,7 @@ function ControlledTabsExample() {
                       {key}
                     </span>
                   </div>
-                  {SSS[tabKey as keyof SSSData]?.map((item, index) => (
+                  {SSS[tabKey as keyof SSSData]?.map((item: SSSItem, index: number) => (
                     <div key={index}>
                       <Accordion.Item className="accordion-item" eventKey={index.toString()}>
                         <Accordion.Header

@@ -11,14 +11,7 @@ import { useNavigate } from "react-router-dom";
 import FiveStar from "../../../../components/FiveStars/FiveStar";
 import { LOCAL_KEY } from "../../ProductDetail";
 import "./LastView.scss";
-
-interface LastViewProduct {
-  name: string;
-  photo_src: string;
-  slug: string;
-  comment_count: number;
-  price: number;
-}
+import { LastViewProduct } from "../../../../types/ProductTypes";
 
 const LastView: React.FC = () => {
   const [lastViewProducts, setLastViewProducts] = useState<LastViewProduct[]>(

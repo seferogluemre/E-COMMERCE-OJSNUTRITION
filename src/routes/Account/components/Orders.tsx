@@ -98,7 +98,6 @@ function Orders() {
   if (loading) {
     return <div>Yükleniyor...</div>;
   }
-  // Sipariş durumuna göre renk belirleme
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'delivered':
@@ -112,7 +111,6 @@ function Orders() {
     }
   };
 
-  // Sipariş durumunu Türkçe metne çevirme
   const getStatusText = (status: string) => {
     switch (status) {
       case 'delivered':

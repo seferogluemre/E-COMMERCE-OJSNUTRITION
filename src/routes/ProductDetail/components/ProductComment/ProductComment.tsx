@@ -2,25 +2,15 @@ import { useState, useEffect } from "react";
 import { Button, Container, Row } from "react-bootstrap";
 import { FaStar } from "react-icons/fa";
 import { dummyCommentsData } from "../../../../data/CommentsDummyData";
-import { createAxiosInstance } from "../../../../services/api/axios";
 import { useParams } from "react-router-dom";
 import { BASE_URL } from "../../../../services/api/collections/Auth";
-
-interface Comment {
-  stars: string;
-  comment: string;
-  title: string;
-  created_at: string;
-  aroma: string;
-  first_name: string;
-  last_name: string;
-}
+import { Comment } from "../../../../types/CommentTypes";
 
 function ProductComment() {
   const { productSlug } = useParams();
   const [apiComments, setApiComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
-  const reviews = [...apiComments, ...dummyCommentsData]; // API ve dummy yorumları birleştir
+  const reviews = [...apiComments, ...dummyCommentsData];
 
   useEffect(() => {
     const fetchComments = async () => {

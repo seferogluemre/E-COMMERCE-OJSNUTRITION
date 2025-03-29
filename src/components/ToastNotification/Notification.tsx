@@ -1,14 +1,6 @@
 import React from "react";
 import { BiCheck, BiError, BiInfoCircle } from "react-icons/bi";
-
-export type NotificationType = "success" | "error" | "info";
-
-interface NotificationProps {
-  type: NotificationType;
-  message: string;
-  isVisible: boolean;
-  onClose: () => void;
-}
+import { NotificationProps } from "../../types/ToastTypes";
 
 const Notification: React.FC<NotificationProps> = ({
   type,

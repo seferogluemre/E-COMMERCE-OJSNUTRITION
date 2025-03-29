@@ -3,32 +3,7 @@ import { useToastStore } from "../toast/ToastStore";
 import { getAccessToken } from "../../services/api/collections/Storage";
 import { createAxiosInstance } from "../../services/api/axios";
 import { BASE_URL } from "../../services/api/collections/Auth";
-
-export interface CartItem {
-  id: string;
-  name: string;
-  product_variant_id: string;
-  aroma: string;
-  size: {
-    gram: number;
-    total_services: number;
-  };
-  price: number;
-  pieces: number;
-  photo_src: string;
-  variant_name: string;
-}
-
-export interface CartStore {
-  items: CartItem[];
-  addToCart: (item: CartItem) => void;
-  removeFromCart: (itemId: string) => void;
-  updateQuantity: (itemId: string, quantity: number) => void;
-  getTotalPrice: () => number;
-  getTotalItems: () => number;
-  fetchUserCart: () => Promise<void>;
-  clearCart: () => void;
-}
+import { CartItem, CartStore } from "../../types/CartTypes";
 
 const loadFromLocalStorage = (): CartItem[] => {
   const accessToken = getAccessToken();
@@ -95,7 +70,6 @@ export const useCartStore = create<CartStore>((set, get) => {
     }
   };
 
-  // Initialize store
   fetchUserCart();
 
   return {

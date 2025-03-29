@@ -1,25 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Card, Button, Row, Col, Form, Alert, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-
-import { MdDelete, MdEdit, MdPlusOne } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 import { City, deleteAddress, District, fetchAddresses, handleSubmitAddress, updateUserAddress } from "../../../services/api/collections/Addresses";
 import { createAxiosInstance } from "../../../services/api/axios";
-import { PiPlus, PiPlusMinus } from "react-icons/pi";
 import { GoPlus } from "react-icons/go";
-
-interface UserAddress {
-  title: string;
-  first_name: string;
-  last_name: string;
-  full_address: string;
-  city: string;
-  district: string;
-  phone_number: string;
-  id: string;
-  region: { id: number; name: string };
-  subregion: { id: number; name: string };
-}
+import { UserAddress } from "../../../types/AccountType";
 
 function Addresses() {
   const navigate = useNavigate();
