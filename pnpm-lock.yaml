@@ -14,6 +14,12 @@ importers:
       '@hookform/resolvers':
         specifier: ^3.10.0
         version: 3.10.0(react-hook-form@7.54.2(react@18.3.1))
+      '@maskito/core':
+        specifier: ^3.5.0
+        version: 3.5.0
+      '@maskito/react':
+        specifier: ^3.5.0
+        version: 3.5.0(@maskito/core@3.5.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       axios:
         specifier: ^1.7.9
         version: 1.7.9
@@ -26,6 +32,9 @@ importers:
       bootstrap-icons:
         specifier: ^1.11.3
         version: 1.11.3
+      dotenv:
+        specifier: ^16.4.7
+        version: 16.4.7
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -421,6 +430,16 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
+
+  '@maskito/core@3.5.0':
+    resolution: {integrity: sha512-zgmBjXeXc7BSBaw8jQw25dnwkFmKDvdj5rHzhEIxYhgGtnpli236F0YWPIOYzIwADjbefwDq1o7qpJfMsdDO4Q==}
+
+  '@maskito/react@3.5.0':
+    resolution: {integrity: sha512-o3W+A5mQoSGi8vrmuJdhWUEuPsQ5ZDgUoyQtsOiNyp5YFVoImK343iR9LGy18biK9MEAQmN19jBVJSpgddiI0Q==}
+    peerDependencies:
+      '@maskito/core': ^3.5.0
+      react: '>=16.8'
+      react-dom: '>=16.8'
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -891,6 +910,10 @@ packages:
 
   dom-helpers@5.2.1:
     resolution: {integrity: sha512-nRCa7CK3VTrM2NmGkIy4cbK7IZlgBE/PYMn55rrXefr5xXDP0LdtfPnblFDoVdcAfslJ7or6iqAUnx0CCGIWQA==}
+
+  dotenv@16.4.7:
+    resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
+    engines: {node: '>=12'}
 
   electron-to-chromium@1.5.76:
     resolution: {integrity: sha512-CjVQyG7n7Sr+eBXE86HIulnL5N8xZY1sgmOPGuq/F0Rr0FJq63lg0kEtOIDfZBk44FnDLf6FUJ+dsJcuiUDdDQ==}
@@ -1895,6 +1918,14 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
+  '@maskito/core@3.5.0': {}
+
+  '@maskito/react@3.5.0(@maskito/core@3.5.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@maskito/core': 3.5.0
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -2331,6 +2362,8 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.26.0
       csstype: 3.1.3
+
+  dotenv@16.4.7: {}
 
   electron-to-chromium@1.5.76: {}
 
